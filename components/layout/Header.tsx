@@ -7,12 +7,12 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "/", label: "홈" },
-    { href: "/about", label: "소개" },
-    { href: "/projects", label: "프로젝트" },
-    { href: "/blog", label: "블로그" },
-    { href: "/resume", label: "이력서" },
-    { href: "/contact", label: "연락처" },
+    { href: "/Donggeon-home/", label: "홈" },
+    { href: "/Donggeon-home/about", label: "소개" },
+    { href: "/Donggeon-home/projects", label: "프로젝트" },
+    { href: "/Donggeon-home/blog", label: "블로그" },
+    { href: "/Donggeon-home/resume", label: "이력서" },
+    { href: "/Donggeon-home/contact", label: "연락처" },
   ];
 
   return (
