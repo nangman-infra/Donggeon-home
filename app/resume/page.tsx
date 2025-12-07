@@ -92,7 +92,7 @@ export default function ResumePage() {
             <li>정보처리기능사 (2020)</li>
             <li>TOEIC 860점 (2024)</li>
             <li>NAVER Cloud Platform Certified Associate (2025)</li>
-            <li>AWS Cloud Certified Practitioner (2025)</li>
+            <li>AWS Certified Cloud Practitioner (2025)</li>
           </ul>
         </section>
       </motion.div>
