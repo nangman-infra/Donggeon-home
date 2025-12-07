@@ -19,7 +19,7 @@ export function Header() {
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-sm border-b z-50">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold">
+          <Link href="/Donggeon-home/" className="text-2xl font-bold">
             동건
           </Link>
 
