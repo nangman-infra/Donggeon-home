@@ -7,19 +7,19 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { href: "/Donggeon-home/", label: "홈" },
-    { href: "/Donggeon-home/about", label: "소개" },
-    { href: "/Donggeon-home/projects", label: "프로젝트" },
-    { href: "/Donggeon-home/blog", label: "블로그" },
-    { href: "/Donggeon-home/resume", label: "이력서" },
-    { href: "/Donggeon-home/contact", label: "연락처" },
+    { href: "/", label: "홈" },
+    { href: "/about", label: "소개" },
+    { href: "/projects", label: "프로젝트" },
+    { href: "/blog", label: "블로그" },
+    { href: "/resume", label: "이력서" },
+    { href: "/contact", label: "연락처" },
   ];
 
   return (
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-sm border-b z-50">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/Donggeon-home/" className="text-2xl font-bold">
+          <Link href="/" className="text-2xl font-bold">
             동건
           </Link>
 
