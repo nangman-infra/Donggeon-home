@@ -35,12 +35,37 @@
   * {
     @apply border-gray-200;
   }
-  body {
+  html, body {
     @apply bg-background text-foreground;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    height: 100%;
+    overflow: hidden; /* 스크롤바 완전 제거 */
   }
   
   .dark * {
     @apply border-gray-800;
+  }
+}
+
+@layer utilities {
+  /* 풀페이지 스크롤 최적화 */
+  .fullpage-container {
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .fullpage-section {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
 }

@@ -69,29 +69,65 @@ export default function Home() {
       }
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isScrolling.current) return;
+
+      if (e.key === "ArrowDown" && currentSection < sections.length - 1) {
+        isScrolling.current = true;
+        setCurrentSection((prev) => prev + 1);
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 1000);
+      } else if (e.key === "ArrowUp" && currentSection > 0) {
+        isScrolling.current = true;
+        setCurrentSection((prev) => prev - 1);
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 1000);
+      }
+    };
+
     const container = containerRef.current;
     if (container) {
       container.addEventListener("wheel", handleWheel, { passive: false });
+      document.addEventListener("keydown", handleKeyDown);
     }
 
     return () => {
       if (container) {
         container.removeEventListener("wheel", handleWheel);
+        document.removeEventListener("keydown", handleKeyDown);
       }
     };
   }, [currentSection, sections.length]);
 
+  // 화면 크기 변경 시 현재 섹션으로 다시 스냅
+  useEffect(() => {
+    const handleResize = () => {
+      // 리사이즈 시 현재 섹션 위치로 즉시 이동
+      if (containerRef.current) {
+        const container = containerRef.current.querySelector('.scroll-container') as HTMLElement;
+        if (container) {
+          container.style.transform = `translateY(-${currentSection * 100}vh)`;
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [currentSection]);
+
   return (
-    <div ref={containerRef} className="h-screen overflow-hidden">
+    <div ref={containerRef} className="fullpage-container">
       <motion.div
         animate={{ y: `-${currentSection * 100}vh` }}
         transition={{ duration: 1, ease: "easeInOut" }}
-        className="h-full"
+        className="scroll-container"
       >
         {sections.map((section, index) => (
           <section
             key={section.id}
-            className="h-screen flex flex-col items-center justify-center px-4 relative"
+            className="fullpage-section px-4"
           >
             <motion.div
               initial={{ opacity: 0, y: 50 }}
