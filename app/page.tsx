@@ -9,6 +9,15 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const isScrolling = useRef(false);
 
+  // 메인 페이지에서만 스크롤 비활성화
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   const sections = [
     {
       id: "hero",
