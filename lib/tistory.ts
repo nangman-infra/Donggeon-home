@@ -41,7 +41,15 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   }
 }
 
-function parseRSSJson(items: any[]): TistoryPost[] {
+interface RSSItem {
+  title?: string;
+  link?: string;
+  description?: string;
+  pubDate?: string;
+  categories?: string[];
+}
+
+function parseRSSJson(items: RSSItem[]): TistoryPost[] {
   const posts: TistoryPost[] = [];
   
   items.forEach((item) => {
@@ -87,74 +95,6 @@ function parseRSSJson(items: any[]): TistoryPost[] {
   return posts;
 }
 
-// 기존 XML 파싱 함수도 유지 (백업용)
-function parseRSS(xmlText: string): TistoryPost[] {
-  const posts: TistoryPost[] = [];
-  
-  // <item> 태그들을 찾아서 파싱
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-  const items = xmlText.match(itemRegex);
 
-  if (!items) return posts;
 
-  items.forEach((item) => {
-    const title = extractTag(item, "title");
-    const link = extractTag(item, "link");
-    const description = extractTag(item, "description");
-    const pubDate = extractTag(item, "pubDate");
-    const category = extractTag(item, "category");
 
-    // 썸네일 이미지 추출 (description에서 첫 번째 img 태그)
-    const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
-    const thumbnail = imgMatch ? imgMatch[1] : undefined;
-
-    // HTML 엔티티 먼저 디코딩
-    let cleanDescription = description
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">")
-      .replace(/&amp;/g, "&")
-      .replace(/&nbsp;/g, " ");
-
-    // HTML 태그 제거
-    cleanDescription = cleanDescription
-      .replace(/<[^>]*>/g, "")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    // 150자로 제한
-    if (cleanDescription.length > 150) {
-      cleanDescription = cleanDescription.substring(0, 150) + "...";
-    } else if (cleanDescription.length === 0) {
-      cleanDescription = "내용 없음";
-    }
-
-    posts.push({
-      title: decodeHTML(title),
-      link,
-      description: cleanDescription,
-      pubDate,
-      category: category || undefined,
-      thumbnail,
-    });
-  });
-
-  return posts;
-}
-
-function extractTag(xml: string, tagName: string): string {
-  const regex = new RegExp(`<${tagName}(?:[^>]*)><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tagName}>|<${tagName}(?:[^>]*)>([\\s\\S]*?)<\\/${tagName}>`, "i");
-  const match = xml.match(regex);
-  return match ? (match[1] || match[2] || "").trim() : "";
-}
-
-function decodeHTML(html: string): string {
-  return html
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, " ");
-}
