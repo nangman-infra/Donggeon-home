@@ -2,13 +2,37 @@
 
 import { motion } from "framer-motion";
 import type { TistoryPost } from "@/lib/tistory";
+import { fetchTistoryPosts } from "@/lib/tistory";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BlogClientProps {
   posts: TistoryPost[];
 }
 
-export function BlogClient({ posts }: BlogClientProps) {
+export function BlogClient({ posts: initialPosts }: BlogClientProps) {
+  const [posts, setPosts] = useState<TistoryPost[]>(initialPosts);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        setLoading(true);
+        const fetchedPosts = await fetchTistoryPosts();
+        setPosts(fetchedPosts);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to load blog posts:", err);
+        setError("블로그 글을 불러오는데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("ko-KR", {
@@ -37,9 +61,29 @@ export function BlogClient({ posts }: BlogClientProps) {
           </a>
         </div>
 
-        {posts.length === 0 ? (
-          <p className="text-muted-foreground">
-            블로그 글을 불러오는 중입니다...
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+            <p className="text-muted-foreground">블로그 글을 불러오는 중입니다...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <p className="text-red-500 mb-4">{error}</p>
+            <p className="text-muted-foreground">
+              직접 블로그를 방문해주세요: 
+              <a 
+                href="https://exit0.tistory.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:underline ml-1"
+              >
+                exit0.tistory.com
+              </a>
+            </p>
+          </div>
+        ) : posts.length === 0 ? (
+          <p className="text-muted-foreground text-center py-12">
+            아직 블로그 글이 없습니다.
           </p>
         ) : (
           <div className="max-w-3xl space-y-8">

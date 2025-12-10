@@ -9,13 +9,11 @@ export interface TistoryPost {
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
-    const RSS_URL = "https://exit0.tistory.com/rss";
+    // CORS 우회를 위한 RSS 프록시 사용
+    const RSS_URL = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent("https://exit0.tistory.com/rss");
     
     const response = await fetch(RSS_URL, {
       cache: "no-store", // 항상 최신 데이터 가져오기
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-      },
     });
 
     if (!response.ok) {
@@ -23,14 +21,14 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
       return [];
     }
 
-    const xmlText = await response.text();
+    const data = await response.json();
     
-    if (!xmlText || xmlText.length === 0) {
-      console.error("Empty RSS response");
+    if (!data || !data.items) {
+      console.error("Invalid RSS response");
       return [];
     }
     
-    const posts = parseRSS(xmlText);
+    const posts = parseRSSJson(data.items);
     
     if (posts.length === 0) {
       console.warn("No posts parsed from RSS");
@@ -43,6 +41,53 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   }
 }
 
+function parseRSSJson(items: any[]): TistoryPost[] {
+  const posts: TistoryPost[] = [];
+  
+  items.forEach((item) => {
+    // 썸네일 이미지 추출 (description에서 첫 번째 img 태그)
+    const imgMatch = item.description?.match(/<img[^>]+src="([^">]+)"/);
+    const thumbnail = imgMatch ? imgMatch[1] : undefined;
+
+    // HTML 태그 제거하고 텍스트만 추출
+    let cleanDescription = item.description || "";
+    
+    // HTML 엔티티 먼저 디코딩
+    cleanDescription = cleanDescription
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&")
+      .replace(/&nbsp;/g, " ");
+
+    // HTML 태그 제거
+    cleanDescription = cleanDescription
+      .replace(/<[^>]*>/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // 150자로 제한
+    if (cleanDescription.length > 150) {
+      cleanDescription = cleanDescription.substring(0, 150) + "...";
+    } else if (cleanDescription.length === 0) {
+      cleanDescription = "내용 없음";
+    }
+
+    posts.push({
+      title: item.title || "제목 없음",
+      link: item.link || "#",
+      description: cleanDescription,
+      pubDate: item.pubDate || new Date().toISOString(),
+      category: item.categories?.[0] || undefined,
+      thumbnail,
+    });
+  });
+
+  return posts;
+}
+
+// 기존 XML 파싱 함수도 유지 (백업용)
 function parseRSS(xmlText: string): TistoryPost[] {
   const posts: TistoryPost[] = [];
   

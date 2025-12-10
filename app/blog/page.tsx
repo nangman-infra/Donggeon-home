@@ -1,8 +1,7 @@
-import { fetchTistoryPosts } from "@/lib/tistory";
+"use client";
+
 import { BlogClient } from "./BlogClient";
 
-export default async function BlogPage() {
-  const posts = await fetchTistoryPosts();
-
-  return <BlogClient posts={posts} />;
+export default function BlogPage() {
+  return <BlogClient posts={[]} />;
 }
