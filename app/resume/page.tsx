@@ -55,7 +55,7 @@ export default function ResumePage() {
             <div>
               <h3 className="font-bold mb-2">Frontend</h3>
               <div className="flex flex-wrap gap-2">
-                {["Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "Vanilla JS"].map((skill) => (
+                {["Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "Vanilla JavaScript"].map((skill) => (
                   <span key={skill} className="px-4 py-2 bg-secondary rounded-lg">
                     {skill}
                   </span>
