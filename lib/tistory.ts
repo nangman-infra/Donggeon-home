@@ -9,13 +9,19 @@ export interface TistoryPost {
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
-    // RSS2JSON API 사용 (count 파라미터 제거)
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}`;
+    // RSS2JSON API 사용 (캐시 무력화를 위한 타임스탬프 추가)
+    const timestamp = new Date().getTime();
+    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss?_t=${timestamp}`)}`;
     
     console.log("Fetching RSS via RSS2JSON:", RSS_URL);
     
     const response = await fetch(RSS_URL, {
       cache: "no-store",
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
 
     if (!response.ok) {
