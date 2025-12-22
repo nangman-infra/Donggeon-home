@@ -8,79 +8,70 @@ export interface TistoryPost {
 }
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
-  try {
-    // AllOrigins를 사용한 CORS 우회
-    const timestamp = new Date().getTime();
-    const RSS_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://exit0.tistory.com/rss?_t=${timestamp}`)}`;
-    
-    console.log("Fetching RSS via AllOrigins:", RSS_URL);
-    
-    const response = await fetch(RSS_URL, {
-      cache: "no-store",
-      headers: {
-        'Accept': 'application/json',
+  // 여러 RSS 프록시 서비스를 순차적으로 시도
+  const proxies = [
+    {
+      name: "RSS2JSON",
+      url: (rssUrl: string) => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=20`,
+      parser: "json"
+    },
+    {
+      name: "CORS Anywhere",
+      url: (rssUrl: string) => `https://cors-anywhere.herokuapp.com/${rssUrl}`,
+      parser: "xml"
+    },
+    {
+      name: "ThingProxy",
+      url: (rssUrl: string) => `https://thingproxy.freeboard.io/fetch/${rssUrl}`,
+      parser: "xml"
+    }
+  ];
+
+  const rssUrl = "https://exit0.tistory.com/rss";
+  
+  for (const proxy of proxies) {
+    try {
+      console.log(`Trying ${proxy.name}...`);
+      const proxyUrl = proxy.url(rssUrl);
+      
+      const response = await fetch(proxyUrl, {
+        cache: "no-store",
+        headers: {
+          'Accept': proxy.parser === 'json' ? 'application/json' : 'application/xml, text/xml',
+        }
+      });
+
+      if (!response.ok) {
+        console.error(`${proxy.name} failed with status: ${response.status}`);
+        continue;
       }
-    });
 
-    if (!response.ok) {
-      console.error(`RSS fetch failed with status: ${response.status}`);
-      // 실패시 RSS2JSON으로 폴백
-      return await fetchViaRSS2JSON();
+      if (proxy.parser === 'json') {
+        const data = await response.json();
+        console.log(`${proxy.name} Response:`, data);
+        
+        if (data && data.items && data.items.length > 0) {
+          return parseRSSJson(data.items);
+        }
+      } else {
+        const xmlText = await response.text();
+        console.log(`${proxy.name} XML length:`, xmlText.length);
+        
+        if (xmlText && xmlText.includes('<item>')) {
+          const posts = parseRSSXML(xmlText);
+          if (posts.length > 0) {
+            return posts;
+          }
+        }
+      }
+    } catch (error) {
+      console.error(`Error with ${proxy.name}:`, error);
+      continue;
     }
-
-    const data = await response.json();
-    console.log("AllOrigins Response:", data);
-    
-    if (!data || !data.contents) {
-      console.error("Invalid AllOrigins response");
-      return await fetchViaRSS2JSON();
-    }
-    
-    const posts = parseRSSXML(data.contents);
-    
-    if (posts.length === 0) {
-      console.warn("No posts parsed from AllOrigins, trying RSS2JSON");
-      return await fetchViaRSS2JSON();
-    }
-    
-    return posts;
-  } catch (error) {
-    console.error("Error fetching via AllOrigins:", error);
-    // 오류 발생시 RSS2JSON으로 폴백
-    return await fetchViaRSS2JSON();
   }
-}
 
-async function fetchViaRSS2JSON(): Promise<TistoryPost[]> {
-  try {
-    const timestamp = new Date().getTime();
-    const randomParam = Math.random().toString(36).substring(7);
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}&count=20&api_key=&_=${timestamp}&r=${randomParam}`;
-    
-    console.log("Fallback to RSS2JSON:", RSS_URL);
-    
-    const response = await fetch(RSS_URL, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      console.error(`RSS2JSON fetch failed with status: ${response.status}`);
-      return [];
-    }
-
-    const data = await response.json();
-    console.log("RSS2JSON Response:", data);
-    
-    if (!data || !data.items) {
-      console.error("Invalid RSS2JSON response");
-      return [];
-    }
-    
-    return parseRSSJson(data.items);
-  } catch (error) {
-    console.error("Error fetching via RSS2JSON:", error);
-    return [];
-  }
+  console.error("All RSS proxy methods failed");
+  return [];
 }
 
 function parseRSSJson(items: any[]): TistoryPost[] {
