@@ -2,17 +2,36 @@
 
 import { motion } from "framer-motion";
 import type { TistoryPost } from "@/lib/tistory";
+import { fetchTistoryPosts } from "@/lib/tistory";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface BlogClientProps {
   posts: TistoryPost[];
 }
 
 export function BlogClient({ posts: initialPosts }: BlogClientProps) {
-  const [posts] = useState<TistoryPost[]>(initialPosts);
-  const [loading] = useState(false);
-  const [error] = useState<string | null>(null);
+  const [posts, setPosts] = useState<TistoryPost[]>(initialPosts);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadPosts = async () => {
+    try {
+      setLoading(true);
+      const fetchedPosts = await fetchTistoryPosts();
+      setPosts(fetchedPosts);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to load blog posts:", err);
+      setError("블로그 글을 불러오는데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

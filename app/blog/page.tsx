@@ -1,9 +1,7 @@
-import { BlogClient } from "./BlogClient";
-import { fetchTistoryPosts } from "@/lib/tistory";
+"use client";
 
-export default async function BlogPage() {
-  // 서버 사이드에서 RSS 데이터 가져오기
-  const posts = await fetchTistoryPosts();
-  
-  return <BlogClient posts={posts} />;
+import { BlogClient } from "./BlogClient";
+
+export default function BlogPage() {
+  return <BlogClient posts={[]} />;
 }

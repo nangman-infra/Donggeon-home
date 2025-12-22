@@ -9,41 +9,125 @@ export interface TistoryPost {
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
-    // RSS2JSON API 사용하되 더 강력한 캐시 무력화
+    // RSS-to-JSON.com API 사용 (RSS2JSON 대안)
     const timestamp = new Date().getTime();
-    const randomParam = Math.random().toString(36).substring(7);
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}&count=20&_=${timestamp}&r=${randomParam}`;
+    const RSS_URL = `https://rss-to-json-serverless-api.vercel.app/api?feedURL=${encodeURIComponent(`https://exit0.tistory.com/rss`)}&count=20&_=${timestamp}`;
     
-    console.log("Fetching with cache busting:", RSS_URL);
+    console.log("Fetching with RSS-to-JSON API:", RSS_URL);
+    
+    const response = await fetch(RSS_URL, {
+      cache: "no-store",
+      headers: {
+        'Accept': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`RSS-to-JSON fetch failed with status: ${response.status}`);
+      // 폴백: 기존 RSS2JSON 시도
+      return await fallbackToRSS2JSON();
+    }
+
+    const data = await response.json();
+    console.log("RSS-to-JSON Response:", data);
+    
+    if (!data || !data.items) {
+      console.error("Invalid RSS-to-JSON response");
+      return await fallbackToRSS2JSON();
+    }
+    
+    const posts = parseRSSToJsonAPI(data.items);
+    
+    if (posts.length === 0) {
+      console.warn("No posts parsed from RSS-to-JSON, trying fallback");
+      return await fallbackToRSS2JSON();
+    }
+    
+    return posts;
+  } catch (error) {
+    console.error("Error fetching via RSS-to-JSON:", error);
+    return await fallbackToRSS2JSON();
+  }
+}
+
+async function fallbackToRSS2JSON(): Promise<TistoryPost[]> {
+  try {
+    console.log("Fallback: Trying RSS2JSON without cache busting...");
+    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}&count=20`;
     
     const response = await fetch(RSS_URL, {
       cache: "no-store",
     });
 
     if (!response.ok) {
-      console.error(`RSS fetch failed with status: ${response.status}`);
+      console.error(`RSS2JSON fallback failed with status: ${response.status}`);
       return [];
     }
 
     const data = await response.json();
-    console.log("RSS2JSON Response:", data);
+    console.log("RSS2JSON Fallback Response:", data);
     
     if (!data || !data.items) {
-      console.error("Invalid RSS response");
+      console.error("Invalid RSS2JSON fallback response");
       return [];
     }
     
-    const posts = parseRSSJson(data.items);
-    
-    if (posts.length === 0) {
-      console.warn("No posts parsed from RSS");
-    }
-    
-    return posts;
+    return parseRSSJson(data.items);
   } catch (error) {
-    console.error("Error fetching Tistory posts:", error);
+    console.error("Error with RSS2JSON fallback:", error);
     return [];
   }
+}
+
+function parseRSSToJsonAPI(items: any[]): TistoryPost[] {
+  const posts: TistoryPost[] = [];
+  
+  try {
+    items.forEach((item) => {
+      const title = item.title || "";
+      const link = item.link || "";
+      const description = item.description || item.content || "";
+      const pubDate = item.pubDate || item.published || "";
+      const category = item.category || (item.categories && item.categories[0]) || undefined;
+
+      // 썸네일 이미지 추출
+      const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
+      const thumbnail = imgMatch ? imgMatch[1] : undefined;
+
+      // HTML 태그 제거하고 텍스트만 추출
+      let cleanDescription = description
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&")
+        .replace(/&nbsp;/g, " ");
+
+      cleanDescription = cleanDescription
+        .replace(/<[^>]*>/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (cleanDescription.length > 150) {
+        cleanDescription = cleanDescription.substring(0, 150) + "...";
+      } else if (cleanDescription.length === 0) {
+        cleanDescription = "내용 없음";
+      }
+
+      posts.push({
+        title: decodeHTML(title),
+        link,
+        description: cleanDescription,
+        pubDate,
+        category: category || undefined,
+        thumbnail,
+      });
+    });
+  } catch (error) {
+    console.error("Error parsing RSS-to-JSON API:", error);
+  }
+
+  return posts;
 }
 
 function parseRSSJson(items: any[]): TistoryPost[] {
