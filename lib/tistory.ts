@@ -9,8 +9,8 @@ export interface TistoryPost {
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
-    // RSS2JSON API 사용
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}&count=20`;
+    // RSS2JSON API 사용 (count 파라미터 제거)
+    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss`)}`;
     
     console.log("Fetching RSS via RSS2JSON:", RSS_URL);
     
@@ -25,6 +25,11 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
 
     const data = await response.json();
     console.log("RSS2JSON Response:", data);
+    
+    if (data.status === "error") {
+      console.error("RSS2JSON API Error:", data.message);
+      return [];
+    }
     
     if (!data || !data.items) {
       console.error("Invalid RSS response");
