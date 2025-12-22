@@ -11,15 +11,10 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
     // 캐시 무력화를 위한 타임스탬프 추가
     const timestamp = new Date().getTime();
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent("https://exit0.tistory.com/rss")}&api_key=&count=10&_t=${timestamp}`;
+    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent("https://exit0.tistory.com/rss")}&count=10&_t=${timestamp}`;
     
     const response = await fetch(RSS_URL, {
       cache: "no-store", // 항상 최신 데이터 가져오기
-      headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
     });
 
     if (!response.ok) {
