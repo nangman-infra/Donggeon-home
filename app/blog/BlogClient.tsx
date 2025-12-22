@@ -15,21 +15,21 @@ export function BlogClient({ posts: initialPosts }: BlogClientProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadPosts = async () => {
-      try {
-        setLoading(true);
-        const fetchedPosts = await fetchTistoryPosts();
-        setPosts(fetchedPosts);
-        setError(null);
-      } catch (err) {
-        console.error("Failed to load blog posts:", err);
-        setError("블로그 글을 불러오는데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadPosts = async () => {
+    try {
+      setLoading(true);
+      const fetchedPosts = await fetchTistoryPosts();
+      setPosts(fetchedPosts);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to load blog posts:", err);
+      setError("블로그 글을 불러오는데 실패했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadPosts();
   }, []);
 
@@ -51,14 +51,23 @@ export function BlogClient({ posts: initialPosts }: BlogClientProps) {
       >
         <div className="flex items-center justify-between mb-12">
           <h1 className="text-4xl md:text-5xl font-bold">블로그</h1>
-          <a
-            href="https://exit0.tistory.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            Tistory 방문 →
-          </a>
+          <div className="flex gap-4 items-center">
+            <button
+              onClick={() => loadPosts()}
+              disabled={loading}
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "새로고침 중..." : "🔄 새로고침"}
+            </button>
+            <a
+              href="https://exit0.tistory.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              Tistory 방문 →
+            </a>
+          </div>
         </div>
 
         {loading ? (
