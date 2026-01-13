@@ -10,7 +10,7 @@ pipeline {
         // [기본 설정] Harbor 정보 (필수)
         HARBOR_URL      = 'harbor.nangman.cloud'
         HARBOR_PROJECT  = 'library'
-        HARBOR_CREDS_ID = 'harbor_auth'
+        HARBOR_CREDS_ID = 'harbor-auth'
 
         // -------------------------------------------------
         // [FUTURE] 소나큐브 설정 (나중에 주석 해제하여 사용)
