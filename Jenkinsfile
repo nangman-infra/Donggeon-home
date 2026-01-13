@@ -81,12 +81,14 @@ pipeline {
         }
 
         // 4단계: Harbor로 전송 (Push)
-        stage('Push to Harbor') {
+       stage('Push to Harbor') {
             steps {
                 script {
                     echo "Harbor로 이미지 전송 중..."
                     withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
-                        sh "docker login ${HARBOR_URL} -u ${USER} -p ${PW}"
+                        // ★★★ 중요: ${USER}와 ${PW} 양옆에 작은따옴표(')를 꼭 붙여야 합니다!
+                        sh "docker login ${HARBOR_URL} -u '${USER}' -p '${PW}'"
+                        
                         sh "docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG}"
                         sh "docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest"
                         sh "docker logout ${HARBOR_URL}"
