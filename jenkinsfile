@@ -27,7 +27,7 @@ pipeline {
                 script {
                     // 예: 'nangman-infra/chulsu-web/main' -> 'chulsu-web' 추출
                     def jobNameParts = env.JOB_NAME.split('/')
-                    env.REPO_NAME = jobNameParts[1]
+                    env.REPO_NAME = jobNameParts[1].toLowerCase()
                     env.IMAGE_TAG = "v${env.BUILD_NUMBER}"
                     echo "타겟: ${env.REPO_NAME} / 태그: ${env.IMAGE_TAG}"
                 }
