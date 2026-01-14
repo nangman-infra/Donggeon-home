@@ -29,7 +29,7 @@ export default function Home() {
       id: "about",
       title: "About Me",
       subtitle: "저를 소개합니다",
-      description: "사용자 경험을 최우선으로 생각하는 개발자",
+      description: "인프라/DevOps에 관심이 많은 학생",
       link: "/about",
     },
     {
