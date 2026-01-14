@@ -23,7 +23,7 @@ export default function Home() {
       id: "hero",
       title: "안녕하세요",
       subtitle: "동건입니다",
-      description: "클라우드 엔지니어 | Devops | 솔루션 아키텍트",
+      description: "클라우드 엔지니어 | Devops | 솔루션 아키텍트 | DevSecOps",
     },
     {
       id: "about",
