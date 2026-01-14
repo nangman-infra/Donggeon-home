@@ -29,7 +29,7 @@ export default function Home() {
       id: "about",
       title: "About Me",
       subtitle: "저를 소개합니다",
-      description: "클라우드 인프라 엔지니어를 꿈꾸는 학생",
+      description: "클라우드 인프라 엔지니어/DevOps를 꿈꾸는 학생",
       link: "/about",
     },
     {
