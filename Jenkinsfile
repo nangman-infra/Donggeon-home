@@ -85,13 +85,17 @@ pipeline {
             steps {
                 script {
                     echo "Harbor로 이미지 전송 중..."
-                    withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
-                        // ★★★ 중요: ${USER}와 ${PW} 양옆에 작은따옴표(')를 꼭 붙여야 합니다!
-                        sh "docker login ${HARBOR_URL} -u '${USER}' -p '${PW}'"
-                        
-                        sh "docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG}"
-                        sh "docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest"
-                        sh "docker logout ${HARBOR_URL}"
+                    withCredentials([usernamePassword(credentialsId: 'harbor-credentials-id', usernameVariable: 'USER', passwordVariable: 'PW')]) {
+                        sh '''
+                            # 로그인, 푸시, 로그아웃을 하나의 프로세스 안에서 실행
+                            echo "$PW" | docker login harbor.nangman.cloud -u "$USER" --password-stdin
+                            
+                            docker push harbor.nangman.cloud/library/juno-blog-web:v1
+                            docker push harbor.nangman.cloud/library/juno-blog-web:latest
+                            
+                            # 명시적 로그아웃 (선택사항이나 권장)
+                            docker logout harbor.nangman.cloud
+                        '''
                     }
                 }
             }
