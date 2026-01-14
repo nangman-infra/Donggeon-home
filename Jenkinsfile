@@ -86,18 +86,25 @@ pipeline {
                 script {
                     echo "Harbor로 이미지 전송 중..."
                     withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
-                        // 쉘 스크립트 블록 시작 (Triple Double Quotes 사용)
-                        sh """
-                            # 1. 로그인: echo와 파이프(|)를 사용해 입력하고, $ 기호 앞에 역슬래시(\\)를 붙여 쉘 변수로 처리합니다.
-                            echo \$PW | docker login ${HARBOR_URL} -u \$USER --password-stdin
-                            
-                            # 2. 연속 푸시: 하나의 sh 블록 안에서 실행되므로 로그인 세션이 절대 끊기지 않습니다.
-                            docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG}
-                            docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest
-                            
-                            # 3. 로그아웃
-                            docker logout ${HARBOR_URL}
-                        """
+                        // 1. Groovy 변수들을 쉘 환경 변수로 명시적 전달
+                        withEnv([
+                            "H_URL=${HARBOR_URL}", 
+                            "H_PROJECT=${HARBOR_PROJECT}", 
+                            "R_NAME=${env.REPO_NAME}", 
+                            "I_TAG=${env.IMAGE_TAG}"
+                        ]) {
+                            // 2. 작은따옴표(''') 사용: Groovy가 $ 기호를 해석하지 않고 쉘로 그대로 넘깁니다.
+                            sh '''
+                                # 이제 $PW, $USER 등 모든 변수는 리눅스 쉘이 직접 처리합니다.
+                                echo "$PW" | docker login $H_URL -u "$USER" --password-stdin
+                                
+                                # 환경 변수를 사용하여 푸시 진행
+                                docker push $H_URL/$H_PROJECT/$R_NAME:$I_TAG
+                                docker push $H_URL/$H_PROJECT/$R_NAME:latest
+                                
+                                docker logout $H_URL
+                            '''
+                        }
                     }
                 }
             }
