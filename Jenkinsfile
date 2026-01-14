@@ -86,16 +86,18 @@ pipeline {
                 script {
                     echo "Harbor로 이미지 전송 중..."
                     withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
-                        sh '''
-                            # 로그인, 푸시, 로그아웃을 하나의 프로세스 안에서 실행
-                            echo "$PW" | docker login harbor.nangman.cloud -u "$USER" --password-stdin
+                        // 쉘 스크립트 블록 시작 (Triple Double Quotes 사용)
+                        sh """
+                            # 1. 로그인: echo와 파이프(|)를 사용해 입력하고, $ 기호 앞에 역슬래시(\\)를 붙여 쉘 변수로 처리합니다.
+                            echo \$PW | docker login ${HARBOR_URL} -u \$USER --password-stdin
                             
-                            docker push harbor.nangman.cloud/library/juno-blog-web:v1
-                            docker push harbor.nangman.cloud/library/juno-blog-web:latest
+                            # 2. 연속 푸시: 하나의 sh 블록 안에서 실행되므로 로그인 세션이 절대 끊기지 않습니다.
+                            docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG}
+                            docker push ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest
                             
-                            # 명시적 로그아웃 (선택사항이나 권장)
-                            docker logout harbor.nangman.cloud
-                        '''
+                            # 3. 로그아웃
+                            docker logout ${HARBOR_URL}
+                        """
                     }
                 }
             }
