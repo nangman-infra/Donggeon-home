@@ -85,7 +85,7 @@ pipeline {
             steps {
                 script {
                     echo "Harbor로 이미지 전송 중..."
-                    withCredentials([usernamePassword(credentialsId: 'harbor-credentials-id', usernameVariable: 'USER', passwordVariable: 'PW')]) {
+                    withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
                         sh '''
                             # 로그인, 푸시, 로그아웃을 하나의 프로세스 안에서 실행
                             echo "$PW" | docker login harbor.nangman.cloud -u "$USER" --password-stdin
