@@ -38,6 +38,13 @@ const projects = [
     tags: ["Vue.js", "Vite", "Tailwind CSS", "AWS EC2"],
     link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
   },
+  {
+    id: 6,
+    title: "이질적 연합학습을 위한 도커 기반 테스트베드 구축 및 BWA·ADM 기법 성능 검증",
+    description: "본 연구는 하드웨어 성능이 다른 클라이언트들로 구성된 이질적 연합학습 환경에서 BWA (Batch-size Weighted Aggregation)와 ADM (Adaptive Data Management) 알고리즘의 성능을 검증하기 위한 도커 기반 실험 플랫폼입니다.",
+    tags: ["Python", "Flower", "Flask", "PyTorch", "Docker"],
+    link: "https://github.com/2026-Feb-Winter-Institute/FL",
+  },
 ];
 
 export default function ProjectsPage() {

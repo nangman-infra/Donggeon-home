@@ -52,7 +52,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="font-semibold mb-2 text-muted-foreground">IaC & Automation</h3>
                 <div className="flex flex-wrap gap-3">
-                  {["Terraform", "CloudFormation", "Ansible", "Jenkins", "GitHub Actions"].map((skill) => (
+                  {["Terraform", "Jenkins", "GitHub Actions"].map((skill) => (
                     <span key={skill} className="px-4 py-2 bg-secondary rounded-lg">
                       {skill}
                     </span>
@@ -63,7 +63,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="font-semibold mb-2 text-muted-foreground">Monitoring & Logging</h3>
                 <div className="flex flex-wrap gap-3">
-                  {["Prometheus", "Grafana", "CloudWatch", "ELK Stack", "Datadog"].map((skill) => (
+                  {["Prometheus", "Grafana"].map((skill) => (
                     <span key={skill} className="px-4 py-2 bg-secondary rounded-lg">
                       {skill}
                     </span>
