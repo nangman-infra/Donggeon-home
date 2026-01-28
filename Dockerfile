@@ -15,10 +15,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Docker 환경에서는 basePath 제거 (존재하는 경우에만)
-RUN sed -i 's|basePath: "/Donggeon-home",||g' next.config.ts || true && \
-    sed -i 's|assetPrefix: "/Donggeon-home",||g' next.config.ts || true && \
-    pnpm build
+# 빌드 실행
+RUN pnpm build
 
 FROM nginx:alpine AS runner
 WORKDIR /app
