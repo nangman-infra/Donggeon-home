@@ -23,14 +23,21 @@ WORKDIR /app
 
 COPY --from=builder /app/out /usr/share/nginx/html
 
-# nginx 설정 (SPA 라우팅 지원)
+# nginx 설정 (정적 HTML 파일 서빙)
 RUN echo 'server { \
     listen 80; \
     server_name _; \
     root /usr/share/nginx/html; \
     index index.html; \
+    \
+    # 정확한 파일이 있으면 서빙 \
     location / { \
-        try_files $uri $uri/ /index.html; \
+        try_files $uri $uri.html $uri/ /index.html; \
+    } \
+    \
+    # HTML 확장자 숨기기 \
+    location ~ \.html$ { \
+        try_files $uri =404; \
     } \
 }' > /etc/nginx/conf.d/default.conf
 

@@ -50,17 +50,23 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   }
 }
 
-function parseRSSJson(items: any[]): TistoryPost[] {
+function parseRSSJson(items: unknown[]): TistoryPost[] {
   const posts: TistoryPost[] = [];
   
   try {
-    items.forEach((item) => {
+    items.forEach((item: unknown) => {
+      // Type guard를 사용하여 안전하게 타입 체크
+      if (!item || typeof item !== 'object') return;
+      
+      const itemObj = item as Record<string, unknown>;
+      
       // RSS2JSON에서 제공하는 데이터 구조에 맞게 파싱
-      const title = item.title || "";
-      const link = item.link || "";
-      const description = item.description || item.content || "";
-      const pubDate = item.pubDate || "";
-      const category = item.categories && item.categories.length > 0 ? item.categories[0] : undefined;
+      const title = String(itemObj.title || "");
+      const link = String(itemObj.link || "");
+      const description = String(itemObj.description || itemObj.content || "");
+      const pubDate = String(itemObj.pubDate || "");
+      const categories = itemObj.categories as string[] | undefined;
+      const category = categories && categories.length > 0 ? categories[0] : undefined;
 
       // 썸네일 이미지 추출 (description에서 첫 번째 img 태그)
       const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
