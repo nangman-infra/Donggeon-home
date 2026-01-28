@@ -15,9 +15,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Docker 환경에서는 basePath 제거를 위해 임시로 next.config.ts 수정
-RUN sed -i 's|basePath: "/Donggeon-home",||g' next.config.ts && \
-    sed -i 's|assetPrefix: "/Donggeon-home",||g' next.config.ts && \
+# Docker 환경에서는 basePath 제거 (존재하는 경우에만)
+RUN sed -i 's|basePath: "/Donggeon-home",||g' next.config.ts || true && \
+    sed -i 's|assetPrefix: "/Donggeon-home",||g' next.config.ts || true && \
     pnpm build
 
 FROM nginx:alpine AS runner
@@ -25,7 +25,7 @@ WORKDIR /app
 
 COPY --from=builder /app/out /usr/share/nginx/html
 
-# nginx 설정 (basePath 처리)
+# nginx 설정 (SPA 라우팅 지원)
 RUN echo 'server { \
     listen 80; \
     server_name _; \
