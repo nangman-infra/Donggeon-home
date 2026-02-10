@@ -6,7 +6,8 @@
 pipeline {
     agent any
     options {
-        disableConcurrentBuilds() 
+        disableConcurrentBuilds()
+        timeout(time: 30, unit: 'MINUTES')  // 크로스플랫폼 빌드를 위한 타임아웃 30분
     }
     triggers {
         pollSCM('*/3 * * * *') // 3분마다 체크
