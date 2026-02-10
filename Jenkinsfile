@@ -9,9 +9,27 @@ pipeline {
         disableConcurrentBuilds()
         timeout(time: 30, unit: 'MINUTES')  // 크로스플랫폼 빌드를 위한 타임아웃 30분
     }
-    // triggers {
-    //     pollSCM('*/3 * * * *') // 3분마다 체크
-    // }
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                // 리포지토리 주소를 변수로 받습니다.
+                [key: 'REPO_URL', value: '$.repository.clone_url', defaultValue: '']
+            ],
+            
+            // 👇 [중요] 토큰을 인프라와 똑같이 맞춥니다!
+            token: 'nangman-trigger',
+            
+            causeString: 'Homepage Push 감지됨',
+            printContributedVariables: true,
+            printPostContent: true,
+            
+            // 👇 [핵심 필터]
+            // 리포지토리 주소에 '홈페이지_리포지토리_이름'이 포함될 때만 이 파이프라인을 실행!
+            // (인프라 쪽 Push나 매터모스트 버튼은 여기서 걸러집니다)
+            regexpFilterText: '$REPO_URL',
+            regexpFilterExpression: '.*(home|blog-web).*'
+        )
+    }
     environment {
         // [기본 설정] Harbor 정보 (필수)
         HARBOR_URL      = 'harbor.nangman.cloud'
