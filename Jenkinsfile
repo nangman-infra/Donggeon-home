@@ -73,54 +73,74 @@ pipeline {
         // }
         */
 
-        // 3단계: 도커 이미지 빌드
-        stage('Docker Build') {
+        // 3단계: 도커 이미지 빌드 (크로스플랫폼)
+        stage('Docker Build & Push') {
             steps {
                 script {
-                    echo "Docker Image 빌드 중..."
-                    // 버전 관리용 & Watchtower용(latest) 두 가지 태그 생성
-                    sh "docker build -t ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG} ."
-                    sh "docker build -t ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest ."
-                }
-            }
-        }
-
-        // 4단계: Harbor로 전송 (Push)
-       stage('Push to Harbor') {
-            steps {
-                script {
-                    echo "Harbor로 이미지 전송 중..."
+                    echo "Docker Buildx를 사용한 크로스플랫폼 이미지 빌드 중..."
+                    
                     withCredentials([usernamePassword(credentialsId: HARBOR_CREDS_ID, passwordVariable: 'PW', usernameVariable: 'USER')]) {
-                        // 1. Groovy 변수들을 쉘 환경 변수로 명시적 전달
                         withEnv([
                             "H_URL=${HARBOR_URL}", 
                             "H_PROJECT=${HARBOR_PROJECT}", 
                             "R_NAME=${env.REPO_NAME}", 
                             "I_TAG=${env.IMAGE_TAG}"
                         ]) {
-                            // 2. 작은따옴표(''') 사용: Groovy가 $ 기호를 해석하지 않고 쉘로 그대로 넘깁니다.
                             sh '''
-                                # 이제 $PW, $USER 등 모든 변수는 리눅스 쉘이 직접 처리합니다.
+                                # Harbor 로그인
                                 echo "$PW" | docker login $H_URL -u "$USER" --password-stdin
                                 
-                                # 환경 변수를 사용하여 푸시 진행
-                                docker push $H_URL/$H_PROJECT/$R_NAME:$I_TAG
-                                docker push $H_URL/$H_PROJECT/$R_NAME:latest
+                                # Buildx 빌더 생성 또는 사용
+                                docker buildx create --name multiarch-builder --use 2>/dev/null || docker buildx use multiarch-builder
                                 
+                                # Buildx 부트스트랩
+                                docker buildx inspect --bootstrap
+                                
+                                # 크로스플랫폼 빌드 및 Harbor에 직접 푸시
+                                # 지원 플랫폼: linux/amd64, linux/arm64
+                                docker buildx build \
+                                    --platform linux/amd64,linux/arm64 \
+                                    --tag $H_URL/$H_PROJECT/$R_NAME:$I_TAG \
+                                    --tag $H_URL/$H_PROJECT/$R_NAME:latest \
+                                    --push \
+                                    .
+                                
+                                # Harbor 로그아웃
                                 docker logout $H_URL
                             '''
                         }
                     }
+                    
+                    echo "Harbor에 이미지가 성공적으로 푸시되었습니다."
+                    echo "이미지: ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG}"
+                    echo "플랫폼: linux/amd64, linux/arm64"
                 }
             }
         }
     }
 
-    // 빌드 후 로컬 이미지 청소
+        // 빌드 후 처리 (성공/실패 알림 및 로컬 이미지 청소)
     post {
+        // 1. 빌드 성공 시 알림
+        success {
+            mattermostSend (
+                color: 'good',
+                message: ":tada: 빌드 성공! 배포가 완료되었습니다.\n프로젝트: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n바로가기: ${env.BUILD_URL}"
+            )
+        }
+
+        // 2. 빌드 실패 시 알림
+        failure {
+            mattermostSend (
+                color: 'danger',
+                message: ":rotating_light: 빌드 실패... 로그를 확인해주세요.\n프로젝트: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n바로가기: ${env.BUILD_URL}"
+            )
+        }
+        
         always {
-            sh "docker rmi ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:${env.IMAGE_TAG} || true"
-            sh "docker rmi ${HARBOR_URL}/${HARBOR_PROJECT}/${env.REPO_NAME}:latest || true"
+            script {
+                echo "빌드 완료. Buildx는 이미지를 직접 푸시하므로 로컬 정리가 불필요합니다."
+            }
         }
     }
 }
