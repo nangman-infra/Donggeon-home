@@ -73,7 +73,7 @@ export default function ContactPage() {
         <h1 className="text-4xl md:text-5xl font-bold mb-8">연락처</h1>
         
         <p className="text-lg text-muted-foreground mb-12">
-          프로젝트 문의나 협업 제안이 있으시면 언제든지 연락주세요!
+          프로젝트 문의나 협업 제안이 있으시면 언제든지 연락주세요!!
         </p>
 
         {/* 연락 정보 */}
