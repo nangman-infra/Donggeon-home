@@ -27,7 +27,7 @@ pipeline {
             // 리포지토리 주소에 '홈페이지_리포지토리_이름'이 포함될 때만 이 파이프라인을 실행!
             // (인프라 쪽 Push나 매터모스트 버튼은 여기서 걸러집니다)
             regexpFilterText: '$REPO_URL',
-            regexpFilterExpression: '.*(home|blog-web).*'
+            regexpFilterExpression: '.*Donggeon-home.*'
         )
     }
     environment {
