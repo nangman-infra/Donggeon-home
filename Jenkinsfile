@@ -20,8 +20,8 @@ pipeline {
             token: 'nangman-trigger',
             
             causeString: 'Homepage Push 감지됨',
-            printContributedVariables: true,
-            printPostContent: true,
+            printContributedVariables: false,
+            printPostContent: false,
             
             // 👇 [핵심 필터]
             // 리포지토리 주소에 '홈페이지_리포지토리_이름'이 포함될 때만 이 파이프라인을 실행!
