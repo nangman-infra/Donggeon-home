@@ -1,231 +1,255 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentSection, setCurrentSection] = useState(0);
-  const isScrolling = useRef(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [displayedText, setDisplayedText] = useState("");
+  
+  const introText = "$ whoami\n> Cloud Engineer & DevOps Enthusiast";
 
-  // 메인 페이지에서만 스크롤 비활성화
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < introText.length) {
+        setDisplayedText(introText.slice(0, index + 1));
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 30);
+
+    return () => clearInterval(interval);
   }, []);
 
-  const sections = [
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setCommandPaletteOpen(true);
+      }
+      if (e.key === "Escape") {
+        setCommandPaletteOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const projects = [
     {
-      id: "hero",
-      title: "안녕하세요",
-      subtitle: "동건입니다",
-      description: "클라우드 엔지니어 | Devops | 솔루션 아키텍트",
+      name: "Budgetly",
+      desc: "Azure OCR 기반 조직 예산 관리 PWA",
+      tech: ["Vue.js", "AWS EC2"],
+      link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
     },
     {
-      id: "about",
-      title: "About Me",
-      subtitle: "저를 소개합니다",
-      description: "클라우드 인프라 엔지니어/DevOps를 꿈꾸는 학생",
-      link: "/about",
+      name: "Federated Learning",
+      desc: "ADM & BWA 알고리즘 연합학습 최적화",
+      tech: ["Python", "PyTorch", "Docker"],
+      link: "https://github.com/Hanbat-IoT/Lab2",
     },
     {
-      id: "projects",
-      title: "Projects",
-      subtitle: "프로젝트 포트폴리오",
-      description: "다양한 프로젝트 경험을 확인해보세요",
-      link: "/projects",
-    },
-    {
-      id: "blog",
-      title: "Blog",
-      subtitle: "기술 블로그",
-      description: "개발 경험과 지식을 공유합니다",
-      link: "/blog",
-    },
-    {
-      id: "contact",
-      title: "Contact",
-      subtitle: "연락하기",
-      description: "함께 일하고 싶으시다면 언제든 연락주세요",
-      link: "/contact",
+      name: "Dev Card Hunter",
+      desc: "개발자 학습 게이미피케이션 시스템",
+      tech: ["JavaScript", "Chrome Extension"],
+      link: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
     },
   ];
 
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling.current) return;
-
-      e.preventDefault();
-
-      if (e.deltaY > 0 && currentSection < sections.length - 1) {
-        // 아래로 스크롤
-        isScrolling.current = true;
-        setCurrentSection((prev) => prev + 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 1000);
-      } else if (e.deltaY < 0 && currentSection > 0) {
-        // 위로 스크롤
-        isScrolling.current = true;
-        setCurrentSection((prev) => prev - 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 1000);
-      }
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (isScrolling.current) return;
-
-      if (e.key === "ArrowDown" && currentSection < sections.length - 1) {
-        isScrolling.current = true;
-        setCurrentSection((prev) => prev + 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 1000);
-      } else if (e.key === "ArrowUp" && currentSection > 0) {
-        isScrolling.current = true;
-        setCurrentSection((prev) => prev - 1);
-        setTimeout(() => {
-          isScrolling.current = false;
-        }, 1000);
-      }
-    };
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("wheel", handleWheel, { passive: false });
-      document.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("wheel", handleWheel);
-        document.removeEventListener("keydown", handleKeyDown);
-      }
-    };
-  }, [currentSection, sections.length]);
-
-  // 화면 크기 변경 시 현재 섹션으로 다시 스냅
-  useEffect(() => {
-    const handleResize = () => {
-      // 리사이즈 시 현재 섹션 위치로 즉시 이동
-      if (containerRef.current) {
-        const container = containerRef.current.querySelector('.scroll-container') as HTMLElement;
-        if (container) {
-          container.style.transform = `translateY(-${currentSection * 100}vh)`;
-        }
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [currentSection]);
+  const skills = [
+    { category: "Cloud", items: ["AWS", "NCP"] },
+    { category: "Container", items: ["Docker", "Kubernetes", "ECS", "EKS"] },
+    { category: "IaC", items: ["Terraform", "Jenkins", "GitHub Actions"] },
+    { category: "Monitoring", items: ["Prometheus", "Grafana"] },
+    { category: "Languages", items: ["Python", "Bash", "Node.js", "TypeScript"] },
+  ];
 
   return (
-    <div ref={containerRef} className="fullpage-container">
-      <motion.div
-        animate={{ y: `-${currentSection * 100}vh` }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-        className="scroll-container"
-      >
-        {sections.map((section, index) => (
-          <section
-            key={section.id}
-            className="fullpage-section px-4"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{
-                opacity: currentSection === index ? 1 : 0.3,
-                y: currentSection === index ? 0 : 50,
-              }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl"
-            >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl text-muted-foreground mb-6">
-                {section.title}
-              </h2>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                {section.subtitle}
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-12">
-                {section.description}
-              </p>
+    <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Hero Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-32"
+        >
+          <div className="mb-8">
+            <pre className="font-mono text-sm text-accent whitespace-pre-wrap">
+              {displayedText}
+              <span className="typing-cursor"></span>
+            </pre>
+          </div>
+          <h1 className="text-6xl md:text-8xl font-bold mb-6">동건</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            안정적이고 확장 가능한 클라우드 인프라 구축에 관심을 가지고 있는 학생입니다.
+            DevOps와 자동화를 통해 더 나은 개발 경험을 만들어가고 있습니다.
+          </p>
+        </motion.section>
 
-              {section.link && (
-                <Link
-                  href={section.link}
-                  className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-                >
-                  자세히 보기 →
-                </Link>
-              )}
+        {/* Stats */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32"
+        >
+          {[
+            { label: "Projects", value: "06+" },
+            { label: "Certifications", value: "05+" },
+            { label: "Year Started", value: "2021" },
+            { label: "Status", value: "Learning" },
+          ].map((stat, i) => (
+            <div key={i} className="p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
+              <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
+              <div className="text-sm text-muted-foreground font-mono">{stat.label}</div>
+            </div>
+          ))}
+        </motion.section>
 
-              {index === 0 && (
-                <div className="flex flex-wrap gap-4 justify-center">
-                  <Link
-                    href="/about"
-                    className="px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-                  >
-                    자기소개
-                  </Link>
-                  <Link
-                    href="/projects"
-                    className="px-8 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
-                  >
-                    프로젝트 보기
-                  </Link>
+        {/* Skills */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-32"
+        >
+          <h2 className="text-3xl font-bold mb-8">
+            <span className="text-accent font-mono">$</span> cat skills.json
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {skills.map((skill, i) => (
+              <div key={i} className="p-6 bg-muted/30 border border-border rounded-xl">
+                <div className="text-sm font-mono text-accent mb-4">{skill.category}</div>
+                <div className="flex flex-wrap gap-2">
+                  {skill.items.map((item) => (
+                    <span
+                      key={item}
+                      className="px-3 py-1 bg-background border border-border rounded-lg text-sm font-mono hover:border-primary transition-colors"
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
-              )}
-            </motion.div>
+              </div>
+            ))}
+          </div>
+        </motion.section>
 
-            {/* 스크롤 인디케이터 */}
-            {index < sections.length - 1 && currentSection === index && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                className="absolute bottom-8"
+        {/* Projects */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-32"
+        >
+          <h2 className="text-3xl font-bold mb-8">
+            <span className="text-accent font-mono">$</span> ls projects/
+          </h2>
+          <div className="space-y-4">
+            {projects.map((project, i) => (
+              <a
+                key={i}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-all group"
               >
-                <svg
-                  className="w-6 h-6 text-muted-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                  />
-                </svg>
-              </motion.div>
-            )}
-          </section>
-        ))}
-      </motion.div>
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                    {project.name}
+                  </h3>
+                  <svg
+                    className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+                <p className="text-muted-foreground mb-4">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech) => (
+                    <span key={tech} className="text-xs font-mono px-2 py-1 bg-background rounded">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </a>
+            ))}
+          </div>
+        </motion.section>
 
-      {/* 섹션 네비게이션 도트 */}
-      <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden md:flex flex-col gap-4">
-        {sections.map((section, index) => (
-          <button
-            key={section.id}
-            onClick={() => setCurrentSection(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              currentSection === index
-                ? "bg-primary scale-125"
-                : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-            }`}
-            aria-label={`Go to ${section.title}`}
-          />
-        ))}
+        {/* Contact */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="p-8 bg-muted/30 border border-border rounded-xl"
+        >
+          <h2 className="text-2xl font-bold mb-6">
+            <span className="text-accent font-mono">$</span> contact
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
+            <a href="mailto:gunni6112@gmail.com" className="flex items-center gap-3 p-4 bg-background rounded-lg hover:border-primary border border-transparent transition-colors">
+              <span className="text-2xl">✉️</span>
+              <div>
+                <div className="text-xs text-muted-foreground font-mono">EMAIL</div>
+                <div className="text-sm">gunni6112@gmail.com</div>
+              </div>
+            </a>
+            <a href="https://github.com/whitejbb" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-background rounded-lg hover:border-primary border border-transparent transition-colors">
+              <span className="text-2xl">💻</span>
+              <div>
+                <div className="text-xs text-muted-foreground font-mono">GITHUB</div>
+                <div className="text-sm">github.com/whitejbb</div>
+              </div>
+            </a>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            프로젝트 문의나 협업 제안이 있으시면 언제든지 연락주세요.
+          </p>
+        </motion.section>
       </div>
+
+      {/* Command Palette */}
+      {commandPaletteOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            onClick={() => setCommandPaletteOpen(false)}
+          />
+          <div className="command-palette">
+            <input
+              type="text"
+              className="command-input"
+              placeholder="Type a command..."
+              autoFocus
+            />
+            <div className="p-2">
+              {[
+                { icon: "📧", label: "Email", desc: "gunni6112@gmail.com" },
+                { icon: "💻", label: "GitHub", desc: "github.com/whitejbb" },
+                { icon: "🔗", label: "LinkedIn", desc: "Connect with me" },
+                { icon: "📝", label: "Blog", desc: "exit0.tistory.com" },
+              ].map((item, i) => (
+                <div key={i} className="command-item">
+                  <span className="text-xl">{item.icon}</span>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium">{item.label}</div>
+                    <div className="text-xs text-muted-foreground">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

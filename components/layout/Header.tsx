@@ -2,34 +2,39 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
-    { href: "/", label: "홈" },
-    { href: "/about", label: "소개" },
-    { href: "/projects", label: "프로젝트" },
-    { href: "/blog", label: "블로그" },
-    { href: "/resume", label: "이력서" },
-    { href: "/contact", label: "연락처" },
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/projects", label: "Projects" },
+    { href: "/blog", label: "Blog" },
+    { href: "/resume", label: "Resume" },
+    { href: "/contact", label: "Contact" },
   ];
 
   return (
-    <header className="fixed top-0 w-full bg-background/80 backdrop-blur-sm border-b z-50">
-      <nav className="container mx-auto px-4 py-4">
+    <header className="fixed top-0 w-full bg-background/80 backdrop-blur-xl border-b border-border z-50">
+      <nav className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold">
-            동건
+          <Link href="/" className="font-mono text-sm">
+            <span className="text-accent">~</span>
+            <span className="text-muted-foreground">/portfolio</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex gap-8">
+          <ul className="hidden md:flex gap-8 items-center">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="hover:text-primary transition-colors"
+                  className={`text-sm font-mono transition-colors ${
+                    pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
                   {item.label}
                 </Link>
@@ -39,42 +44,23 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="md:hidden text-sm font-mono"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
+            {isMenuOpen ? "Close" : "Menu"}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <ul className="md:hidden mt-4 space-y-2">
+          <ul className="md:hidden mt-4 space-y-2 pt-4 border-t border-border">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="block py-2 hover:text-primary transition-colors"
+                  className={`block py-2 text-sm font-mono transition-colors ${
+                    pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}

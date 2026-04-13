@@ -5,8 +5,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "동건 | 개인 홈페이지",
-  description: "동건의 포트폴리오와 블로그",
+  title: "동건 | 개발자 포트폴리오",
+  description: "Cloud Engineer & DevOps Enthusiast",
 };
 
 export default function RootLayout({
@@ -35,7 +35,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
