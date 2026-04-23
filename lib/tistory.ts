@@ -87,8 +87,8 @@ export function parseRSSJson(items: unknown[]): TistoryPost[] {
 
       // HTML 태그 제거
       cleanDescription = cleanDescription
-        .replace(/<[^>]*>/g, "")
-        .replace(/\s+/g, " ")
+        .replaceAll(/<[^>]*>/g, "")
+        .replaceAll(/\s+/g, " ")
         .trim();
 
       // 150자로 제한
