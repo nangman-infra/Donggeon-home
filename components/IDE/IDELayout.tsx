@@ -24,8 +24,8 @@ export function IDELayout() {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const openFile = (file: FileType) => {
@@ -39,7 +39,7 @@ export function IDELayout() {
     const newTabs = openTabs.filter((tab) => tab !== file);
     setOpenTabs(newTabs);
     if (activeFile === file && newTabs.length > 0) {
-      setActiveFile(newTabs[newTabs.length - 1]);
+      setActiveFile(newTabs.at(-1) ?? "readme");
     }
   };
 

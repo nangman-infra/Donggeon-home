@@ -3,6 +3,32 @@
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
+  const learningAreas = [
+    "클라우드 인프라 기초 (AWS, NCP)",
+    "컨테이너 기술 (Docker, Kubernetes)",
+    "Infrastructure as Code (Terraform, Ansible)",
+    "CI/CD 파이프라인 구축",
+    "모니터링 및 로깅 시스템",
+    "리눅스 시스템 관리",
+    "네트워크/운영체제 및 보안 기초",
+  ];
+  const goals = [
+    "클라우드 네이티브 아키텍처 이해",
+    "DevOps 문화와 실무 경험 쌓기",
+    "자동화를 통한 효율적인 인프라 운영",
+    "실습 프로젝트를 통한 실전 경험",
+    "클라우드 자격증 취득 (AWS SAA, CKA 등)",
+    "오픈소스 프로젝트 기여",
+  ];
+  const skillGroups = [
+    { category: "Cloud Platforms", skills: ["AWS", "NCP"] },
+    { category: "Container & Orchestration", skills: ["Docker", "Kubernetes", "ECS", "EKS"] },
+    { category: "IaC & Automation", skills: ["Terraform", "Jenkins", "GitHub Actions"] },
+    { category: "Monitoring & Logging", skills: ["Prometheus", "Grafana"] },
+    { category: "Scripting & Programming", skills: ["Python", "Bash", "Node.js"] },
+    { category: "Frontend", skills: ["Next.js", "TypeScript", "Tailwind CSS"] },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
       <div className="max-w-6xl mx-auto px-6">
@@ -38,16 +64,8 @@ export default function AboutPage() {
               <span className="text-accent font-mono">$</span> cat learning.txt
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
-              {[
-                "클라우드 인프라 기초 (AWS, NCP)",
-                "컨테이너 기술 (Docker, Kubernetes)",
-                "Infrastructure as Code (Terraform, Ansible)",
-                "CI/CD 파이프라인 구축",
-                "모니터링 및 로깅 시스템",
-                "리눅스 시스템 관리",
-                "네트워크/운영체제 및 보안 기초",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-4 bg-background rounded-lg">
+              {learningAreas.map((item) => (
+                <div key={item} className="flex items-center gap-3 p-4 bg-background rounded-lg">
                   <span className="text-primary font-mono text-xl">→</span>
                   <span className="text-foreground">{item}</span>
                 </div>
@@ -61,15 +79,8 @@ export default function AboutPage() {
               <span className="text-accent font-mono">$</span> cat goals.txt
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
-              {[
-                "클라우드 네이티브 아키텍처 이해",
-                "DevOps 문화와 실무 경험 쌓기",
-                "자동화를 통한 효율적인 인프라 운영",
-                "실습 프로젝트를 통한 실전 경험",
-                "클라우드 자격증 취득 (AWS SAA, CKA 등)",
-                "오픈소스 프로젝트 기여",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-4 bg-background rounded-lg">
+              {goals.map((item) => (
+                <div key={item} className="flex items-center gap-3 p-4 bg-background rounded-lg">
                   <span className="text-primary font-mono text-xl">→</span>
                   <span className="text-foreground">{item}</span>
                 </div>
@@ -82,15 +93,8 @@ export default function AboutPage() {
             <span className="text-accent font-mono">$</span> ls skills/
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { category: "Cloud Platforms", skills: ["AWS", "NCP"] },
-              { category: "Container & Orchestration", skills: ["Docker", "Kubernetes", "ECS", "EKS"] },
-              { category: "IaC & Automation", skills: ["Terraform", "Jenkins", "GitHub Actions"] },
-              { category: "Monitoring & Logging", skills: ["Prometheus", "Grafana"] },
-              { category: "Scripting & Programming", skills: ["Python", "Bash", "Node.js"] },
-              { category: "Frontend", skills: ["Next.js", "TypeScript", "Tailwind CSS"] },
-            ].map((item, i) => (
-              <div key={i} className="p-6 bg-muted/30 border border-border rounded-xl">
+            {skillGroups.map((item) => (
+              <div key={item.category} className="p-6 bg-muted/30 border border-border rounded-xl">
                 <div className="text-sm font-mono text-accent mb-4">{item.category}</div>
                 <div className="flex flex-wrap gap-2">
                   {item.skills.map((skill) => (

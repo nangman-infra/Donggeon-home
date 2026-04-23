@@ -34,14 +34,14 @@ export function ProjectsContent() {
     <div className="font-mono text-sm">
       <div className="flex items-center gap-2 text-muted-foreground mb-6">
         <span className="line-numbers">1</span>
-        <span className="text-accent">//</span>
+        <span className="text-accent">{"//"}</span>
         <span>projects/</span>
       </div>
 
       <div className="space-y-4">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <a
-            key={index}
+            key={project.name}
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"

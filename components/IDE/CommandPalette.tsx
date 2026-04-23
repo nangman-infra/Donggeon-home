@@ -16,7 +16,7 @@ interface Command {
   icon: string;
 }
 
-export function CommandPalette({ onClose, onFileSelect }: CommandPaletteProps) {
+export function CommandPalette({ onClose, onFileSelect }: Readonly<CommandPaletteProps>) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -108,13 +108,15 @@ export function CommandPalette({ onClose, onFileSelect }: CommandPaletteProps) {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, [filteredCommands, selectedIndex]);
 
   return (
     <>
-      <div
+      <button
+        type="button"
+        aria-label="Close command palette"
         className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
         onClick={onClose}
       />
@@ -132,7 +134,8 @@ export function CommandPalette({ onClose, onFileSelect }: CommandPaletteProps) {
         />
         <div className="max-h-96 overflow-y-auto">
           {filteredCommands.map((cmd, index) => (
-            <div
+            <button
+              type="button"
               key={cmd.id}
               className={`command-item ${selectedIndex === index ? "selected" : ""}`}
               onClick={cmd.action}
@@ -145,7 +148,7 @@ export function CommandPalette({ onClose, onFileSelect }: CommandPaletteProps) {
               {selectedIndex === index && (
                 <kbd className="px-2 py-1 bg-muted rounded text-xs">↵</kbd>
               )}
-            </div>
+            </button>
           ))}
         </div>
       </div>

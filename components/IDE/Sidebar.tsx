@@ -8,7 +8,7 @@ interface SidebarProps {
   onFileClick: (file: FileType) => void;
 }
 
-export function Sidebar({ activeFile, onFileClick }: SidebarProps) {
+export function Sidebar({ activeFile, onFileClick }: Readonly<SidebarProps>) {
   const [expandedFolders, setExpandedFolders] = useState<string[]>(["root", "src"]);
 
   const toggleFolder = (folder: string) => {
@@ -36,25 +36,27 @@ export function Sidebar({ activeFile, onFileClick }: SidebarProps) {
       
       <div className="flex-1 overflow-y-auto">
         <div className="py-2">
-          <div
+          <button
+            type="button"
             className="file-tree-folder"
             onClick={() => toggleFolder("root")}
           >
             <span>{expandedFolders.includes("root") ? "▼" : "▶"}</span>
             <span>portfolio</span>
-          </div>
+          </button>
           
           {expandedFolders.includes("root") && (
             <div className="ml-4">
               {files.map((file) => (
-                <div
+                <button
+                  type="button"
                   key={file.type}
                   className={`file-tree-item ${activeFile === file.type ? "active" : ""}`}
                   onClick={() => onFileClick(file.type)}
                 >
                   <span>{file.icon}</span>
                   <span className="font-mono text-xs">{file.name}</span>
-                </div>
+                </button>
               ))}
             </div>
           )}

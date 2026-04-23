@@ -7,16 +7,20 @@ export interface TistoryPost {
   thumbnail?: string;
 }
 
+export function toSafeString(value: unknown): string {
+  return typeof value === "string" || typeof value === "number" ? String(value) : "";
+}
+
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   try {
     // RSS2JSON API 사용 (캐시 무력화를 위한 타임스탬프 추가)
-    const timestamp = new Date().getTime();
-    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://exit0.tistory.com/rss?_t=${timestamp}`)}`;
-    
+    const cacheBustUrl = `https://exit0.tistory.com/rss?_t=${Date.now()}`;
+    const RSS_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(cacheBustUrl)}`;
+
     console.log("Fetching RSS via RSS2JSON:", RSS_URL);
-    
+
     const response = await fetch(RSS_URL, {
-      cache: "no-store"
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -32,17 +36,17 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
       return [];
     }
     
-    if (!data || !data.items) {
+    if (!data?.items) {
       console.error("Invalid RSS response");
       return [];
     }
-    
+
     const posts = parseRSSJson(data.items);
-    
+
     if (posts.length === 0) {
       console.warn("No posts parsed from RSS");
     }
-    
+
     return posts;
   } catch (error) {
     console.error("Error fetching Tistory posts:", error);
@@ -50,7 +54,7 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
   }
 }
 
-function parseRSSJson(items: unknown[]): TistoryPost[] {
+export function parseRSSJson(items: unknown[]): TistoryPost[] {
   const posts: TistoryPost[] = [];
   
   try {
@@ -61,25 +65,25 @@ function parseRSSJson(items: unknown[]): TistoryPost[] {
       const itemObj = item as Record<string, unknown>;
       
       // RSS2JSON에서 제공하는 데이터 구조에 맞게 파싱
-      const title = String(itemObj.title || "");
-      const link = String(itemObj.link || "");
-      const description = String(itemObj.description || itemObj.content || "");
-      const pubDate = String(itemObj.pubDate || "");
+      const title = toSafeString(itemObj.title);
+      const link = toSafeString(itemObj.link);
+      const description = toSafeString(itemObj.description) || toSafeString(itemObj.content);
+      const pubDate = toSafeString(itemObj.pubDate);
       const categories = itemObj.categories as string[] | undefined;
-      const category = categories && categories.length > 0 ? categories[0] : undefined;
+      const category = Array.isArray(categories) && categories.length > 0 ? categories[0] : undefined;
 
       // 썸네일 이미지 추출 (description에서 첫 번째 img 태그)
-      const imgMatch = description.match(/<img[^>]+src="([^">]+)"/);
+      const imgMatch = /<img[^>]+src="([^">]+)"/i.exec(description);
       const thumbnail = imgMatch ? imgMatch[1] : undefined;
 
       // HTML 태그 제거하고 텍스트만 추출
       let cleanDescription = description
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&amp;/g, "&")
-        .replace(/&nbsp;/g, " ");
+        .replaceAll("&quot;", '"')
+        .replaceAll("&#39;", "'")
+        .replaceAll("&lt;", "<")
+        .replaceAll("&gt;", ">")
+        .replaceAll("&amp;", "&")
+        .replaceAll("&nbsp;", " ");
 
       // HTML 태그 제거
       cleanDescription = cleanDescription
@@ -110,12 +114,12 @@ function parseRSSJson(items: unknown[]): TistoryPost[] {
   return posts;
 }
 
-function decodeHTML(html: string): string {
+export function decodeHTML(html: string): string {
   return html
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, " ");
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&#39;", "'")
+    .replaceAll("&nbsp;", " ");
 }

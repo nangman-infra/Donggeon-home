@@ -2,13 +2,51 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 export default function Home() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
-  
+
   const introText = "$ whoami\n> Cloud Engineer & DevOps Enthusiast";
+  const stats = [
+    { id: "projects", label: "Projects", value: "06+" },
+    { id: "certifications", label: "Certifications", value: "05+" },
+    { id: "year-started", label: "Year Started", value: "2021" },
+    { id: "status", label: "Status", value: "Learning" },
+  ];
+  const projectSummaries = [
+    {
+      name: "Budgetly",
+      desc: "Azure OCR 기반 조직 예산 관리 PWA",
+      tech: ["Vue.js", "AWS EC2"],
+      link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
+    },
+    {
+      name: "Federated Learning",
+      desc: "ADM & BWA 알고리즘 연합학습 최적화",
+      tech: ["Python", "PyTorch", "Docker"],
+      link: "https://github.com/Hanbat-IoT/Lab2",
+    },
+    {
+      name: "Dev Card Hunter",
+      desc: "개발자 학습 게이미피케이션 시스템",
+      tech: ["JavaScript", "Chrome Extension"],
+      link: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
+    },
+  ];
+  const skills = [
+    { category: "Cloud", items: ["AWS", "NCP"] },
+    { category: "Container", items: ["Docker", "Kubernetes", "ECS", "EKS"] },
+    { category: "IaC", items: ["Terraform", "Jenkins", "GitHub Actions"] },
+    { category: "Monitoring", items: ["Prometheus", "Grafana"] },
+    { category: "Languages", items: ["Python", "Bash", "Node.js", "TypeScript"] },
+  ];
+  const paletteItems = [
+    { id: "email", icon: "📧", label: "Email", desc: "gunni6112@gmail.com" },
+    { id: "github", icon: "💻", label: "GitHub", desc: "github.com/whitejbb" },
+    { id: "linkedin", icon: "🔗", label: "LinkedIn", desc: "Connect with me" },
+    { id: "blog", icon: "📝", label: "Blog", desc: "exit0.tistory.com" },
+  ];
 
   useEffect(() => {
     let index = 0;
@@ -35,38 +73,9 @@ export default function Home() {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, []);
-
-  const projects = [
-    {
-      name: "Budgetly",
-      desc: "Azure OCR 기반 조직 예산 관리 PWA",
-      tech: ["Vue.js", "AWS EC2"],
-      link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
-    },
-    {
-      name: "Federated Learning",
-      desc: "ADM & BWA 알고리즘 연합학습 최적화",
-      tech: ["Python", "PyTorch", "Docker"],
-      link: "https://github.com/Hanbat-IoT/Lab2",
-    },
-    {
-      name: "Dev Card Hunter",
-      desc: "개발자 학습 게이미피케이션 시스템",
-      tech: ["JavaScript", "Chrome Extension"],
-      link: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
-    },
-  ];
-
-  const skills = [
-    { category: "Cloud", items: ["AWS", "NCP"] },
-    { category: "Container", items: ["Docker", "Kubernetes", "ECS", "EKS"] },
-    { category: "IaC", items: ["Terraform", "Jenkins", "GitHub Actions"] },
-    { category: "Monitoring", items: ["Prometheus", "Grafana"] },
-    { category: "Languages", items: ["Python", "Bash", "Node.js", "TypeScript"] },
-  ];
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
@@ -98,13 +107,8 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32"
         >
-          {[
-            { label: "Projects", value: "06+" },
-            { label: "Certifications", value: "05+" },
-            { label: "Year Started", value: "2021" },
-            { label: "Status", value: "Learning" },
-          ].map((stat, i) => (
-            <div key={i} className="p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
+          {stats.map((stat) => (
+            <div key={stat.id} className="p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
               <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
               <div className="text-sm text-muted-foreground font-mono">{stat.label}</div>
             </div>
@@ -122,8 +126,8 @@ export default function Home() {
             <span className="text-accent font-mono">$</span> cat skills.json
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            {skills.map((skill, i) => (
-              <div key={i} className="p-6 bg-muted/30 border border-border rounded-xl">
+            {skills.map((skill) => (
+              <div key={skill.category} className="p-6 bg-muted/30 border border-border rounded-xl">
                 <div className="text-sm font-mono text-accent mb-4">{skill.category}</div>
                 <div className="flex flex-wrap gap-2">
                   {skill.items.map((item) => (
@@ -151,9 +155,9 @@ export default function Home() {
             <span className="text-accent font-mono">$</span> ls projects/
           </h2>
           <div className="space-y-4">
-            {projects.map((project, i) => (
+            {projectSummaries.map((project) => (
               <a
-                key={i}
+                key={project.name}
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -220,7 +224,9 @@ export default function Home() {
       {/* Command Palette */}
       {commandPaletteOpen && (
         <>
-          <div
+          <button
+            type="button"
+            aria-label="Close command palette"
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
             onClick={() => setCommandPaletteOpen(false)}
           />
@@ -232,13 +238,8 @@ export default function Home() {
               autoFocus
             />
             <div className="p-2">
-              {[
-                { icon: "📧", label: "Email", desc: "gunni6112@gmail.com" },
-                { icon: "💻", label: "GitHub", desc: "github.com/whitejbb" },
-                { icon: "🔗", label: "LinkedIn", desc: "Connect with me" },
-                { icon: "📝", label: "Blog", desc: "exit0.tistory.com" },
-              ].map((item, i) => (
-                <div key={i} className="command-item">
+              {paletteItems.map((item) => (
+                <div key={item.id} className="command-item">
                   <span className="text-xl">{item.icon}</span>
                   <div className="flex-1">
                     <div className="text-sm font-medium">{item.label}</div>

@@ -30,6 +30,7 @@ export function ContactContent() {
       setStatus("success");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
+      console.error("Failed to send contact form", error);
       setStatus("error");
     }
   };
@@ -38,7 +39,7 @@ export function ContactContent() {
     <div className="font-mono text-sm">
       <div className="flex items-center gap-2 text-muted-foreground mb-6">
         <span className="line-numbers">1</span>
-        <span className="text-accent">//</span>
+        <span className="text-accent">{"//"}</span>
         <span>contact.tsx</span>
       </div>
 
@@ -101,8 +102,9 @@ export function ContactContent() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs text-muted-foreground mb-2">NAME</label>
+            <label htmlFor="contact-name" className="block text-xs text-muted-foreground mb-2">NAME</label>
             <input
+              id="contact-name"
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -113,8 +115,9 @@ export function ContactContent() {
           </div>
           
           <div>
-            <label className="block text-xs text-muted-foreground mb-2">EMAIL</label>
+            <label htmlFor="contact-email" className="block text-xs text-muted-foreground mb-2">EMAIL</label>
             <input
+              id="contact-email"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -125,8 +128,9 @@ export function ContactContent() {
           </div>
           
           <div>
-            <label className="block text-xs text-muted-foreground mb-2">MESSAGE</label>
+            <label htmlFor="contact-message" className="block text-xs text-muted-foreground mb-2">MESSAGE</label>
             <textarea
+              id="contact-message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               required

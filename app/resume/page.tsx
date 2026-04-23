@@ -3,6 +3,19 @@
 import { motion } from "framer-motion";
 
 export default function ResumePage() {
+  const skillGroups = [
+    { category: "Frontend", skills: ["Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "Vanilla JavaScript"] },
+    { category: "Backend", skills: ["Node.js", "Flask", "MongoDB"] },
+    { category: "Tools", skills: ["Git", "GitHub", "VS Code"] },
+  ];
+  const certifications = [
+    { name: "AWS Certified Cloud Practitioner", year: "2025" },
+    { name: "NAVER Cloud Platform Certified Professional", year: "2026" },
+    { name: "NAVER Cloud Platform Certified Associate", year: "2025" },
+    { name: "TOEIC 860점", year: "2024" },
+    { name: "정보처리기능사", year: "2020" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
       <div className="max-w-6xl mx-auto px-6">
@@ -34,12 +47,8 @@ export default function ResumePage() {
               <span className="text-accent font-mono">#</span> Technical Skills
             </h2>
             <div className="grid md:grid-cols-3 gap-4">
-              {[
-                { category: "Frontend", skills: ["Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "Vanilla JavaScript"] },
-                { category: "Backend", skills: ["Node.js", "Flask", "MongoDB"] },
-                { category: "Tools", skills: ["Git", "GitHub", "VS Code"] },
-              ].map((group, i) => (
-                <div key={i} className="p-4 bg-muted/30 border border-border rounded-xl">
+              {skillGroups.map((group) => (
+                <div key={group.category} className="p-4 bg-muted/30 border border-border rounded-xl">
                   <div className="text-sm font-mono text-accent mb-3">{group.category}</div>
                   <div className="space-y-2">
                     {group.skills.map((skill) => (
@@ -57,14 +66,8 @@ export default function ResumePage() {
               <span className="text-accent font-mono">#</span> Certifications
             </h2>
             <div className="space-y-3">
-              {[
-                { name: "AWS Certified Cloud Practitioner", year: "2025" },
-                { name: "NAVER Cloud Platform Certified Professional", year: "2026" },
-                { name: "NAVER Cloud Platform Certified Associate", year: "2025" },
-                { name: "TOEIC 860점", year: "2024" },
-                { name: "정보처리기능사", year: "2020" },
-              ].map((cert, i) => (
-                <div key={i} className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
+              {certifications.map((cert) => (
+                <div key={cert.name} className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
                   <span className="font-mono text-sm">{cert.name}</span>
                   <span className="text-sm text-muted-foreground font-mono">{cert.year}</span>
                 </div>

@@ -3,13 +3,13 @@ export function SkillsContent() {
     <div className="font-mono text-sm">
       <div className="flex items-center gap-2 text-muted-foreground mb-6">
         <span className="line-numbers">1</span>
-        <span className="text-accent">//</span>
+        <span className="text-accent">{"//"}</span>
         <span>skills.config.js</span>
       </div>
 
       <pre className="code-block">
         <code>
-          <span className="syntax-comment">// skills.config.js</span>{"\n"}
+          <span className="syntax-comment">{"// skills.config.js"}</span>{"\n"}
           <span className="syntax-keyword">module.exports</span> = {"{"}{"\n"}
           {"  "}<span className="syntax-property">cloudPlatforms</span>: [{"\n"}
           {"    "}<span className="syntax-string">"AWS"</span>,{"\n"}

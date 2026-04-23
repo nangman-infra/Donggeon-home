@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function ReadmeContent() {
-  const [displayedText, setDisplayedText] = useState("");
-  const fullText = `$ whoami
+const fullText = `$ whoami
 > 동건 (Donggeon)
 
 $ cat introduction.txt
@@ -25,6 +23,9 @@ On branch main
 Your branch is up to date with 'origin/main'.
 
 nothing to commit, working tree clean`;
+
+export function ReadmeContent() {
+  const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
     let index = 0;

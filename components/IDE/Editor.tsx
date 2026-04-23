@@ -33,7 +33,7 @@ const fileNames: Record<FileType, string> = {
   contact: "contact.tsx",
 };
 
-export function Editor({ activeFile, openTabs, onTabClick, onTabClose }: EditorProps) {
+export function Editor({ activeFile, openTabs, onTabClick, onTabClose }: Readonly<EditorProps>) {
   const renderContent = () => {
     switch (activeFile) {
       case "readme":
@@ -60,11 +60,17 @@ export function Editor({ activeFile, openTabs, onTabClick, onTabClose }: EditorP
           <div
             key={tab}
             className={`editor-tab ${activeFile === tab ? "active" : ""}`}
-            onClick={() => onTabClick(tab)}
           >
-            <span>{fileIcons[tab]}</span>
-            <span className="font-mono text-xs">{fileNames[tab]}</span>
             <button
+              type="button"
+              className="flex items-center"
+              onClick={() => onTabClick(tab)}
+            >
+              <span>{fileIcons[tab]}</span>
+              <span className="font-mono text-xs">{fileNames[tab]}</span>
+            </button>
+            <button
+              type="button"
               className="ml-2 hover:bg-muted/50 rounded px-1"
               onClick={(e) => {
                 e.stopPropagation();

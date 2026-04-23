@@ -3,7 +3,7 @@ export function ExperienceContent() {
     <div className="font-mono text-sm">
       <div className="flex items-center gap-2 text-muted-foreground mb-6">
         <span className="line-numbers">1</span>
-        <span className="text-accent">//</span>
+        <span className="text-accent">{"//"}</span>
         <span>experience.ts</span>
       </div>
 
