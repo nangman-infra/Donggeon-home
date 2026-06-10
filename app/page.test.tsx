@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import emailjs from "@emailjs/browser";
 
@@ -14,6 +14,7 @@ import { Header } from "@/components/layout/Header";
 
 describe("portfolio pages", () => {
   afterEach(() => {
+    cleanup();
     vi.clearAllMocks();
     vi.unstubAllGlobals();
   });
@@ -21,11 +22,11 @@ describe("portfolio pages", () => {
   it("renders the home page case studies and core calls to action", () => {
     render(React.createElement(Home));
 
-    expect(screen.getByText("Budgetly")).toBeInTheDocument();
-    expect(screen.getByText("Federated Learning")).toBeInTheDocument();
-    expect(screen.getByText("Dev Card Hunter")).toBeInTheDocument();
+    expect(screen.getAllByText("Budgetly").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Federated Learning").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Dev Card Hunter").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("GitHub").length).toBeGreaterThanOrEqual(3);
-    expect(screen.getByText("AWS EC2")).toBeInTheDocument();
+    expect(screen.getAllByText("AWS EC2").length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders about and resume evidence sections", () => {
@@ -33,7 +34,7 @@ describe("portfolio pages", () => {
 
     expect(screen.getByText("Cloud Platforms")).toBeInTheDocument();
     expect(screen.getByText("Container & DevOps")).toBeInTheDocument();
-    expect(screen.getByText("Model Evaluation")).toBeInTheDocument();
+    expect(screen.getAllByText("Model Evaluation").length).toBeGreaterThanOrEqual(1);
 
     rerender(React.createElement(ResumePage));
 
@@ -45,10 +46,10 @@ describe("portfolio pages", () => {
   it("renders the full projects index", () => {
     render(React.createElement(ProjectsPage));
 
-    expect(screen.getByText("Budgetly")).toBeInTheDocument();
+    expect(screen.getAllByText("Budgetly").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Drone Delivery System")).toBeInTheDocument();
     expect(screen.getByText("Heterogeneous Federated Learning Testbed")).toBeInTheDocument();
-    expect(screen.getByText("Parrot Olympe SDK")).toBeInTheDocument();
+    expect(screen.getAllByText("Parrot Olympe SDK").length).toBeGreaterThanOrEqual(1);
   });
 
   it("submits the contact form successfully", async () => {
@@ -67,7 +68,7 @@ describe("portfolio pages", () => {
     fireEvent.change(name!, { target: { value: "Donggeon" } });
     fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
     fireEvent.change(message!, { target: { value: "hello" } });
-    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(container.querySelector<HTMLButtonElement>('button[type="submit"]')!);
 
     await waitFor(() => {
       expect(name).toHaveValue("");
@@ -87,7 +88,7 @@ describe("portfolio pages", () => {
     fireEvent.change(name!, { target: { value: "Donggeon" } });
     fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
     fireEvent.change(message!, { target: { value: "hello" } });
-    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(container.querySelector<HTMLButtonElement>('button[type="submit"]')!);
 
     await waitFor(() => {
       expect(container.querySelector(".form-status--error")).not.toBeNull();
@@ -103,16 +104,18 @@ describe("portfolio pages", () => {
       }),
     );
 
-    const { rerender } = render(React.createElement(BlogPage));
+    const blogRender = render(React.createElement(BlogPage));
 
     expect(screen.getByRole("link", { name: /Tistory/i })).toHaveAttribute("href", "https://exit0.tistory.com");
 
+    blogRender.unmount();
     const { container } = render(React.createElement(Header));
     expect(container.querySelector('a[href="/"]')).not.toBeNull();
-    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(container.querySelector("button")!);
     expect(container.querySelectorAll('a[href="/projects"]').length).toBeGreaterThanOrEqual(1);
 
-    rerender(React.createElement(Footer));
+    cleanup();
+    render(React.createElement(Footer));
     expect(screen.getByText("GitHub")).toBeInTheDocument();
     expect(screen.getByText("LinkedIn")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();

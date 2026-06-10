@@ -1,6 +1,6 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { BlogClient } from "@/app/blog/BlogClient";
 import { fetchTistoryPosts } from "@/lib/tistory";
@@ -14,6 +14,11 @@ vi.mock("@/lib/tistory", async () => {
 });
 
 describe("blog client", () => {
+  afterEach(() => {
+    cleanup();
+    vi.clearAllMocks();
+  });
+
   it("renders fetched posts", async () => {
     vi.mocked(fetchTistoryPosts).mockResolvedValue([
       {
@@ -31,8 +36,8 @@ describe("blog client", () => {
     await waitFor(() => {
       expect(screen.getByText("Test Post")).toBeInTheDocument();
     });
-    expect(screen.getByText("Short description")).toBeInTheDocument();
-    expect(screen.getByText("DevOps")).toBeInTheDocument();
+    expect(screen.getAllByText("Short description").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("DevOps").length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders an empty state when there are no posts", async () => {
