@@ -40,6 +40,23 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov"],
       reportsDirectory: "./coverage",
+      include: [
+        "app/**/*.{ts,tsx}",
+        "components/layout/**/*.{ts,tsx}",
+        "lib/**/*.{ts,tsx}",
+      ],
+      exclude: [
+        "app/**/*.test.{ts,tsx}",
+        "app/layout.tsx",
+        "components/**/*.test.{ts,tsx}",
+        "lib/**/*.test.{ts,tsx}",
+      ],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
+      },
     },
   },
 });

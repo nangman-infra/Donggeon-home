@@ -1,32 +1,120 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import emailjs from "@emailjs/browser";
 
 import AboutPage from "@/app/about/page";
+import BlogPage from "@/app/blog/page";
+import ContactPage from "@/app/contact/page";
 import Home from "@/app/page";
+import ProjectsPage from "@/app/projects/page";
 import ResumePage from "@/app/resume/page";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
 
-describe("donggeon main pages", () => {
-  it("renders the AI product engineering home page", () => {
+describe("portfolio pages", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it("renders the home page case studies and core calls to action", () => {
     render(React.createElement(Home));
 
-    expect(screen.getByText("AI 기능을 실제 업무 흐름으로 연결하는 엔지니어.")).toBeInTheDocument();
-    expect(screen.getByText("기술 목록보다 문제와 시스템 설계를 먼저 보여줍니다.")).toBeInTheDocument();
     expect(screen.getByText("Budgetly")).toBeInTheDocument();
     expect(screen.getByText("Federated Learning")).toBeInTheDocument();
     expect(screen.getByText("Dev Card Hunter")).toBeInTheDocument();
+    expect(screen.getAllByText("GitHub").length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByText("AWS EC2")).toBeInTheDocument();
   });
 
-  it("renders about and resume pages", () => {
+  it("renders about and resume evidence sections", () => {
     const { rerender } = render(React.createElement(AboutPage));
 
-    expect(screen.getByText("AI 기능을 실제 제품 흐름으로 연결하는 엔지니어를 목표로 합니다.")).toBeInTheDocument();
     expect(screen.getByText("Cloud Platforms")).toBeInTheDocument();
+    expect(screen.getByText("Container & DevOps")).toBeInTheDocument();
+    expect(screen.getByText("Model Evaluation")).toBeInTheDocument();
 
     rerender(React.createElement(ResumePage));
 
-    expect(screen.getByText("AI 제품 엔지니어링 역할에 맞춘 역량 요약")).toBeInTheDocument();
     expect(screen.getByText("Technical Skills")).toBeInTheDocument();
     expect(screen.getByText("AWS Certified Cloud Practitioner")).toBeInTheDocument();
+    expect(screen.getByText("NAVER Cloud Platform Certified Associate")).toBeInTheDocument();
+  });
+
+  it("renders the full projects index", () => {
+    render(React.createElement(ProjectsPage));
+
+    expect(screen.getByText("Budgetly")).toBeInTheDocument();
+    expect(screen.getByText("Drone Delivery System")).toBeInTheDocument();
+    expect(screen.getByText("Heterogeneous Federated Learning Testbed")).toBeInTheDocument();
+    expect(screen.getByText("Parrot Olympe SDK")).toBeInTheDocument();
+  });
+
+  it("submits the contact form successfully", async () => {
+    vi.mocked(emailjs.send).mockResolvedValueOnce({ status: 200 });
+
+    const { container } = render(React.createElement(ContactPage));
+
+    const name = container.querySelector<HTMLInputElement>('input[name="name"]');
+    const email = container.querySelector<HTMLInputElement>('input[name="email"]');
+    const message = container.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+
+    expect(name).not.toBeNull();
+    expect(email).not.toBeNull();
+    expect(message).not.toBeNull();
+
+    fireEvent.change(name!, { target: { value: "Donggeon" } });
+    fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
+    fireEvent.change(message!, { target: { value: "hello" } });
+    fireEvent.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(name).toHaveValue("");
+      expect(email).toHaveValue("");
+      expect(message).toHaveValue("");
+    });
+  });
+
+  it("renders the contact form error state", async () => {
+    vi.mocked(emailjs.send).mockRejectedValueOnce(new Error("mail failed"));
+
+    const { container } = render(React.createElement(ContactPage));
+    const name = container.querySelector<HTMLInputElement>('input[name="name"]');
+    const email = container.querySelector<HTMLInputElement>('input[name="email"]');
+    const message = container.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+
+    fireEvent.change(name!, { target: { value: "Donggeon" } });
+    fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
+    fireEvent.change(message!, { target: { value: "hello" } });
+    fireEvent.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(container.querySelector(".form-status--error")).not.toBeNull();
+    });
+  });
+
+  it("renders blog, header, and footer navigation surfaces", () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ status: "ok", items: [] }),
+      }),
+    );
+
+    const { rerender } = render(React.createElement(BlogPage));
+
+    expect(screen.getByRole("link", { name: /Tistory/i })).toHaveAttribute("href", "https://exit0.tistory.com");
+
+    const { container } = render(React.createElement(Header));
+    expect(container.querySelector('a[href="/"]')).not.toBeNull();
+    fireEvent.click(screen.getByRole("button"));
+    expect(container.querySelectorAll('a[href="/projects"]').length).toBeGreaterThanOrEqual(1);
+
+    rerender(React.createElement(Footer));
+    expect(screen.getByText("GitHub")).toBeInTheDocument();
+    expect(screen.getByText("LinkedIn")).toBeInTheDocument();
+    expect(screen.getByText("Email")).toBeInTheDocument();
   });
 });

@@ -34,8 +34,12 @@ vi.mock("next/link", () => ({
     React.createElement("a", { href, ...props }, children),
 }));
 
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
+
 vi.mock("@emailjs/browser", () => ({
   default: {
-    send: vi.fn().mockResolvedValue(undefined),
+    send: vi.fn().mockResolvedValue({ status: 200 }),
   },
 }));

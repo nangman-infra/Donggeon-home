@@ -17,9 +17,9 @@ describe("blog client", () => {
   it("renders fetched posts", async () => {
     vi.mocked(fetchTistoryPosts).mockResolvedValue([
       {
-        title: "테스트 포스트",
+        title: "Test Post",
         link: "https://example.com/post",
-        description: "설명",
+        description: "Short description",
         pubDate: "2026-04-24T00:00:00.000Z",
         category: "DevOps",
         thumbnail: "https://example.com/thumb.png",
@@ -29,17 +29,30 @@ describe("blog client", () => {
     render(React.createElement(BlogClient, { posts: [] }));
 
     await waitFor(() => {
-      expect(screen.getByText("테스트 포스트")).toBeInTheDocument();
+      expect(screen.getByText("Test Post")).toBeInTheDocument();
     });
+    expect(screen.getByText("Short description")).toBeInTheDocument();
+    expect(screen.getByText("DevOps")).toBeInTheDocument();
   });
 
-  it("renders error state when fetch fails", async () => {
+  it("renders an empty state when there are no posts", async () => {
+    vi.mocked(fetchTistoryPosts).mockResolvedValue([]);
+
+    render(React.createElement(BlogClient, { posts: [] }));
+
+    await waitFor(() => {
+      expect(fetchTistoryPosts).toHaveBeenCalled();
+    });
+    expect(screen.getByRole("link", { name: /Tistory/i })).toHaveAttribute("href", "https://exit0.tistory.com");
+  });
+
+  it("renders a fallback link when fetch fails", async () => {
     vi.mocked(fetchTistoryPosts).mockRejectedValueOnce(new Error("boom"));
 
     render(React.createElement(BlogClient, { posts: [] }));
 
     await waitFor(() => {
-      expect(screen.getByText("블로그 글을 불러오지 못했습니다.")).toBeInTheDocument();
+      expect(screen.getByText(/exit0\.tistory\.com/i)).toBeInTheDocument();
     });
   });
 });
