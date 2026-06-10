@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import "./globals.css";
-import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "임동건 | AI 제품 엔지니어 포트폴리오",
-  description: "프로덕션 수준의 AI 시스템, 워크플로우, 클라우드 배포 경험을 보여주는 포트폴리오.",
+  title: "임동건 | AI Product Engineer Portfolio",
+  description: "AI 기능을 실제 제품 흐름과 운영 가능한 시스템으로 연결하는 포트폴리오입니다.",
 };
 
 export default function RootLayout({
@@ -31,8 +31,10 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Header />
-        <main>{children}</main>
-        <Footer />
+        <div className="site-frame">
+          <main>{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

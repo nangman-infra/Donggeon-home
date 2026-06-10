@@ -14,12 +14,9 @@
     --secondary-foreground: 222 35% 8%;
     --muted: 218 18% 92%;
     --muted-foreground: 221 12% 40%;
-    --accent: 258 55% 48%;
+    --accent: 14 78% 54%;
     --accent-foreground: 0 0% 100%;
     --border: 220 15% 86%;
-    --sidebar: 48 33% 98%;
-    --editor: 222 35% 8%;
-    --tab: 220 18% 94%;
   }
 
   * {
@@ -35,8 +32,8 @@
   body {
     min-height: 100vh;
     background:
-      linear-gradient(180deg, rgba(248, 247, 243, 0.96), rgba(248, 247, 243, 1)),
-      radial-gradient(circle at 15% 8%, rgba(25, 140, 121, 0.12), transparent 30%);
+      linear-gradient(135deg, rgba(247, 246, 241, 0.96), rgba(255, 255, 255, 0.98) 42%, rgba(238, 245, 242, 0.96)),
+      radial-gradient(circle at 88% 12%, rgba(25, 140, 121, 0.12), transparent 28%);
   }
 
   a,
@@ -50,83 +47,97 @@
 }
 
 @layer components {
-  .fixed.top-0 {
-    @apply border-b border-black/10 bg-background/85 backdrop-blur-xl;
+  .site-frame {
+    @apply min-h-screen lg:pl-64;
   }
 
-  .portfolio-page {
-    @apply mx-auto max-w-7xl px-4 pb-10 pt-28 sm:px-6 lg:px-8;
+  .site-frame main {
+    @apply min-h-screen;
   }
 
+  .site-sidebar {
+    @apply fixed left-0 top-0 z-50 hidden h-screen w-64 flex-col border-r border-black/10 bg-[#f7f6f1]/90 px-4 py-5 shadow-2xl shadow-black/[0.04] backdrop-blur-xl lg:flex;
+  }
+
+  .sidebar-brand {
+    @apply flex items-center gap-3 rounded-lg border border-black/10 bg-white px-3 py-2.5 shadow-sm transition hover:border-primary/50;
+  }
+
+  .sidebar-brand__mark {
+    @apply grid h-10 w-10 place-items-center rounded-md bg-foreground font-mono text-xs font-semibold text-white;
+  }
+
+  .sidebar-brand strong {
+    @apply block text-sm font-semibold text-foreground;
+  }
+
+  .sidebar-brand small {
+    @apply mt-1 block text-xs text-muted-foreground;
+  }
+
+  .sidebar-nav {
+    @apply mt-8 grid gap-1.5;
+  }
+
+  .sidebar-nav__item {
+    @apply grid min-h-10 grid-cols-[2rem_1fr] items-center rounded-md px-3 text-[0.82rem] font-semibold text-muted-foreground transition hover:bg-white hover:text-foreground;
+  }
+
+  .sidebar-nav__item span {
+    @apply font-mono text-xs text-muted-foreground/70;
+  }
+
+  .sidebar-nav__item--active {
+    @apply bg-foreground text-white shadow-lg shadow-black/10;
+  }
+
+  .sidebar-nav__item--active span {
+    @apply text-white/55;
+  }
+
+  .sidebar-status {
+    @apply mt-auto rounded-lg border border-black/10 bg-white p-3.5;
+  }
+
+  .sidebar-status span {
+    @apply block text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .sidebar-status strong {
+    @apply mt-2 block text-sm leading-6 text-foreground;
+  }
+
+  .mobile-header {
+    @apply fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-black/10 bg-background/90 px-4 py-3 backdrop-blur-xl lg:hidden;
+  }
+
+  .mobile-brand {
+    @apply grid h-10 w-10 place-items-center rounded-md bg-foreground font-mono text-sm font-semibold text-white;
+  }
+
+  .mobile-menu-button {
+    @apply min-h-10 rounded-md border border-black/10 bg-white px-4 text-sm font-semibold text-foreground;
+  }
+
+  .mobile-menu {
+    @apply absolute left-4 right-4 top-[4.25rem] grid gap-1 rounded-lg border border-black/10 bg-white p-2 shadow-xl shadow-black/[0.08];
+  }
+
+  .mobile-menu__item {
+    @apply rounded-md px-3 py-3 text-sm font-semibold text-muted-foreground;
+  }
+
+  .mobile-menu__item--active {
+    @apply bg-foreground text-white;
+  }
+
+  .portfolio-page,
   .subpage-shell {
-    @apply mx-auto max-w-7xl px-4 pb-12 pt-32 sm:px-6 lg:px-8;
-  }
-
-  .subpage-hero {
-    @apply mb-12 max-w-4xl;
-  }
-
-  .subpage-hero--row {
-    @apply grid max-w-none gap-6 lg:grid-cols-[1fr_auto] lg:items-end;
-  }
-
-  .subpage-hero h1 {
-    @apply mt-4 text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl;
-  }
-
-  .subpage-hero p:not(.section-kicker) {
-    @apply mt-5 max-w-3xl text-lg leading-8 text-muted-foreground;
-  }
-
-  .subpage-grid {
-    @apply grid gap-4 md:grid-cols-3;
-  }
-
-  .tone-card,
-  .detail-panel,
-  .project-row,
-  .contact-card,
-  .contact-form,
-  .state-panel,
-  .blog-row {
-    @apply rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04];
-  }
-
-  .tone-card {
-    @apply p-5 sm:p-6;
-  }
-
-  .tone-card h2,
-  .detail-panel h2 {
-    @apply text-xl font-semibold text-foreground;
-  }
-
-  .tone-card p,
-  .detail-panel p:not(.section-kicker),
-  .project-row p,
-  .state-panel p,
-  .blog-row p {
-    @apply mt-3 text-sm leading-7 text-muted-foreground;
-  }
-
-  .detail-panel {
-    @apply p-5 sm:p-6;
-  }
-
-  .focus-list {
-    @apply grid gap-3 md:grid-cols-2;
-  }
-
-  .focus-list--compact {
-    @apply mt-5 md:grid-cols-1;
-  }
-
-  .focus-list div {
-    @apply rounded-md border border-black/10 bg-secondary/55 p-4 text-sm font-medium leading-6 text-foreground/75;
+    @apply mx-auto max-w-6xl px-4 pb-10 pt-24 sm:px-6 lg:px-8 lg:pt-10;
   }
 
   .hero-section {
-    @apply grid min-h-[calc(100vh-7rem)] items-center gap-8 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:py-16;
+    @apply grid items-start gap-6 pb-10 pt-3 lg:grid-cols-[1.08fr_0.92fr] lg:pt-8;
   }
 
   .hero-copy {
@@ -138,15 +149,22 @@
   }
 
   .hero-copy h1 {
-    @apply mt-5 max-w-5xl text-5xl font-semibold leading-[1.02] text-foreground sm:text-6xl lg:text-7xl;
+    @apply mt-3 max-w-4xl text-3xl font-semibold leading-tight text-foreground sm:text-4xl lg:text-[2.75rem];
   }
 
-  .hero-summary {
-    @apply mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl;
+  .subpage-hero h1 {
+    @apply mt-2 max-w-3xl text-2xl font-semibold leading-tight text-foreground sm:text-3xl lg:text-[2.15rem];
+  }
+
+  .hero-summary,
+  .subpage-hero p:not(.section-kicker),
+  .section-heading p:not(.section-kicker),
+  .closing-band p {
+    @apply mt-3 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base;
   }
 
   .hero-meta {
-    @apply mt-8 grid gap-2 border-l border-foreground/20 pl-4 text-sm font-medium text-foreground/75 sm:text-base;
+    @apply mt-6 grid gap-1.5 border-l border-foreground/20 pl-4 text-sm font-medium leading-6 text-foreground/75;
   }
 
   .expertise-list,
@@ -155,7 +173,7 @@
   }
 
   .expertise-list {
-    @apply mt-7;
+    @apply mt-6;
   }
 
   .expertise-list span,
@@ -165,7 +183,7 @@
 
   .hero-actions,
   .closing-actions {
-    @apply mt-8 flex flex-wrap gap-3;
+    @apply mt-6 flex flex-wrap gap-3;
   }
 
   .button-primary,
@@ -181,8 +199,24 @@
     @apply border border-black/10 bg-white text-foreground hover:border-black/25 hover:bg-secondary;
   }
 
+  .signal-panel,
+  .proof-strip,
+  .case-study,
+  .experience-card,
+  .stack-card,
+  .closing-band,
+  .detail-panel,
+  .tone-card,
+  .project-row,
+  .contact-card,
+  .contact-form,
+  .state-panel,
+  .blog-row {
+    @apply rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04];
+  }
+
   .signal-panel {
-    @apply rounded-lg border border-black/10 bg-white/80 p-5 shadow-2xl shadow-black/[0.06] backdrop-blur md:p-6;
+    @apply p-4 md:p-5;
   }
 
   .signal-panel__header {
@@ -193,25 +227,39 @@
     @apply text-xs font-bold uppercase tracking-[0.08em] text-foreground;
   }
 
-  .signal-panel p {
-    @apply mt-5 text-sm leading-7 text-muted-foreground;
+  .signal-panel p,
+  .case-grid p,
+  .project-row p,
+  .state-panel p,
+  .blog-row p,
+  .experience-card dd,
+  .detail-panel p:not(.section-kicker) {
+    @apply mt-3 text-sm leading-7 text-muted-foreground;
+  }
+
+  .case-grid p,
+  .project-row p,
+  .blog-row p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  .case-grid p,
+  .project-row p {
+    -webkit-line-clamp: 3;
+  }
+
+  .blog-row p {
+    -webkit-line-clamp: 2;
   }
 
   .system-map {
-    @apply my-6 grid gap-3 rounded-lg border border-black/10 bg-[#0d1117] p-4;
+    @apply my-5 grid gap-2.5 rounded-lg border border-black/10 bg-[#101318] p-3.5;
   }
 
   .system-node {
-    @apply relative rounded-md border border-white/10 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white/70;
-  }
-
-  .system-node::after {
-    content: "";
-    @apply absolute -bottom-3 left-6 h-3 w-px bg-white/20;
-  }
-
-  .system-node:last-child::after {
-    display: none;
+    @apply relative rounded-md border border-white/10 bg-white/[0.06] px-3 py-2.5 text-xs font-semibold text-white/70;
   }
 
   .system-node--primary {
@@ -219,11 +267,11 @@
   }
 
   .proof-strip {
-    @apply grid overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04] sm:grid-cols-2 lg:grid-cols-4;
+    @apply grid overflow-hidden sm:grid-cols-2 lg:grid-cols-4;
   }
 
   .proof-strip div {
-    @apply border-b border-black/10 p-5 sm:border-r lg:border-b-0;
+    @apply border-b border-black/10 p-4 sm:border-r lg:border-b-0;
   }
 
   .proof-strip div:last-child {
@@ -231,78 +279,88 @@
   }
 
   .proof-strip strong {
-    @apply block text-2xl font-semibold text-foreground;
+    @apply block text-xl font-semibold text-foreground;
   }
 
   .proof-strip span {
-    @apply mt-2 block text-sm leading-6 text-muted-foreground;
+    @apply mt-1.5 block text-sm leading-6 text-muted-foreground;
   }
 
   .section-block {
-    @apply py-16 sm:py-20;
+    @apply py-10 sm:py-14;
   }
 
   .section-heading {
-    @apply mb-8 max-w-3xl;
+    @apply mb-6 max-w-3xl;
   }
 
   .section-heading h2,
   .closing-band h2 {
-    @apply mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl;
+    @apply mt-2 text-xl font-semibold leading-tight text-foreground sm:text-2xl;
   }
 
-  .section-heading p:not(.section-kicker),
-  .closing-band p {
-    @apply mt-4 text-base leading-7 text-muted-foreground;
-  }
-
-  .case-study-list {
-    @apply grid gap-5;
+  .case-study-list,
+  .project-index,
+  .blog-list {
+    @apply grid gap-3;
   }
 
   .case-study {
-    @apply grid gap-6 rounded-lg border border-black/10 bg-white p-5 shadow-xl shadow-black/[0.04] lg:grid-cols-[4rem_1fr_22rem] lg:p-6;
+    @apply grid gap-5 p-4 lg:grid-cols-[3rem_1fr_18rem] lg:p-5;
   }
 
-  .case-study__index {
-    @apply text-sm font-bold text-muted-foreground;
+  .case-study:hover,
+  .project-row:hover,
+  .blog-row:hover {
+    @apply -translate-y-0.5;
   }
 
-  .case-study__topline {
-    @apply flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
+  .case-study__index,
+  .project-row__number,
+  .blog-row__index {
+    @apply font-mono text-sm font-bold text-muted-foreground;
+  }
+
+  .case-study__topline,
+  .project-row__meta,
+  .blog-row__meta {
+    @apply flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
   }
 
   .case-study__topline a {
     @apply rounded-full border border-black/10 px-3 py-1.5 text-[0.7rem] font-bold text-foreground hover:border-primary hover:text-primary;
   }
 
-  .case-study h3 {
-    @apply mt-4 text-3xl font-semibold text-foreground;
+  .case-study h3,
+  .project-row h2,
+  .blog-row h2 {
+    @apply mt-2 text-xl font-semibold leading-snug text-foreground;
   }
 
-  .case-grid {
-    @apply mt-6 grid gap-4 md:grid-cols-2;
+  .case-grid,
+  .project-row__grid {
+    @apply mt-4 grid gap-3 md:grid-cols-2;
   }
 
-  .case-grid div {
+  .case-grid div,
+  .project-row__grid div {
     @apply border-t border-black/10 pt-4;
   }
 
   .case-grid span,
-  .architecture-panel > span {
+  .architecture-panel > span,
+  .project-row__grid strong,
+  .experience-card dt,
+  .contact-card span {
     @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
   }
 
-  .case-grid p {
-    @apply mt-2 text-sm leading-7 text-muted-foreground;
-  }
-
   .architecture-panel {
-    @apply rounded-md border border-black/10 bg-secondary/55 p-4;
+    @apply rounded-md border border-black/10 bg-secondary/55 p-3.5;
   }
 
   .architecture-panel ol {
-    @apply mt-4 space-y-3;
+    @apply mt-3 space-y-2.5;
     counter-reset: architecture-step;
   }
 
@@ -313,82 +371,85 @@
 
   .architecture-panel li::before {
     content: counter(architecture-step, decimal-leading-zero);
-    @apply text-xs font-bold text-muted-foreground;
+    @apply font-mono text-xs font-bold text-muted-foreground;
   }
 
   .architecture-panel .tag-list {
-    @apply mt-5 border-t border-black/10 pt-4;
+    @apply mt-4 border-t border-black/10 pt-3;
   }
 
-  .experience-grid {
-    @apply grid gap-5 lg:grid-cols-2;
+  .experience-grid,
+  .contact-layout,
+  .resume-layout {
+    @apply grid gap-4 lg:grid-cols-2;
   }
 
   .experience-card,
   .stack-card,
+  .detail-panel,
+  .tone-card,
+  .contact-form,
   .closing-band {
-    @apply rounded-lg border border-black/10 bg-white p-5 shadow-xl shadow-black/[0.04] sm:p-6;
+    @apply p-4 sm:p-5;
   }
 
   .experience-card h3,
-  .stack-card h3 {
-    @apply text-xl font-semibold text-foreground;
+  .stack-card h3,
+  .detail-panel h2,
+  .tone-card h2 {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .tone-card p {
+    @apply mt-3 text-sm leading-7 text-muted-foreground;
+  }
+
+  .subpage-grid {
+    @apply mb-4 grid gap-3 md:grid-cols-3;
   }
 
   .experience-card dl {
-    @apply mt-6 grid gap-5;
+    @apply mt-5 grid gap-4;
   }
 
   .experience-card div {
     @apply border-t border-black/10 pt-4;
   }
 
-  .experience-card dt {
-    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
-  }
-
-  .experience-card dd {
-    @apply mt-2 text-sm leading-7 text-muted-foreground;
-  }
-
-  .stack-section {
-    @apply pt-8;
-  }
-
   .stack-grid {
-    @apply grid gap-4 md:grid-cols-2 lg:grid-cols-5;
+    @apply grid gap-3 md:grid-cols-2 xl:grid-cols-5;
+  }
+
+  .stack-grid--wide {
+    @apply xl:grid-cols-4;
   }
 
   .stack-card {
-    @apply flex min-h-48 flex-col;
+    @apply flex min-h-36 flex-col;
   }
 
   .stack-card .tag-list {
-    @apply mt-5;
+    @apply mt-4;
   }
 
   .closing-band {
-    @apply mb-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center;
+    @apply mb-8 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center;
   }
 
   .closing-band .closing-actions {
     @apply mt-0;
   }
 
-  .stack-grid--wide {
-    @apply lg:grid-cols-4;
+  .subpage-hero {
+    @apply mb-5 max-w-4xl border-b border-black/10 pb-5;
   }
 
-  .resume-layout {
-    @apply grid gap-5 lg:grid-cols-[0.85fr_1.15fr];
+  .subpage-hero--row {
+    @apply grid max-w-none gap-4 lg:grid-cols-[1fr_auto] lg:items-end;
   }
 
-  .resume-major {
-    @apply text-lg font-medium text-foreground/80;
-  }
-
-  .resume-period {
-    @apply text-sm text-muted-foreground;
+  .project-row {
+    @apply grid gap-4 p-4 transition hover:border-primary/60 hover:shadow-2xl hover:shadow-black/[0.06] md:grid-cols-[3rem_1fr] sm:p-5;
   }
 
   .credential-list {
@@ -396,7 +457,7 @@
   }
 
   .credential-row {
-    @apply flex items-center justify-between gap-4 border-b border-black/10 px-5 py-4 text-sm last:border-b-0;
+    @apply flex items-center justify-between gap-4 border-b border-black/10 px-4 py-3.5 text-sm last:border-b-0;
   }
 
   .credential-row span {
@@ -407,44 +468,12 @@
     @apply text-muted-foreground;
   }
 
-  .project-index {
-    @apply grid gap-4;
+  .focus-list {
+    @apply mt-5 grid gap-3;
   }
 
-  .project-row {
-    @apply grid gap-5 p-5 transition hover:border-primary/60 hover:shadow-2xl hover:shadow-black/[0.06] md:grid-cols-[3.5rem_1fr] sm:p-6;
-  }
-
-  .project-row__number {
-    @apply text-sm font-bold text-muted-foreground;
-  }
-
-  .project-row__meta {
-    @apply flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
-  }
-
-  .project-row h2 {
-    @apply mt-3 text-2xl font-semibold text-foreground;
-  }
-
-  .project-row__grid {
-    @apply mt-5 grid gap-4 md:grid-cols-2;
-  }
-
-  .project-row__grid div {
-    @apply border-t border-black/10 pt-4;
-  }
-
-  .project-row__grid strong {
-    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
-  }
-
-  .project-row .tag-list {
-    @apply mt-5;
-  }
-
-  .contact-layout {
-    @apply grid gap-5 lg:grid-cols-[0.85fr_1.15fr];
+  .focus-list div {
+    @apply rounded-md border border-black/10 bg-secondary/55 p-4 text-sm font-medium leading-6 text-foreground/75;
   }
 
   .contact-links {
@@ -452,19 +481,11 @@
   }
 
   .contact-card {
-    @apply grid gap-2 p-5 transition hover:border-primary/60;
-  }
-
-  .contact-card span {
-    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+    @apply grid gap-2 p-4 transition hover:border-primary/60;
   }
 
   .contact-card strong {
     @apply break-all text-base font-semibold text-foreground;
-  }
-
-  .contact-form {
-    @apply p-5 sm:p-6;
   }
 
   .contact-form label {
@@ -497,7 +518,15 @@
   }
 
   .state-panel {
-    @apply p-8 text-center;
+    @apply p-6 text-center;
+  }
+
+  .state-panel--accent {
+    @apply bg-[#101318] text-white;
+  }
+
+  .state-panel--accent p {
+    @apply text-white/75;
   }
 
   .state-panel a {
@@ -505,7 +534,7 @@
   }
 
   .loading-line {
-    @apply mx-auto mb-4 h-1 w-32 overflow-hidden rounded-full bg-secondary;
+    @apply mx-auto mb-4 h-1 w-32 overflow-hidden rounded-full bg-white/15;
   }
 
   .loading-line::after {
@@ -514,24 +543,32 @@
     animation: loading-slide 1.2s ease-in-out infinite;
   }
 
-  .blog-list {
-    @apply grid gap-4;
-  }
-
   .blog-row {
-    @apply grid gap-5 p-5 transition hover:border-primary/60 md:grid-cols-[14rem_1fr];
+    @apply grid gap-4 p-3.5 transition hover:border-primary/60 hover:shadow-2xl hover:shadow-black/[0.06] md:grid-cols-[2.75rem_10rem_1fr] md:items-stretch;
   }
 
   .blog-row__image {
-    @apply relative aspect-[16/10] overflow-hidden rounded-md border border-black/10 bg-secondary md:aspect-auto md:min-h-36;
+    @apply relative flex aspect-[16/10] min-h-28 items-center justify-center overflow-hidden rounded-md border border-black/10 bg-secondary md:aspect-auto;
   }
 
-  .blog-row__meta {
-    @apply flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
+  .blog-row__image--empty {
+    @apply bg-[#101318] font-mono text-xs font-semibold uppercase tracking-[0.08em] text-white/65;
   }
 
-  .blog-row h2 {
-    @apply mt-3 text-2xl font-semibold text-foreground;
+  .blog-row__body {
+    @apply py-1;
+  }
+
+  .site-footer {
+    @apply mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 border-t border-black/10 px-4 py-8 text-sm text-muted-foreground sm:px-6 md:flex-row lg:px-10;
+  }
+
+  .site-footer div {
+    @apply flex gap-5;
+  }
+
+  .site-footer a {
+    @apply font-mono text-xs font-semibold transition hover:text-primary;
   }
 }
 

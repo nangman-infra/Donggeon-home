@@ -1,70 +1,77 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+
+const navItems = [
+  { href: "/", label: "Home", marker: "01" },
+  { href: "/projects", label: "Projects", marker: "02" },
+  { href: "/blog", label: "Blog", marker: "03" },
+  { href: "/resume", label: "Resume", marker: "04" },
+  { href: "/contact", label: "Contact", marker: "05" },
+];
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  const navItems = [
-    { href: "/", label: "홈" },
-    { href: "/projects", label: "프로젝트" },
-    { href: "/resume", label: "이력" },
-    { href: "/contact", label: "연락" },
-  ];
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 z-50 w-full">
-      <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between rounded-lg border border-black/10 bg-background/90 px-4 py-3 shadow-lg shadow-black/[0.04] backdrop-blur-xl">
-          <Link href="/" className="font-mono text-sm font-semibold text-foreground">
-            임동건
-          </Link>
+    <>
+      <aside className="site-sidebar" aria-label="주요 메뉴">
+        <Link href="/" className="sidebar-brand" aria-label="홈으로 이동">
+          <span className="sidebar-brand__mark">DG</span>
+          <span>
+            <strong>임동건</strong>
+            <small>AI Product Engineer</small>
+          </span>
+        </Link>
 
-          <ul className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                    pathname === item.href ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav className="sidebar-nav">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
 
-          <button
-            className="rounded-md border border-black/10 px-3 py-2 text-sm font-medium text-foreground md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            type="button"
-          >
-            {isMenuOpen ? "닫기" : "메뉴"}
-          </button>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={isActive ? "sidebar-nav__item sidebar-nav__item--active" : "sidebar-nav__item"}
+              >
+                <span>{item.marker}</span>
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="sidebar-status">
+          <span>Available for</span>
+          <strong>Applied AI, FDE, AX</strong>
         </div>
+      </aside>
 
+      <header className="mobile-header">
+        <Link href="/" className="mobile-brand">
+          DG
+        </Link>
+        <button type="button" className="mobile-menu-button" onClick={() => setIsMenuOpen((value) => !value)}>
+          {isMenuOpen ? "닫기" : "메뉴"}
+        </button>
         {isMenuOpen && (
-          <ul className="mt-2 grid gap-1 rounded-lg border border-black/10 bg-background/95 p-2 shadow-lg shadow-black/[0.05] backdrop-blur-xl md:hidden">
+          <nav className="mobile-menu" aria-label="모바일 메뉴">
             {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`block rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                    pathname === item.href ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={pathname === item.href ? "mobile-menu__item mobile-menu__item--active" : "mobile-menu__item"}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
             ))}
-          </ul>
+          </nav>
         )}
-      </nav>
-    </header>
+      </header>
+    </>
   );
 }

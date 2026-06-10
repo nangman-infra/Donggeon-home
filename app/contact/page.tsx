@@ -21,8 +21,8 @@ export default function ContactPage() {
     message: string;
   }>({ type: null, message: "" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: "" });
 
@@ -51,19 +51,16 @@ export default function ContactPage() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   return (
     <div className="subpage-shell">
       <section className="subpage-hero">
         <p className="section-kicker">Contact</p>
-        <h1>AI 제품과 운영 문제를 함께 다루는 팀과 이야기하고 싶습니다.</h1>
-        <p>
-          Applied AI, FDE, AX, AI Product Engineering 역할에 관심이 있습니다. 프로젝트 협업, 채용, 기술 대화 모두
-          편하게 연락 주세요.
-        </p>
+        <h1>프로젝트나 역할에 대해 편하게 연락 주세요.</h1>
+        <p>Applied AI, AI 백엔드, 문서 처리 자동화, FDE/AX 역할에 관심이 있습니다. 채용, 협업, 기술 대화 모두 괜찮습니다.</p>
       </section>
 
       <section className="contact-layout">
@@ -85,7 +82,7 @@ export default function ContactPage() {
         <form onSubmit={handleSubmit} className="contact-form">
           <div className="section-heading">
             <p className="section-kicker">Message</p>
-            <h2>짧게 남겨주시면 됩니다.</h2>
+            <h2>메시지 보내기</h2>
           </div>
 
           {submitStatus.type && <div className={`form-status form-status--${submitStatus.type}`}>{submitStatus.message}</div>}
@@ -125,7 +122,7 @@ export default function ContactPage() {
               required
               disabled={isSubmitting}
               rows={6}
-              placeholder="역할, 협업 주제, 궁금한 점을 남겨주세요."
+              placeholder="역할, 프로젝트 주제, 궁금한 점을 남겨주세요."
             />
           </label>
 

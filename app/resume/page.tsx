@@ -21,9 +21,9 @@ const certifications = [
 ];
 
 const resumeSignals = [
-  "AI 프로젝트를 기능 구현보다 문제 해결과 시스템 설계 관점으로 설명할 수 있습니다.",
-  "Docker, AWS/NCP, CI/CD 등 배포와 운영에 필요한 기반 지식을 함께 쌓고 있습니다.",
-  "문서 처리, 연합학습, 브라우저 자동화처럼 서로 다른 문제를 제품 흐름으로 정리해본 경험이 있습니다.",
+  "AI 프로젝트를 문제, 구현 방식, 배운 점 기준으로 정리해 설명할 수 있습니다.",
+  "Docker, AWS/NCP, CI/CD 등 실행과 배포에 필요한 기초를 함께 학습하고 있습니다.",
+  "문서 처리, 연합학습, 브라우저 자동화처럼 다른 성격의 문제를 직접 구현해본 경험이 있습니다.",
 ];
 
 export default function ResumePage() {
@@ -31,24 +31,21 @@ export default function ResumePage() {
     <div className="subpage-shell">
       <section className="subpage-hero">
         <p className="section-kicker">Resume</p>
-        <h1>AI 제품 엔지니어링 역할에 맞춘 역량 요약</h1>
-        <p>
-          학력, 기술 스택, 자격증을 단순 나열하지 않고 AI 시스템을 만들고 배포하는 데 필요한 근거로
-          재구성했습니다.
-        </p>
+        <h1>학습 이력과 기술 경험을 한눈에 정리했습니다.</h1>
+        <p>전공, 프로젝트에서 사용한 기술, 클라우드 관련 자격을 역할과 연결해 볼 수 있도록 구성했습니다.</p>
       </section>
 
       <section className="resume-layout">
         <article className="detail-panel">
           <p className="section-kicker">Education</p>
           <h2>{education.school}</h2>
-          <p className="resume-major">{education.major}</p>
-          <p className="resume-period">{education.period}</p>
+          <p>{education.major}</p>
+          <p>{education.period}</p>
         </article>
 
         <article className="detail-panel">
           <p className="section-kicker">Signal</p>
-          <div className="focus-list focus-list--compact">
+          <div className="focus-list">
             {resumeSignals.map((item) => (
               <div key={item}>{item}</div>
             ))}
@@ -59,7 +56,7 @@ export default function ResumePage() {
       <section className="section-block">
         <div className="section-heading">
           <p className="section-kicker">Technical Skills</p>
-          <h2>AI 제품 개발에 필요한 영역별 기술</h2>
+          <h2>프로젝트에서 사용한 기술</h2>
         </div>
         <div className="stack-grid">
           {skillGroups.map((group) => (
@@ -78,7 +75,7 @@ export default function ResumePage() {
       <section className="section-block">
         <div className="section-heading">
           <p className="section-kicker">Certifications</p>
-          <h2>클라우드와 기본 역량을 뒷받침하는 자격</h2>
+          <h2>자격과 어학</h2>
         </div>
         <div className="credential-list">
           {certifications.map((cert) => (
