@@ -42,7 +42,7 @@ export default defineConfig({
       reportsDirectory: "./coverage",
       include: [
         "app/**/*.{ts,tsx}",
-        "components/layout/**/*.{ts,tsx}",
+        "components/**/*.{ts,tsx}",
         "lib/**/*.{ts,tsx}",
       ],
       exclude: [

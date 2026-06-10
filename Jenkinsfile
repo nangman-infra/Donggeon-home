@@ -195,7 +195,9 @@ pipeline {
                                     sonar.sourceEncoding=UTF-8
                                     sonar.scm.revision=${env.FULL_SHA}
                                     sonar.sources=${env.SONAR_SOURCES}
-                                    sonar.exclusions=**/node_modules/**,**/.next/**,**/out/**,**/coverage/**,**/dist/**,**/*.config.*,**/next-env.d.ts
+                                    sonar.exclusions=**/node_modules/**,**/.next/**,**/out/**,**/coverage/**,**/dist/**,**/*.config.*,**/next-env.d.ts,**/*.test.ts,**/*.test.tsx
+                                    sonar.coverage.exclusions=**/*.test.ts,**/*.test.tsx
+                                    sonar.cpd.exclusions=**/*.test.ts,**/*.test.tsx
                                     sonar.javascript.lcov.reportPaths=${env.SONAR_COVERAGE_REPORT}
                                     sonar.javascript.node.maxspace=4096
                                 """.stripIndent().trim() + '\n'
