@@ -33,7 +33,7 @@ const config: Config = {
         tab: "hsl(var(--tab))",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Pretendard Variable"', 'Pretendard', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {

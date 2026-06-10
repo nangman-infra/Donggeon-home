@@ -1,256 +1,303 @@
-"use client";
+const projects = [
+  {
+    title: "Budgetly",
+    type: "문서 처리 워크플로우 PWA",
+    href: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
+    problem:
+      "영수증과 예산 증빙 자료가 분리된 파일로 관리되어 검토 과정이 느리고 오류가 발생하기 쉬웠습니다.",
+    solution:
+      "OCR 결과를 사용자가 확인하고 정리할 수 있는 문서 검토 흐름으로 연결한 PWA를 구축했습니다.",
+    architecture: ["Vue.js PWA", "OCR 처리 흐름", "검증 UI", "AWS EC2 배포"],
+    technologies: ["Vue.js", "OCR", "AWS EC2", "PWA"],
+    impact:
+      "단순 기능 구현을 넘어 운영자가 실제로 검토하고 사용할 수 있는 흐름과 배포 환경까지 고려했습니다.",
+    lesson:
+      "AI 기능은 결과를 보여주는 것에서 끝나지 않고, 사용자가 확인하고 수정하고 신뢰할 수 있을 때 제품 가치가 생깁니다.",
+  },
+  {
+    title: "Federated Learning",
+    type: "AI 시스템 실험",
+    href: "https://github.com/Hanbat-IoT/Lab2",
+    problem:
+      "분산 학습 구조는 반복 가능한 실험 환경이 없으면 모델 동작과 트레이드오프를 이해하기 어렵습니다.",
+    solution:
+      "연합학습 구조, 클라이언트 업데이트, 모델 학습 흐름을 이해하기 위한 실험 환경을 구성했습니다.",
+    architecture: ["PyTorch 학습 루프", "클라이언트 시뮬레이션", "Docker 실행 환경", "반복 가능한 실험"],
+    technologies: ["Python", "PyTorch", "Docker"],
+    impact:
+      "이론 중심 학습에서 벗어나 실행 결과를 비교하고 구조적 차이를 논의할 수 있는 기반을 만들었습니다.",
+    lesson:
+      "분산 특성을 가진 AI 시스템에서는 모델 코드만큼 실험 설계와 평가 방식이 중요하다는 점을 배웠습니다.",
+  },
+  {
+    title: "Dev Card Hunter",
+    type: "학습 자동화 도구",
+    href: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
+    problem:
+      "개발 학습 기록이 여러 도구와 세션에 흩어지면 꾸준한 실천 여부를 파악하기 어렵습니다.",
+    solution:
+      "브라우저 기반 경험으로 학습 활동을 기록하고, 진행 상황을 가볍게 확인할 수 있는 루프를 설계했습니다.",
+    architecture: ["Chrome Extension", "브라우저 이벤트", "프론트엔드 상태 관리", "진행 피드백"],
+    technologies: ["JavaScript", "Chrome Extension", "Frontend"],
+    impact:
+      "제품적 장치를 통해 개발 학습을 더 눈에 보이고, 지속 가능하며, 동기부여되는 경험으로 바꾸는 방식을 실험했습니다.",
+    lesson:
+      "자동화는 사용자의 통제권을 빼앗지 않으면서 반복 작업의 마찰을 줄일 때 가장 효과적입니다.",
+  },
+];
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+const expertise = [
+  "LLM 워크플로우",
+  "AI 백엔드 API",
+  "클라우드 배포",
+  "평가 중심 사고",
+  "제품 문제 정의",
+];
+
+const proofPoints = [
+  { value: "3", label: "대표 엔지니어링 케이스 스터디" },
+  { value: "AI", label: "사용자 흐름에 연결한 시스템 설계" },
+  { value: "Cloud", label: "배포와 운영을 고려한 구현 경험" },
+  { value: "Product", label: "문제 정의에서 출발하는 기술 선택" },
+];
+
+const experience = [
+  {
+    role: "AI 제품 엔지니어링 방향성",
+    problem: "많은 AI 데모는 모델 출력에서 멈추고 실제 사용 가능한 업무 흐름으로 이어지지 못합니다.",
+    challenge: "AI 결과물을 사용자가 검토하고 활용할 수 있도록 인터페이스, 검증 단계, 배포 경로를 함께 설계해야 했습니다.",
+    decision:
+      "프로젝트 설명을 기술 목록이 아니라 사용자 문제, 아키텍처, 운영 경계, 학습한 점 중심으로 재구성했습니다.",
+    result:
+      "AI Engineer, Applied AI Engineer, FDE, AX Engineer 직무에서 요구하는 제품 감각과 시스템 사고를 함께 보여주도록 정리했습니다.",
+  },
+  {
+    role: "클라우드와 DevOps 기반",
+    problem: "운영 가능한 AI 시스템은 모델 코드뿐 아니라 안정적인 실행 환경과 배포 흐름이 필요합니다.",
+    challenge: "애플리케이션 코드와 Docker, AWS/NCP, CI/CD, 모니터링, 로그 관점을 연결해야 했습니다.",
+    decision:
+      "도구를 나열하는 대신 배포 가능성, 반복 가능성, 시스템 동작을 설명하는 방식으로 경험을 표현했습니다.",
+    result: "프로덕션 수준의 AI 제품 개발로 확장할 수 있는 기반과 성장 방향을 명확히 보여주었습니다.",
+  },
+];
+
+const stackGroups = [
+  {
+    name: "AI / LLM",
+    items: ["RAG", "OCR", "PyTorch", "Model Evaluation", "Prompted Workflows"],
+  },
+  {
+    name: "Backend",
+    items: ["Python", "Node.js", "REST API", "Flask", "TypeScript"],
+  },
+  {
+    name: "Cloud",
+    items: ["AWS EC2", "NCP", "Linux", "Deployment", "Runtime Ops"],
+  },
+  {
+    name: "Database",
+    items: ["MongoDB", "Document Data", "Validation Records"],
+  },
+  {
+    name: "DevOps",
+    items: ["Docker", "Jenkins", "GitHub Actions", "Prometheus", "Grafana"],
+  },
+];
 
 export default function Home() {
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-  const [displayedText, setDisplayedText] = useState("");
-
-  const introText = "$ whoami\n> Cloud Engineer & DevOps Enthusiast";
-  const stats = [
-    { id: "projects", label: "Projects", value: "06+" },
-    { id: "certifications", label: "Certifications", value: "05+" },
-    { id: "year-started", label: "Year Started", value: "2021" },
-    { id: "status", label: "Status", value: "Learning" },
-  ];
-  const projectSummaries = [
-    {
-      name: "Budgetly",
-      desc: "Azure OCR 기반 조직 예산 관리 PWA",
-      tech: ["Vue.js", "AWS EC2"],
-      link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
-    },
-    {
-      name: "Federated Learning",
-      desc: "ADM & BWA 알고리즘 연합학습 최적화",
-      tech: ["Python", "PyTorch", "Docker"],
-      link: "https://github.com/Hanbat-IoT/Lab2",
-    },
-    {
-      name: "Dev Card Hunter",
-      desc: "개발자 학습 게이미피케이션 시스템",
-      tech: ["JavaScript", "Chrome Extension"],
-      link: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
-    },
-  ];
-  const skills = [
-    { category: "Cloud", items: ["AWS", "NCP"] },
-    { category: "Container", items: ["Docker", "Kubernetes", "ECS", "EKS"] },
-    { category: "IaC", items: ["Terraform", "Jenkins", "GitHub Actions"] },
-    { category: "Monitoring", items: ["Prometheus", "Grafana"] },
-    { category: "Languages", items: ["Python", "Bash", "Node.js", "TypeScript"] },
-  ];
-  const paletteItems = [
-    { id: "email", icon: "📧", label: "Email", desc: "gunni6112@gmail.com" },
-    { id: "github", icon: "💻", label: "GitHub", desc: "github.com/whitejbb" },
-    { id: "linkedin", icon: "🔗", label: "LinkedIn", desc: "Connect with me" },
-    { id: "blog", icon: "📝", label: "Blog", desc: "exit0.tistory.com" },
-  ];
-
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < introText.length) {
-        setDisplayedText(introText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 30);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setCommandPaletteOpen(true);
-      }
-      if (e.key === "Escape") {
-        setCommandPaletteOpen(false);
-      }
-    };
-
-    globalThis.addEventListener("keydown", handleKeyDown);
-    return () => globalThis.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Hero Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-32"
-        >
-          <div className="mb-8">
-            <pre className="font-mono text-sm text-accent whitespace-pre-wrap">
-              {displayedText}
-              <span className="typing-cursor"></span>
-            </pre>
-          </div>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6">동건</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            안정적이고 확장 가능한 클라우드 인프라 구축에 관심을 가지고 있는 학생입니다.
-            DevOps와 자동화를 통해 더 나은 개발 경험을 만들어가고 있습니다.
+    <div className="portfolio-page">
+      <section className="hero-section">
+        <div className="hero-copy">
+          <p className="section-kicker">임동건 / AI Engineer Candidate</p>
+          <h1>실제 업무 흐름에 붙는 AI 시스템을 만드는 엔지니어.</h1>
+          <p className="hero-summary">
+            문서 처리, 반복 가능한 모델 실험, 브라우저 자동화, 클라우드 배포 경험을 바탕으로 데모를 넘어
+            사용자가 실제로 쓸 수 있는 AI 기능과 제품 흐름을 설계합니다.
           </p>
-        </motion.section>
-
-        {/* Stats */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32"
-        >
-          {stats.map((stat) => (
-            <div key={stat.id} className="p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
-              <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
-              <div className="text-sm text-muted-foreground font-mono">{stat.label}</div>
-            </div>
-          ))}
-        </motion.section>
-
-        {/* Skills */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-32"
-        >
-          <h2 className="text-3xl font-bold mb-8">
-            <span className="text-accent font-mono">$</span> cat skills.json
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {skills.map((skill) => (
-              <div key={skill.category} className="p-6 bg-muted/30 border border-border rounded-xl">
-                <div className="text-sm font-mono text-accent mb-4">{skill.category}</div>
-                <div className="flex flex-wrap gap-2">
-                  {skill.items.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 bg-background border border-border rounded-lg text-sm font-mono hover:border-primary transition-colors"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
+          <div className="hero-meta" aria-label="Current role and expertise">
+            <span>현재: 컴퓨터공학 전공, AI 제품 엔지니어링 중심으로 포트폴리오 구축 중</span>
+            <span>목표 직무: AI Engineer / AI Product Engineer / FDE / Applied AI / AX</span>
+          </div>
+          <div className="expertise-list">
+            {expertise.map((item) => (
+              <span key={item}>{item}</span>
             ))}
           </div>
-        </motion.section>
-
-        {/* Projects */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-32"
-        >
-          <h2 className="text-3xl font-bold mb-8">
-            <span className="text-accent font-mono">$</span> ls projects/
-          </h2>
-          <div className="space-y-4">
-            {projectSummaries.map((project) => (
-              <a
-                key={project.name}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-all group"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
-                    {project.name}
-                  </h3>
-                  <svg
-                    className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-                <p className="text-muted-foreground mb-4">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <span key={tech} className="text-xs font-mono px-2 py-1 bg-background rounded">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </a>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Contact */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="p-8 bg-muted/30 border border-border rounded-xl"
-        >
-          <h2 className="text-2xl font-bold mb-6">
-            <span className="text-accent font-mono">$</span> contact
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <a href="mailto:gunni6112@gmail.com" className="flex items-center gap-3 p-4 bg-background rounded-lg hover:border-primary border border-transparent transition-colors">
-              <span className="text-2xl">✉️</span>
-              <div>
-                <div className="text-xs text-muted-foreground font-mono">EMAIL</div>
-                <div className="text-sm">gunni6112@gmail.com</div>
-              </div>
+          <div className="hero-actions">
+            <a href="#projects" className="button-primary">
+              케이스 스터디 보기
             </a>
-            <a href="https://github.com/whitejbb" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 bg-background rounded-lg hover:border-primary border border-transparent transition-colors">
-              <span className="text-2xl">💻</span>
-              <div>
-                <div className="text-xs text-muted-foreground font-mono">GITHUB</div>
-                <div className="text-sm">github.com/whitejbb</div>
-              </div>
+            <a href="mailto:gunni6112@gmail.com" className="button-secondary">
+              연락하기
             </a>
           </div>
-          <p className="text-sm text-muted-foreground">
-            프로젝트 문의나 협업 제안이 있으시면 언제든지 연락주세요.
+        </div>
+
+        <aside className="signal-panel" aria-label="포트폴리오 포지셔닝">
+          <div className="signal-panel__header">
+            <span>평가 관점</span>
+            <strong>제품 + 시스템</strong>
+          </div>
+          <div className="system-map" aria-hidden="true">
+            <div className="system-node system-node--primary">사용자 문제</div>
+            <div className="system-node">AI 워크플로우</div>
+            <div className="system-node">백엔드 API</div>
+            <div className="system-node">클라우드 실행 환경</div>
+            <div className="system-node">피드백 루프</div>
+          </div>
+          <p>
+            이 포트폴리오는 채용 리뷰어가 빠르게 판단할 수 있도록 구성했습니다. 어떤 문제를 풀었는지,
+            어떤 시스템을 설계했는지, 어떤 판단을 했는지, 그리고 그 결과 무엇을 배웠는지를 먼저 보여줍니다.
           </p>
-        </motion.section>
-      </div>
+        </aside>
+      </section>
 
-      {/* Command Palette */}
-      {commandPaletteOpen && (
-        <>
-          <button
-            type="button"
-            aria-label="Close command palette"
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
-            onClick={() => setCommandPaletteOpen(false)}
-          />
-          <div className="command-palette">
-            <input
-              type="text"
-              className="command-input"
-              placeholder="Type a command..."
-              autoFocus
-            />
-            <div className="p-2">
-              {paletteItems.map((item) => (
-                <div key={item.id} className="command-item">
-                  <span className="text-xl">{item.icon}</span>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium">{item.label}</div>
-                    <div className="text-xs text-muted-foreground">{item.desc}</div>
+      <section className="proof-strip" aria-label="핵심 증거">
+        {proofPoints.map((item) => (
+          <div key={item.label}>
+            <strong>{item.value}</strong>
+            <span>{item.label}</span>
+          </div>
+        ))}
+      </section>
+
+      <section id="projects" className="section-block">
+        <div className="section-heading">
+          <p className="section-kicker">대표 프로젝트</p>
+          <h2>일반 프로젝트 카드가 아니라 엔지니어링 케이스 스터디로 보여줍니다.</h2>
+          <p>
+            각 프로젝트는 비즈니스 또는 사용자 문제, 시스템으로서의 해결 방식, 아키텍처, 기술 스택,
+            임팩트와 배운 점을 기준으로 정리했습니다.
+          </p>
+        </div>
+
+        <div className="case-study-list">
+          {projects.map((project, index) => (
+            <article key={project.title} className="case-study">
+              <div className="case-study__index">0{index + 1}</div>
+              <div className="case-study__main">
+                <div className="case-study__topline">
+                  <span>{project.type}</span>
+                  <a href={project.href} target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
+                </div>
+                <h3>{project.title}</h3>
+                <div className="case-grid">
+                  <div>
+                    <span>문제</span>
+                    <p>{project.problem}</p>
+                  </div>
+                  <div>
+                    <span>해결</span>
+                    <p>{project.solution}</p>
+                  </div>
+                  <div>
+                    <span>임팩트</span>
+                    <p>{project.impact}</p>
+                  </div>
+                  <div>
+                    <span>배운 점</span>
+                    <p>{project.lesson}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
+              </div>
+              <aside className="architecture-panel">
+                <span>아키텍처</span>
+                <ol>
+                  {project.architecture.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+                <div className="tag-list">
+                  {project.technologies.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+              </aside>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="section-heading">
+          <p className="section-kicker">경험 정리</p>
+          <h2>비즈니스 문제, 기술적 난제, 의사결정, 결과를 중심으로 정리했습니다.</h2>
+        </div>
+        <div className="experience-grid">
+          {experience.map((item) => (
+            <article key={item.role} className="experience-card">
+              <h3>{item.role}</h3>
+              <dl>
+                <div>
+                  <dt>비즈니스 문제</dt>
+                  <dd>{item.problem}</dd>
+                </div>
+                <div>
+                  <dt>기술적 난제</dt>
+                  <dd>{item.challenge}</dd>
+                </div>
+                <div>
+                  <dt>내린 결정</dt>
+                  <dd>{item.decision}</dd>
+                </div>
+                <div>
+                  <dt>결과</dt>
+                  <dd>{item.result}</dd>
+                </div>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="stack" className="section-block stack-section">
+        <div className="section-heading">
+          <p className="section-kicker">기술 스택</p>
+          <h2>AI 엔지니어가 책임져야 하는 시스템 영역 기준으로 묶었습니다.</h2>
+        </div>
+        <div className="stack-grid">
+          {stackGroups.map((group) => (
+            <article key={group.name} className="stack-card">
+              <h3>{group.name}</h3>
+              <div className="tag-list">
+                {group.items.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="closing-band">
+        <div>
+          <p className="section-kicker">연락</p>
+          <h2>AI 시스템이 실제 운영 문제와 만나는 역할을 찾고 있습니다.</h2>
+          <p>
+            Applied AI 제품, 사내 자동화, 문서 지능화, AI 워크플로우 도구, Forward Deployed 솔루션을 만드는 팀에
+            가장 잘 맞습니다.
+          </p>
+        </div>
+        <div className="closing-actions">
+          <a href="mailto:gunni6112@gmail.com" className="button-primary">
+            이메일
+          </a>
+          <a href="https://github.com/whitejbb" target="_blank" rel="noopener noreferrer" className="button-secondary">
+            GitHub
+          </a>
+          <a
+            href="https://www.linkedin.com/in/%EB%8F%99%EA%B1%B4-%EC%9E%84-a574ab386/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button-secondary"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

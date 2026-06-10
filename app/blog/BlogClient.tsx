@@ -1,10 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import type { TistoryPost } from "@/lib/tistory";
-import { fetchTistoryPosts } from "@/lib/tistory";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { TistoryPost } from "@/lib/tistory";
+import { fetchTistoryPosts } from "@/lib/tistory";
 
 interface BlogClientProps {
   posts: TistoryPost[];
@@ -15,21 +14,21 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadPosts = async () => {
-    try {
-      setLoading(true);
-      const fetchedPosts = await fetchTistoryPosts();
-      setPosts(fetchedPosts);
-      setError(null);
-    } catch (err) {
-      console.error("Failed to load blog posts:", err);
-      setError("블로그 글을 불러오는데 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        setLoading(true);
+        const fetchedPosts = await fetchTistoryPosts();
+        setPosts(fetchedPosts);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to load blog posts:", err);
+        setError("블로그 글을 불러오지 못했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadPosts();
   }, []);
 
@@ -41,114 +40,60 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
       day: "2-digit",
     });
   };
-  const content = loading ? (
-    <div className="p-12 bg-muted/30 border border-border rounded-xl text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-      <p className="text-sm font-mono text-muted-foreground">loading posts...</p>
-    </div>
-  ) : error ? (
-    <div className="p-12 bg-muted/30 border border-border rounded-xl text-center">
-      <p className="text-sm text-red-500 mb-4 font-mono">{error}</p>
-      <p className="text-sm text-muted-foreground">
-        Visit directly:{" "}
-        <a
-          href="https://exit0.tistory.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline font-mono"
-        >
-          exit0.tistory.com
-        </a>
-      </p>
-    </div>
-  ) : posts.length === 0 ? (
-    <div className="p-12 bg-muted/30 border border-border rounded-xl text-center">
-      <p className="text-sm font-mono text-muted-foreground">no posts yet</p>
-    </div>
-  ) : (
-    <div className="space-y-4">
-      {posts.map((post, index) => (
-        <motion.a
-          key={post.link}
-          href={post.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: index * 0.1 }}
-          className="block p-6 bg-muted/30 border border-border rounded-xl hover:border-primary transition-all group"
-        >
-          <div className="flex flex-col md:flex-row gap-6">
-            {post.thumbnail && (
-              <div className="relative w-full md:w-48 h-48 md:h-32 flex-shrink-0 overflow-hidden rounded-lg">
-                <Image
-                  src={post.thumbnail}
-                  alt={post.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
-              </div>
-            )}
-
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
-                <time className="text-xs font-mono text-muted-foreground">
-                  {formatDate(post.pubDate)}
-                </time>
-                {post.category && (
-                  <>
-                    <span className="text-muted-foreground">•</span>
-                    <span className="text-xs font-mono text-muted-foreground">
-                      {post.category}
-                    </span>
-                  </>
-                )}
-              </div>
-
-              <h2 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                {post.title}
-              </h2>
-
-              <p className="text-sm text-muted-foreground line-clamp-2">
-                {post.description}
-              </p>
-            </div>
-          </div>
-        </motion.a>
-      ))}
-    </div>
-  );
 
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                <span className="text-accent font-mono">$</span> cat blog/
-              </h1>
-              <p className="text-xl text-muted-foreground">Thoughts & Learning</p>
-            </div>
-            <a
-              href="https://exit0.tistory.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-mono text-muted-foreground hover:text-primary transition-colors"
-            >
-              exit0.tistory.com →
-            </a>
-          </div>
+    <div className="subpage-shell">
+      <section className="subpage-hero subpage-hero--row">
+        <div>
+          <p className="section-kicker">Learning Notes</p>
+          <h1>기술을 배우고 실험한 과정을 기록합니다.</h1>
+          <p>
+            블로그는 메인 포트폴리오가 아니라 보조 증거입니다. 프로젝트에서 다룬 기술, 실험 과정, 문제 해결
+            기록을 더 자세히 남기는 공간입니다.
+          </p>
+        </div>
+        <a href="https://exit0.tistory.com" target="_blank" rel="noopener noreferrer" className="button-secondary">
+          Tistory 보기
+        </a>
+      </section>
 
-          {/* Posts */}
-          {content}
-        </motion.div>
-      </div>
+      {loading ? (
+        <div className="state-panel">
+          <div className="loading-line" />
+          <p>블로그 글을 불러오는 중입니다.</p>
+        </div>
+      ) : error ? (
+        <div className="state-panel">
+          <p>{error}</p>
+          <a href="https://exit0.tistory.com" target="_blank" rel="noopener noreferrer">
+            exit0.tistory.com에서 직접 보기
+          </a>
+        </div>
+      ) : posts.length === 0 ? (
+        <div className="state-panel">
+          <p>아직 표시할 글이 없습니다.</p>
+        </div>
+      ) : (
+        <section className="blog-list">
+          {posts.map((post) => (
+            <a key={post.link} href={post.link} target="_blank" rel="noopener noreferrer" className="blog-row">
+              {post.thumbnail && (
+                <div className="blog-row__image">
+                  <Image src={post.thumbnail} alt={post.title} fill className="object-cover" unoptimized />
+                </div>
+              )}
+              <div className="blog-row__body">
+                <div className="blog-row__meta">
+                  <time>{formatDate(post.pubDate)}</time>
+                  {post.category && <span>{post.category}</span>}
+                </div>
+                <h2>{post.title}</h2>
+                <p>{post.description}</p>
+              </div>
+            </a>
+          ))}
+        </section>
+      )}
     </div>
   );
 }

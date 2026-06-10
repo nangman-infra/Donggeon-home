@@ -39,7 +39,7 @@ describe("blog client", () => {
     render(React.createElement(BlogClient, { posts: [] }));
 
     await waitFor(() => {
-      expect(screen.getByText("블로그 글을 불러오는데 실패했습니다.")).toBeInTheDocument();
+      expect(screen.getByText("블로그 글을 불러오지 못했습니다.")).toBeInTheDocument();
     });
   });
 });

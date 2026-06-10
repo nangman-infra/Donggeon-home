@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,212 +6,562 @@
 
 @layer base {
   :root {
-    --background: 220 13% 9%;
-    --foreground: 220 9% 85%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 220 13% 9%;
-    --secondary: 220 13% 13%;
-    --secondary-foreground: 220 9% 85%;
-    --muted: 220 13% 15%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 142 76% 36%;
-    --accent-foreground: 220 13% 9%;
-    --border: 220 13% 18%;
-    --sidebar: 220 13% 11%;
-    --editor: 220 13% 9%;
-    --tab: 220 13% 13%;
+    --background: 48 33% 98%;
+    --foreground: 222 35% 8%;
+    --primary: 168 76% 31%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 18% 94%;
+    --secondary-foreground: 222 35% 8%;
+    --muted: 218 18% 92%;
+    --muted-foreground: 221 12% 40%;
+    --accent: 258 55% 48%;
+    --accent-foreground: 0 0% 100%;
+    --border: 220 15% 86%;
+    --sidebar: 48 33% 98%;
+    --editor: 222 35% 8%;
+    --tab: 220 18% 94%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
-  
+
   html {
     @apply bg-background text-foreground antialiased;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply bg-background text-foreground;
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg, rgba(248, 247, 243, 0.96), rgba(248, 247, 243, 1)),
+      radial-gradient(circle at 15% 8%, rgba(25, 140, 121, 0.12), transparent 30%);
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: rgba(25, 140, 121, 0.18);
+  }
+}
+
+@layer components {
+  .fixed.top-0 {
+    @apply border-b border-black/10 bg-background/85 backdrop-blur-xl;
+  }
+
+  .portfolio-page {
+    @apply mx-auto max-w-7xl px-4 pb-10 pt-28 sm:px-6 lg:px-8;
+  }
+
+  .subpage-shell {
+    @apply mx-auto max-w-7xl px-4 pb-12 pt-32 sm:px-6 lg:px-8;
+  }
+
+  .subpage-hero {
+    @apply mb-12 max-w-4xl;
+  }
+
+  .subpage-hero--row {
+    @apply grid max-w-none gap-6 lg:grid-cols-[1fr_auto] lg:items-end;
+  }
+
+  .subpage-hero h1 {
+    @apply mt-4 text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl;
+  }
+
+  .subpage-hero p:not(.section-kicker) {
+    @apply mt-5 max-w-3xl text-lg leading-8 text-muted-foreground;
+  }
+
+  .subpage-grid {
+    @apply grid gap-4 md:grid-cols-3;
+  }
+
+  .tone-card,
+  .detail-panel,
+  .project-row,
+  .contact-card,
+  .contact-form,
+  .state-panel,
+  .blog-row {
+    @apply rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04];
+  }
+
+  .tone-card {
+    @apply p-5 sm:p-6;
+  }
+
+  .tone-card h2,
+  .detail-panel h2 {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  .tone-card p,
+  .detail-panel p:not(.section-kicker),
+  .project-row p,
+  .state-panel p,
+  .blog-row p {
+    @apply mt-3 text-sm leading-7 text-muted-foreground;
+  }
+
+  .detail-panel {
+    @apply p-5 sm:p-6;
+  }
+
+  .focus-list {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+
+  .focus-list--compact {
+    @apply mt-5 md:grid-cols-1;
+  }
+
+  .focus-list div {
+    @apply rounded-md border border-black/10 bg-secondary/55 p-4 text-sm font-medium leading-6 text-foreground/75;
+  }
+
+  .hero-section {
+    @apply grid min-h-[calc(100vh-7rem)] items-center gap-8 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:py-16;
+  }
+
+  .hero-copy {
+    @apply max-w-4xl;
+  }
+
+  .section-kicker {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .hero-copy h1 {
+    @apply mt-5 max-w-5xl text-5xl font-semibold leading-[1.02] text-foreground sm:text-6xl lg:text-7xl;
+  }
+
+  .hero-summary {
+    @apply mt-7 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl;
+  }
+
+  .hero-meta {
+    @apply mt-8 grid gap-2 border-l border-foreground/20 pl-4 text-sm font-medium text-foreground/75 sm:text-base;
+  }
+
+  .expertise-list,
+  .tag-list {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .expertise-list {
+    @apply mt-7;
+  }
+
+  .expertise-list span,
+  .tag-list span {
+    @apply rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-semibold text-foreground/70 shadow-sm;
+  }
+
+  .hero-actions,
+  .closing-actions {
+    @apply mt-8 flex flex-wrap gap-3;
+  }
+
+  .button-primary,
+  .button-secondary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold transition;
+  }
+
+  .button-primary {
+    @apply bg-foreground text-white shadow-lg shadow-black/10 hover:bg-foreground/90;
+  }
+
+  .button-secondary {
+    @apply border border-black/10 bg-white text-foreground hover:border-black/25 hover:bg-secondary;
+  }
+
+  .signal-panel {
+    @apply rounded-lg border border-black/10 bg-white/80 p-5 shadow-2xl shadow-black/[0.06] backdrop-blur md:p-6;
+  }
+
+  .signal-panel__header {
+    @apply flex items-center justify-between gap-4 border-b border-black/10 pb-4 text-sm text-muted-foreground;
+  }
+
+  .signal-panel__header strong {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-foreground;
+  }
+
+  .signal-panel p {
+    @apply mt-5 text-sm leading-7 text-muted-foreground;
+  }
+
+  .system-map {
+    @apply my-6 grid gap-3 rounded-lg border border-black/10 bg-[#0d1117] p-4;
+  }
+
+  .system-node {
+    @apply relative rounded-md border border-white/10 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white/70;
+  }
+
+  .system-node::after {
+    content: "";
+    @apply absolute -bottom-3 left-6 h-3 w-px bg-white/20;
+  }
+
+  .system-node:last-child::after {
+    display: none;
+  }
+
+  .system-node--primary {
+    @apply border-primary/70 bg-primary/20 text-white;
+  }
+
+  .proof-strip {
+    @apply grid overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04] sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .proof-strip div {
+    @apply border-b border-black/10 p-5 sm:border-r lg:border-b-0;
+  }
+
+  .proof-strip div:last-child {
+    @apply border-r-0;
+  }
+
+  .proof-strip strong {
+    @apply block text-2xl font-semibold text-foreground;
+  }
+
+  .proof-strip span {
+    @apply mt-2 block text-sm leading-6 text-muted-foreground;
+  }
+
+  .section-block {
+    @apply py-16 sm:py-20;
+  }
+
+  .section-heading {
+    @apply mb-8 max-w-3xl;
+  }
+
+  .section-heading h2,
+  .closing-band h2 {
+    @apply mt-3 text-3xl font-semibold leading-tight text-foreground sm:text-4xl;
+  }
+
+  .section-heading p:not(.section-kicker),
+  .closing-band p {
+    @apply mt-4 text-base leading-7 text-muted-foreground;
+  }
+
+  .case-study-list {
+    @apply grid gap-5;
+  }
+
+  .case-study {
+    @apply grid gap-6 rounded-lg border border-black/10 bg-white p-5 shadow-xl shadow-black/[0.04] lg:grid-cols-[4rem_1fr_22rem] lg:p-6;
+  }
+
+  .case-study__index {
+    @apply text-sm font-bold text-muted-foreground;
+  }
+
+  .case-study__topline {
+    @apply flex flex-wrap items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  .case-study__topline a {
+    @apply rounded-full border border-black/10 px-3 py-1.5 text-[0.7rem] font-bold text-foreground hover:border-primary hover:text-primary;
+  }
+
+  .case-study h3 {
+    @apply mt-4 text-3xl font-semibold text-foreground;
+  }
+
+  .case-grid {
+    @apply mt-6 grid gap-4 md:grid-cols-2;
+  }
+
+  .case-grid div {
+    @apply border-t border-black/10 pt-4;
+  }
+
+  .case-grid span,
+  .architecture-panel > span {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .case-grid p {
+    @apply mt-2 text-sm leading-7 text-muted-foreground;
+  }
+
+  .architecture-panel {
+    @apply rounded-md border border-black/10 bg-secondary/55 p-4;
+  }
+
+  .architecture-panel ol {
+    @apply mt-4 space-y-3;
+    counter-reset: architecture-step;
+  }
+
+  .architecture-panel li {
+    @apply flex items-start gap-3 text-sm leading-6 text-foreground/75;
+    counter-increment: architecture-step;
+  }
+
+  .architecture-panel li::before {
+    content: counter(architecture-step, decimal-leading-zero);
+    @apply text-xs font-bold text-muted-foreground;
+  }
+
+  .architecture-panel .tag-list {
+    @apply mt-5 border-t border-black/10 pt-4;
+  }
+
+  .experience-grid {
+    @apply grid gap-5 lg:grid-cols-2;
+  }
+
+  .experience-card,
+  .stack-card,
+  .closing-band {
+    @apply rounded-lg border border-black/10 bg-white p-5 shadow-xl shadow-black/[0.04] sm:p-6;
+  }
+
+  .experience-card h3,
+  .stack-card h3 {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  .experience-card dl {
+    @apply mt-6 grid gap-5;
+  }
+
+  .experience-card div {
+    @apply border-t border-black/10 pt-4;
+  }
+
+  .experience-card dt {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .experience-card dd {
+    @apply mt-2 text-sm leading-7 text-muted-foreground;
+  }
+
+  .stack-section {
+    @apply pt-8;
+  }
+
+  .stack-grid {
+    @apply grid gap-4 md:grid-cols-2 lg:grid-cols-5;
+  }
+
+  .stack-card {
+    @apply flex min-h-48 flex-col;
+  }
+
+  .stack-card .tag-list {
+    @apply mt-5;
+  }
+
+  .closing-band {
+    @apply mb-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center;
+  }
+
+  .closing-band .closing-actions {
+    @apply mt-0;
+  }
+
+  .stack-grid--wide {
+    @apply lg:grid-cols-4;
+  }
+
+  .resume-layout {
+    @apply grid gap-5 lg:grid-cols-[0.85fr_1.15fr];
+  }
+
+  .resume-major {
+    @apply text-lg font-medium text-foreground/80;
+  }
+
+  .resume-period {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .credential-list {
+    @apply overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl shadow-black/[0.04];
+  }
+
+  .credential-row {
+    @apply flex items-center justify-between gap-4 border-b border-black/10 px-5 py-4 text-sm last:border-b-0;
+  }
+
+  .credential-row span {
+    @apply font-medium text-foreground;
+  }
+
+  .credential-row strong {
+    @apply text-muted-foreground;
+  }
+
+  .project-index {
+    @apply grid gap-4;
+  }
+
+  .project-row {
+    @apply grid gap-5 p-5 transition hover:border-primary/60 hover:shadow-2xl hover:shadow-black/[0.06] md:grid-cols-[3.5rem_1fr] sm:p-6;
+  }
+
+  .project-row__number {
+    @apply text-sm font-bold text-muted-foreground;
+  }
+
+  .project-row__meta {
+    @apply flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  .project-row h2 {
+    @apply mt-3 text-2xl font-semibold text-foreground;
+  }
+
+  .project-row__grid {
+    @apply mt-5 grid gap-4 md:grid-cols-2;
+  }
+
+  .project-row__grid div {
+    @apply border-t border-black/10 pt-4;
+  }
+
+  .project-row__grid strong {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .project-row .tag-list {
+    @apply mt-5;
+  }
+
+  .contact-layout {
+    @apply grid gap-5 lg:grid-cols-[0.85fr_1.15fr];
+  }
+
+  .contact-links {
+    @apply grid gap-4 self-start;
+  }
+
+  .contact-card {
+    @apply grid gap-2 p-5 transition hover:border-primary/60;
+  }
+
+  .contact-card span {
+    @apply text-xs font-bold uppercase tracking-[0.08em] text-primary;
+  }
+
+  .contact-card strong {
+    @apply break-all text-base font-semibold text-foreground;
+  }
+
+  .contact-form {
+    @apply p-5 sm:p-6;
+  }
+
+  .contact-form label {
+    @apply mt-5 block text-sm font-semibold text-foreground;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    @apply mt-2 w-full rounded-md border border-black/10 bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-primary disabled:opacity-50;
+  }
+
+  .contact-form textarea {
+    @apply resize-none;
+  }
+
+  .contact-form .button-primary {
+    @apply mt-6;
+  }
+
+  .form-status {
+    @apply rounded-md border px-4 py-3 text-sm font-medium;
+  }
+
+  .form-status--success {
+    @apply border-primary/30 bg-primary/10 text-primary;
+  }
+
+  .form-status--error {
+    @apply border-red-500/30 bg-red-500/10 text-red-600;
+  }
+
+  .state-panel {
+    @apply p-8 text-center;
+  }
+
+  .state-panel a {
+    @apply mt-3 inline-flex text-sm font-semibold text-primary hover:underline;
+  }
+
+  .loading-line {
+    @apply mx-auto mb-4 h-1 w-32 overflow-hidden rounded-full bg-secondary;
+  }
+
+  .loading-line::after {
+    content: "";
+    @apply block h-full w-1/2 rounded-full bg-primary;
+    animation: loading-slide 1.2s ease-in-out infinite;
+  }
+
+  .blog-list {
+    @apply grid gap-4;
+  }
+
+  .blog-row {
+    @apply grid gap-5 p-5 transition hover:border-primary/60 md:grid-cols-[14rem_1fr];
+  }
+
+  .blog-row__image {
+    @apply relative aspect-[16/10] overflow-hidden rounded-md border border-black/10 bg-secondary md:aspect-auto md:min-h-36;
+  }
+
+  .blog-row__meta {
+    @apply flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  .blog-row h2 {
+    @apply mt-3 text-2xl font-semibold text-foreground;
   }
 }
 
 @layer utilities {
-  /* IDE Layout */
-  .ide-container {
-    @apply h-screen flex flex-col overflow-hidden;
-  }
-  
-  .ide-titlebar {
-    @apply h-8 bg-sidebar border-b border-border flex items-center px-2 text-xs text-muted-foreground;
-  }
-  
-  .ide-main {
-    @apply flex-1 flex overflow-hidden;
-  }
-  
-  .ide-sidebar {
-    @apply w-64 bg-sidebar border-r border-border flex flex-col overflow-hidden;
-  }
-  
-  .ide-editor {
-    @apply flex-1 bg-editor flex flex-col overflow-hidden;
-  }
-  
-  /* File Tree */
-  .file-tree-item {
-    @apply flex items-center gap-2 px-3 py-1 text-sm cursor-pointer hover:bg-muted/50 transition-colors;
-  }
-  
-  .file-tree-item.active {
-    @apply bg-muted text-primary;
-  }
-  
-  .file-tree-folder {
-    @apply flex items-center gap-2 px-3 py-1 text-sm cursor-pointer hover:bg-muted/50 transition-colors font-medium;
-  }
-  
-  /* Tabs */
-  .editor-tabs {
-    @apply flex items-center bg-tab border-b border-border overflow-x-auto;
-  }
-  
-  .editor-tab {
-    @apply flex items-center gap-2 px-4 py-2 text-sm border-r border-border cursor-pointer hover:bg-muted/30 transition-colors;
-  }
-  
-  .editor-tab.active {
-    @apply bg-editor text-primary border-t-2 border-t-primary;
-  }
-  
-  /* Terminal Typing Effect */
-  .terminal-text {
-    @apply font-mono text-sm;
-  }
-  
-  .terminal-prompt {
-    @apply text-accent font-mono;
-  }
-  
-  .typing-cursor {
-    @apply inline-block w-2 h-4 bg-primary ml-1 animate-blink;
-  }
-  
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
-  
-  /* Command Palette */
-  .command-palette {
-    @apply fixed top-1/4 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-secondary border border-border rounded-lg shadow-2xl z-50;
-  }
-  
-  .command-input {
-    @apply w-full px-4 py-3 bg-transparent border-b border-border text-foreground placeholder-muted-foreground focus:outline-none font-mono;
-  }
-  
-  .command-item {
-    @apply flex items-center gap-3 px-4 py-2 cursor-pointer hover:bg-muted transition-colors;
-  }
-  
-  .command-item.selected {
-    @apply bg-muted;
-  }
-  
-  /* Code Syntax Highlighting */
-  .code-block {
-    @apply bg-muted/50 rounded p-4 font-mono text-sm overflow-x-auto;
-  }
-  
-  .syntax-keyword { @apply text-[#C792EA]; }
-  .syntax-string { @apply text-[#C3E88D]; }
-  .syntax-number { @apply text-[#F78C6C]; }
-  .syntax-function { @apply text-[#82AAFF]; }
-  .syntax-comment { @apply text-muted-foreground italic; }
-  .syntax-property { @apply text-[#89DDFF]; }
-  
-  /* Glitch Effect */
-  .glitch {
-    position: relative;
-  }
-  
-  .glitch:hover::before,
-  .glitch:hover::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .glitch:hover::before {
-    animation: glitch-1 0.3s infinite;
-    color: #ff00ff;
-    z-index: -1;
-  }
-  
-  .glitch:hover::after {
-    animation: glitch-2 0.3s infinite;
-    color: #00ffff;
-    z-index: -2;
-  }
-  
-  @keyframes glitch-1 {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-  }
-  
-  @keyframes glitch-2 {
-    0% { transform: translate(0); }
-    20% { transform: translate(2px, -2px); }
-    40% { transform: translate(2px, 2px); }
-    60% { transform: translate(-2px, -2px); }
-    80% { transform: translate(-2px, 2px); }
-    100% { transform: translate(0); }
-  }
-  
-  /* Terminal Button */
-  .terminal-button {
-    @apply px-4 py-2 bg-transparent border border-primary text-primary font-mono text-sm hover:bg-primary hover:text-background transition-all cursor-pointer;
-  }
-  
-  .terminal-button:hover {
-    box-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
-  }
-  
-  /* Scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
-  
+
   ::-webkit-scrollbar-track {
-    @apply bg-sidebar;
+    @apply bg-background;
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted;
+    @apply bg-black/20;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground;
+    @apply bg-black/35;
   }
-  
-  /* Selection */
-  ::selection {
-    @apply bg-primary/30;
-  }
-  
-  /* Line Numbers */
-  .line-numbers {
-    @apply text-muted-foreground font-mono text-xs select-none pr-4 text-right;
+
+  @keyframes loading-slide {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(60%);
+    }
+    100% {
+      transform: translateX(220%);
+    }
   }
 }

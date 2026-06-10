@@ -1,81 +1,94 @@
-"use client";
+const education = {
+  school: "국립한밭대학교",
+  major: "컴퓨터공학 전공",
+  period: "2021.03 - 2027.02 예정",
+};
 
-import { motion } from "framer-motion";
+const skillGroups = [
+  { category: "AI / LLM", skills: ["RAG", "OCR", "PyTorch", "Model Evaluation"] },
+  { category: "Backend", skills: ["Python", "Node.js", "Flask", "REST API"] },
+  { category: "Frontend", skills: ["Next.js", "TypeScript", "Vue.js", "Tailwind CSS"] },
+  { category: "Cloud / DevOps", skills: ["AWS", "NCP", "Docker", "Jenkins", "GitHub Actions"] },
+  { category: "Database", skills: ["MongoDB", "Document Data"] },
+];
+
+const certifications = [
+  { name: "AWS Certified Cloud Practitioner", year: "2025" },
+  { name: "NAVER Cloud Platform Certified Professional", year: "2026" },
+  { name: "NAVER Cloud Platform Certified Associate", year: "2025" },
+  { name: "TOEIC 860", year: "2024" },
+  { name: "정보처리기능사", year: "2020" },
+];
+
+const resumeSignals = [
+  "AI 프로젝트를 기능 구현보다 문제 해결과 시스템 설계 관점으로 설명할 수 있습니다.",
+  "Docker, AWS/NCP, CI/CD 등 배포와 운영에 필요한 기반 지식을 함께 쌓고 있습니다.",
+  "문서 처리, 연합학습, 브라우저 자동화처럼 서로 다른 문제를 제품 흐름으로 정리해본 경험이 있습니다.",
+];
 
 export default function ResumePage() {
-  const skillGroups = [
-    { category: "Frontend", skills: ["Next.js", "TypeScript", "Tailwind CSS", "HTML/CSS", "Vanilla JavaScript"] },
-    { category: "Backend", skills: ["Node.js", "Flask", "MongoDB"] },
-    { category: "Tools", skills: ["Git", "GitHub", "VS Code"] },
-  ];
-  const certifications = [
-    { name: "AWS Certified Cloud Practitioner", year: "2025" },
-    { name: "NAVER Cloud Platform Certified Professional", year: "2026" },
-    { name: "NAVER Cloud Platform Certified Associate", year: "2025" },
-    { name: "TOEIC 860점", year: "2024" },
-    { name: "정보처리기능사", year: "2020" },
-  ];
-
   return (
-    <div className="min-h-screen bg-background text-foreground pt-24 pb-20">
-      <div className="max-w-6xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="text-accent font-mono">$</span> cat resume.md
-          </h1>
-          <p className="text-xl text-muted-foreground mb-12">Education, Skills & Certifications</p>
+    <div className="subpage-shell">
+      <section className="subpage-hero">
+        <p className="section-kicker">Resume</p>
+        <h1>AI 제품 엔지니어링 역할에 맞춘 역량 요약</h1>
+        <p>
+          학력, 기술 스택, 자격증을 단순 나열하지 않고 AI 시스템을 만들고 배포하는 데 필요한 근거로
+          재구성했습니다.
+        </p>
+      </section>
 
-          {/* Education */}
-          <div className="mb-12 p-6 bg-muted/30 border border-border rounded-xl">
-            <h2 className="text-2xl font-bold mb-6">
-              <span className="text-accent font-mono">#</span> Education
-            </h2>
-            <div className="space-y-2">
-              <h3 className="text-xl font-bold">컴퓨터공학</h3>
-              <p className="text-muted-foreground">국립한밭대학교</p>
-              <p className="text-sm text-muted-foreground font-mono">2021.03 - 2027.02 (재학 중)</p>
-            </div>
-          </div>
+      <section className="resume-layout">
+        <article className="detail-panel">
+          <p className="section-kicker">Education</p>
+          <h2>{education.school}</h2>
+          <p className="resume-major">{education.major}</p>
+          <p className="resume-period">{education.period}</p>
+        </article>
 
-          {/* Tech Stack */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">
-              <span className="text-accent font-mono">#</span> Technical Skills
-            </h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              {skillGroups.map((group) => (
-                <div key={group.category} className="p-4 bg-muted/30 border border-border rounded-xl">
-                  <div className="text-sm font-mono text-accent mb-3">{group.category}</div>
-                  <div className="space-y-2">
-                    {group.skills.map((skill) => (
-                      <div key={skill} className="text-sm font-mono">• {skill}</div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+        <article className="detail-panel">
+          <p className="section-kicker">Signal</p>
+          <div className="focus-list focus-list--compact">
+            {resumeSignals.map((item) => (
+              <div key={item}>{item}</div>
+            ))}
           </div>
+        </article>
+      </section>
 
-          {/* Certifications */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6">
-              <span className="text-accent font-mono">#</span> Certifications
-            </h2>
-            <div className="space-y-3">
-              {certifications.map((cert) => (
-                <div key={cert.name} className="flex items-center justify-between p-4 bg-muted/30 border border-border rounded-xl hover:border-primary transition-colors">
-                  <span className="font-mono text-sm">{cert.name}</span>
-                  <span className="text-sm text-muted-foreground font-mono">{cert.year}</span>
-                </div>
-              ))}
+      <section className="section-block">
+        <div className="section-heading">
+          <p className="section-kicker">Technical Skills</p>
+          <h2>AI 제품 개발에 필요한 영역별 기술</h2>
+        </div>
+        <div className="stack-grid">
+          {skillGroups.map((group) => (
+            <article key={group.category} className="stack-card">
+              <h3>{group.category}</h3>
+              <div className="tag-list">
+                {group.skills.map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="section-heading">
+          <p className="section-kicker">Certifications</p>
+          <h2>클라우드와 기본 역량을 뒷받침하는 자격</h2>
+        </div>
+        <div className="credential-list">
+          {certifications.map((cert) => (
+            <div key={cert.name} className="credential-row">
+              <span>{cert.name}</span>
+              <strong>{cert.year}</strong>
             </div>
-          </div>
-        </motion.div>
-      </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

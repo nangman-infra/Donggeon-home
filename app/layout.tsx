@@ -5,8 +5,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "동건 | 개발자 포트폴리오",
-  description: "Cloud Engineer & DevOps Enthusiast",
+  title: "임동건 | AI 제품 엔지니어 포트폴리오",
+  description: "프로덕션 수준의 AI 시스템, 워크플로우, 클라우드 배포 경험을 보여주는 포트폴리오.",
 };
 
 export default function RootLayout({
@@ -17,11 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        <link
-          rel="preconnect"
-          href="https://cdn.jsdelivr.net"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
