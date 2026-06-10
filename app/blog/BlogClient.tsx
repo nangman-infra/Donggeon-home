@@ -48,7 +48,7 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
           <p className="section-kicker">Learning Notes</p>
           <h1>기술을 배우고 실험한 과정을 기록합니다.</h1>
           <p>
-            블로그는 메인 포트폴리오가 아니라 보조 증거입니다. 프로젝트에서 다룬 기술, 실험 과정, 문제 해결
+            블로그는 메인 포트폴리오가 아니라 보조 자료입니다. 프로젝트에서 다룬 기술, 실험 과정, 문제 해결
             기록을 더 자세히 남기는 공간입니다.
           </p>
         </div>

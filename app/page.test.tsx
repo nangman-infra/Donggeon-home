@@ -10,8 +10,8 @@ describe("donggeon main pages", () => {
   it("renders the AI product engineering home page", () => {
     render(React.createElement(Home));
 
-    expect(screen.getByText("실제 업무 흐름에 붙는 AI 시스템을 만드는 엔지니어.")).toBeInTheDocument();
-    expect(screen.getByText("일반 프로젝트 카드가 아니라 엔지니어링 케이스 스터디로 보여줍니다.")).toBeInTheDocument();
+    expect(screen.getByText("AI 기능을 실제 업무 흐름으로 연결하는 엔지니어.")).toBeInTheDocument();
+    expect(screen.getByText("기술 목록보다 문제와 시스템 설계를 먼저 보여줍니다.")).toBeInTheDocument();
     expect(screen.getByText("Budgetly")).toBeInTheDocument();
     expect(screen.getByText("Federated Learning")).toBeInTheDocument();
     expect(screen.getByText("Dev Card Hunter")).toBeInTheDocument();

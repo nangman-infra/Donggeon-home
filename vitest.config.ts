@@ -4,6 +4,11 @@ export default defineConfig({
   esbuild: {
     jsx: "automatic",
     jsxImportSource: "react",
+    tsconfigRaw: {
+      compilerOptions: {
+        jsx: "react-jsx",
+      },
+    },
   },
   resolve: {
     tsconfigPaths: true,

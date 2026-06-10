@@ -31,7 +31,7 @@ const projects = [
     year: "2025",
     category: "실시간 제어",
     problem: "드론 배송 시나리오에서 실시간 상태 확인과 제어 흐름을 웹에서 다뤄야 했습니다.",
-    system: "PWA와 Flask, Parrot Olympe SDK를 연결해 드론 배송 시스템 흐름을 구현했습니다.",
+    system: "PWA와 Flask, Parrot Olympe SDK를 연결해 드론 배송 시스템의 기본 흐름을 구현했습니다.",
     tags: ["Next.js", "TypeScript", "React", "Python Flask", "Parrot Olympe SDK"],
     link: "https://github.com/DroneDelivery2/Embedded_PJ",
   },
@@ -62,8 +62,8 @@ export default function ProjectsPage() {
         <p className="section-kicker">Projects</p>
         <h1>프로젝트를 기술 목록이 아니라 시스템 판단의 증거로 보여줍니다.</h1>
         <p>
-          각 프로젝트는 문제, 시스템 접근, 기술 스택을 함께 보여줍니다. 채용 리뷰어가 빠르게 맥락을 잡고
-          더 깊게 볼 프로젝트를 선택할 수 있도록 구성했습니다.
+          각 프로젝트는 문제, 시스템 접근, 기술 스택을 함께 보여줍니다. 리뷰어가 빠르게 맥락을 잡고 더 깊게 볼
+          프로젝트를 선택할 수 있도록 구성했습니다.
         </p>
       </section>
 
