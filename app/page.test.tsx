@@ -12,6 +12,16 @@ import ResumePage from "@/app/resume/page";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 
+const getRequiredElement = <T extends Element>(container: HTMLElement, selector: string): T => {
+  const element = container.querySelector<T>(selector);
+
+  if (element === null) {
+    throw new Error(`Expected element matching selector "${selector}" to exist.`);
+  }
+
+  return element;
+};
+
 describe("portfolio pages", () => {
   afterEach(() => {
     cleanup();
@@ -57,18 +67,15 @@ describe("portfolio pages", () => {
 
     const { container } = render(React.createElement(ContactPage));
 
-    const name = container.querySelector<HTMLInputElement>('input[name="name"]');
-    const email = container.querySelector<HTMLInputElement>('input[name="email"]');
-    const message = container.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    const name = getRequiredElement<HTMLInputElement>(container, 'input[name="name"]');
+    const email = getRequiredElement<HTMLInputElement>(container, 'input[name="email"]');
+    const message = getRequiredElement<HTMLTextAreaElement>(container, 'textarea[name="message"]');
+    const submitButton = getRequiredElement<HTMLButtonElement>(container, 'button[type="submit"]');
 
-    expect(name).not.toBeNull();
-    expect(email).not.toBeNull();
-    expect(message).not.toBeNull();
-
-    fireEvent.change(name!, { target: { value: "Donggeon" } });
-    fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
-    fireEvent.change(message!, { target: { value: "hello" } });
-    fireEvent.click(container.querySelector<HTMLButtonElement>('button[type="submit"]')!);
+    fireEvent.change(name, { target: { value: "Donggeon" } });
+    fireEvent.change(email, { target: { value: "donggeon@example.com" } });
+    fireEvent.change(message, { target: { value: "hello" } });
+    fireEvent.click(submitButton);
 
     await waitFor(() => {
       expect(name).toHaveValue("");
@@ -81,14 +88,15 @@ describe("portfolio pages", () => {
     vi.mocked(emailjs.send).mockRejectedValueOnce(new Error("mail failed"));
 
     const { container } = render(React.createElement(ContactPage));
-    const name = container.querySelector<HTMLInputElement>('input[name="name"]');
-    const email = container.querySelector<HTMLInputElement>('input[name="email"]');
-    const message = container.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    const name = getRequiredElement<HTMLInputElement>(container, 'input[name="name"]');
+    const email = getRequiredElement<HTMLInputElement>(container, 'input[name="email"]');
+    const message = getRequiredElement<HTMLTextAreaElement>(container, 'textarea[name="message"]');
+    const submitButton = getRequiredElement<HTMLButtonElement>(container, 'button[type="submit"]');
 
-    fireEvent.change(name!, { target: { value: "Donggeon" } });
-    fireEvent.change(email!, { target: { value: "donggeon@example.com" } });
-    fireEvent.change(message!, { target: { value: "hello" } });
-    fireEvent.click(container.querySelector<HTMLButtonElement>('button[type="submit"]')!);
+    fireEvent.change(name, { target: { value: "Donggeon" } });
+    fireEvent.change(email, { target: { value: "donggeon@example.com" } });
+    fireEvent.change(message, { target: { value: "hello" } });
+    fireEvent.click(submitButton);
 
     await waitFor(() => {
       expect(container.querySelector(".form-status--error")).not.toBeNull();
@@ -111,7 +119,7 @@ describe("portfolio pages", () => {
     blogRender.unmount();
     const { container } = render(React.createElement(Header));
     expect(container.querySelector('a[href="/"]')).not.toBeNull();
-    fireEvent.click(container.querySelector("button")!);
+    fireEvent.click(getRequiredElement<HTMLButtonElement>(container, "button"));
     expect(container.querySelectorAll('a[href="/projects"]').length).toBeGreaterThanOrEqual(1);
 
     cleanup();
