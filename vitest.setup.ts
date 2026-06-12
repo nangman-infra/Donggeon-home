@@ -5,7 +5,17 @@ import { vi } from "vitest";
 vi.mock("framer-motion", () => {
   const createMotionComponent = (tag: string) => {
     const MotionComponent = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
-      ({ children, ...props }, ref) => React.createElement(tag, { ...props, ref }, children)
+      ({ children, ...props }, ref) => {
+        const domProps = { ...props } as React.HTMLAttributes<HTMLElement> & Record<string, unknown>;
+        delete domProps.animate;
+        delete domProps.initial;
+        delete domProps.transition;
+        delete domProps.variants;
+        delete domProps.viewport;
+        delete domProps.whileInView;
+
+        return React.createElement(tag, { ...domProps, ref }, children);
+      }
     );
     MotionComponent.displayName = `MockMotion(${tag})`;
     return MotionComponent;
@@ -18,6 +28,8 @@ vi.mock("framer-motion", () => {
         get: (_, tag) => createMotionComponent(String(tag)),
       }
     ),
+    useScroll: () => ({ scrollYProgress: 0 }),
+    useTransform: (_value: unknown, _input: unknown, output: unknown[]) => output[0],
   };
 });
 

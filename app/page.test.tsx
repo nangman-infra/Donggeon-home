@@ -32,18 +32,18 @@ describe("portfolio pages", () => {
   it("renders the home page case studies and core calls to action", () => {
     render(React.createElement(Home));
 
-    expect(screen.getAllByText("Budgetly").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Federated Learning").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Dev Card Hunter").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("GitHub").length).toBeGreaterThanOrEqual(3);
-    expect(screen.getAllByText("AWS EC2").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Orbit").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Enterprise RAG Platform").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("K8s Survival Camp").length).toBeGreaterThanOrEqual(1);
+    expect(document.querySelector('a[href="#systems"]')).not.toBeNull();
+    expect(document.querySelector('a[href="mailto:gunni6112@gmail.com"]')).not.toBeNull();
   });
 
   it("renders about and resume evidence sections", () => {
     const { rerender } = render(React.createElement(AboutPage));
 
-    expect(screen.getByText("Cloud Platforms")).toBeInTheDocument();
-    expect(screen.getByText("Container & DevOps")).toBeInTheDocument();
+    expect(screen.getByText("AI Product")).toBeInTheDocument();
+    expect(screen.getByText("Infrastructure")).toBeInTheDocument();
     expect(screen.getAllByText("Model Evaluation").length).toBeGreaterThanOrEqual(1);
 
     rerender(React.createElement(ResumePage));
@@ -56,10 +56,10 @@ describe("portfolio pages", () => {
   it("renders the full projects index", () => {
     render(React.createElement(ProjectsPage));
 
-    expect(screen.getAllByText("Budgetly").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Drone Delivery System")).toBeInTheDocument();
-    expect(screen.getByText("Heterogeneous Federated Learning Testbed")).toBeInTheDocument();
-    expect(screen.getAllByText("Parrot Olympe SDK").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Orbit").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("Enterprise RAG Platform")).toBeInTheDocument();
+    expect(screen.getByText("K8s Survival Camp")).toBeInTheDocument();
+    expect(screen.getAllByText("Qdrant").length).toBeGreaterThanOrEqual(1);
   });
 
   it("submits the contact form successfully", async () => {
@@ -120,7 +120,7 @@ describe("portfolio pages", () => {
     const { container } = render(React.createElement(Header));
     expect(container.querySelector('a[href="/"]')).not.toBeNull();
     fireEvent.click(getRequiredElement<HTMLButtonElement>(container, "button"));
-    expect(container.querySelectorAll('a[href="/projects"]').length).toBeGreaterThanOrEqual(1);
+    expect(container.querySelectorAll('a[href="/#systems"]').length).toBeGreaterThanOrEqual(1);
 
     cleanup();
     render(React.createElement(Footer));

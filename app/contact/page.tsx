@@ -8,7 +8,7 @@ const contactLinks = [
   { label: "GitHub", value: "github.com/whitejbb", href: "https://github.com/whitejbb" },
   {
     label: "LinkedIn",
-    value: "프로필 보기",
+    value: "임동건 프로필",
     href: "https://www.linkedin.com/in/%EB%8F%99%EA%B1%B4-%EC%9E%84-a574ab386/",
   },
 ];
@@ -59,8 +59,8 @@ export default function ContactPage() {
     <div className="subpage-shell">
       <section className="subpage-hero">
         <p className="section-kicker">Contact</p>
-        <h1>프로젝트나 역할에 대해 편하게 연락 주세요.</h1>
-        <p>Applied AI, AI 백엔드, 문서 처리 자동화, FDE/AX 역할에 관심이 있습니다. 채용, 협업, 기술 대화 모두 괜찮습니다.</p>
+        <h1>AI 제품, RAG, 에이전트, 자동화에 대해 이야기하고 싶다면 편하게 연락 주세요.</h1>
+        <p>채용, 협업, 기술 자문, 제품 실험 모두 환영합니다. 문제의 맥락과 기대하는 결과를 함께 보내주시면 더 빠르게 이해할 수 있습니다.</p>
       </section>
 
       <section className="contact-layout">

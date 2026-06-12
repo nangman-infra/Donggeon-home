@@ -1,32 +1,32 @@
 const operatingPrinciples = [
   {
-    title: "문제를 먼저 정리합니다",
-    body: "기술을 고르기 전에 어떤 작업이 느리고 반복적인지, 어디에서 검토가 필요한지부터 확인합니다.",
+    title: "문제의 반복성을 먼저 봅니다.",
+    body: "AI를 붙이기 전에 어떤 판단이 반복되고, 어디에서 맥락이 사라지고, 어떤 결과를 사람이 검증해야 하는지 확인합니다.",
   },
   {
-    title: "화면과 실행 환경까지 봅니다",
-    body: "AI 출력이 실제로 쓰이려면 결과를 확인하는 화면, 예외 상황, 배포 환경까지 함께 맞아야 한다고 생각합니다.",
+    title: "모델과 인터페이스를 함께 설계합니다.",
+    body: "좋은 답변도 사용자가 근거를 확인할 수 없다면 제품 경험이 되기 어렵습니다. 출력, 근거, 수정 흐름을 같은 시스템으로 봅니다.",
   },
   {
-    title: "배운 점을 다음 작업에 연결합니다",
-    body: "모델, 백엔드, 클라우드, 자동화 경험을 기록으로 남기고 다음 프로젝트에서 더 나은 선택을 하는 근거로 삼습니다.",
+    title: "배포 이후의 운영을 기준으로 만듭니다.",
+    body: "데모가 아니라 실제 환경에서 계속 쓰이는 AI를 목표로 로그, 예외, 비용, 보안, 업데이트 방식을 함께 고려합니다.",
   },
 ];
 
 const focusAreas = [
-  "문서 처리와 OCR 기반 업무 자동화",
-  "RAG와 LLM workflow 설계",
-  "Flask/Node.js 기반 AI 백엔드 구성",
-  "Docker와 클라우드 배포 흐름",
-  "모델 평가와 실패 케이스 정리",
-  "로그, 모니터링, CI/CD 등 운영 기반",
+  "AI Agents와 도구 사용 흐름 설계",
+  "Qdrant, Hybrid Search, Reranking 기반 Enterprise RAG",
+  "브라우저 자동화와 업무 세션 복원",
+  "Local LLM Infrastructure와 사내 배포 전략",
+  "OCR 및 Document Intelligence 파이프라인",
+  "제품 검증을 위한 인터페이스와 운영 지표",
 ];
 
 const skillGroups = [
-  { category: "Cloud Platforms", skills: ["AWS", "NCP"] },
-  { category: "Container & DevOps", skills: ["Docker", "Jenkins", "GitHub Actions", "Linux"] },
-  { category: "AI / ML", skills: ["PyTorch", "OCR", "RAG", "Model Evaluation"] },
-  { category: "Application", skills: ["Python", "TypeScript", "Node.js", "Vue.js", "Next.js"] },
+  { category: "AI Product", skills: ["RAG", "Agents", "OCR", "Local LLM", "Model Evaluation"] },
+  { category: "Application", skills: ["Next.js", "TypeScript", "Python", "Node.js", "Vue.js"] },
+  { category: "Infrastructure", skills: ["Docker", "AWS", "NCP", "Linux", "GitHub Actions"] },
+  { category: "Data Systems", skills: ["Qdrant", "Hybrid Search", "MongoDB", "API Design"] },
 ];
 
 export default function AboutPage() {
@@ -34,10 +34,10 @@ export default function AboutPage() {
     <div className="subpage-shell">
       <section className="subpage-hero">
         <p className="section-kicker">About</p>
-        <h1>AI 기능이 실제로 쓰이는 흐름에 관심이 있습니다.</h1>
+        <h1>AI 기능을 실제 업무 흐름 안에서 작동하는 제품으로 바꾸는 데 집중합니다.</h1>
         <p>
-          컴퓨터공학을 기반으로 AI/LLM, 백엔드, 클라우드 배포를 함께 학습하고 있습니다. 모델을 만드는 것뿐 아니라
-          결과를 확인하고 업무에 반영하는 과정까지 설계하는 데 관심이 있습니다.
+          관심사는 모델 자체보다 모델이 사용자의 문제를 해결하는 방식입니다. 문서 처리, 사내 검색, 브라우저 에이전트처럼
+          현실의 복잡한 맥락을 다루는 AI 시스템을 설계하고 구현합니다.
         </p>
       </section>
 
@@ -53,8 +53,8 @@ export default function AboutPage() {
       <section className="detail-panel">
         <div className="section-heading">
           <p className="section-kicker">Current Focus</p>
-          <h2>요즘 집중하는 영역</h2>
-          <p>AI 기능을 화면, API, 배포 환경과 연결하는 데 필요한 기초 역량을 프로젝트로 쌓고 있습니다.</p>
+          <h2>현재 집중하고 있는 영역</h2>
+          <p>검색, 추론, 자동화, 배포를 하나의 제품 흐름으로 연결하는 작업을 깊게 파고 있습니다.</p>
         </div>
         <div className="focus-list">
           {focusAreas.map((item) => (
@@ -66,7 +66,7 @@ export default function AboutPage() {
       <section className="section-block">
         <div className="section-heading">
           <p className="section-kicker">Capabilities</p>
-          <h2>다뤄본 기술</h2>
+          <h2>제품을 만들 때 사용하는 기술 기반</h2>
         </div>
         <div className="stack-grid stack-grid--wide">
           {skillGroups.map((group) => (

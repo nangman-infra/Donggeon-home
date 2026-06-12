@@ -3,7 +3,7 @@ export function Footer() {
 
   return (
     <footer className="site-footer">
-      <p>© {currentYear} 임동건. Built with Next.js.</p>
+      <p>(c) {currentYear} 임동건. Building AI products from retrieval to runtime.</p>
       <div>
         <a href="https://github.com/whitejbb" target="_blank" rel="noopener noreferrer">
           GitHub

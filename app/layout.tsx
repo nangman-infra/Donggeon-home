@@ -5,8 +5,8 @@ import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "임동건 | AI Product Engineer Portfolio",
-  description: "AI 기능을 실제 제품 흐름과 운영 가능한 시스템으로 연결하는 포트폴리오입니다.",
+  title: "임동건 | AI Product Engineer",
+  description: "RAG, Agent, Browser Automation, Local LLM 기반 AI 제품과 운영 가능한 AI 시스템을 만드는 엔지니어.",
 };
 
 export default function RootLayout({

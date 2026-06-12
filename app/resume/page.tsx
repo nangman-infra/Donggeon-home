@@ -5,11 +5,11 @@ const education = {
 };
 
 const skillGroups = [
-  { category: "AI / LLM", skills: ["RAG", "OCR", "PyTorch", "Model Evaluation"] },
+  { category: "AI / LLM", skills: ["RAG", "Agents", "OCR", "PyTorch", "Model Evaluation"] },
   { category: "Backend", skills: ["Python", "Node.js", "Flask", "REST API"] },
-  { category: "Frontend", skills: ["Next.js", "TypeScript", "Vue.js", "Tailwind CSS"] },
+  { category: "Frontend", skills: ["Next.js", "TypeScript", "React", "Vue.js", "Tailwind CSS"] },
   { category: "Cloud / DevOps", skills: ["AWS", "NCP", "Docker", "Jenkins", "GitHub Actions"] },
-  { category: "Database", skills: ["MongoDB", "Document Data"] },
+  { category: "Data", skills: ["Qdrant", "MongoDB", "Document Data", "Hybrid Search"] },
 ];
 
 const certifications = [
@@ -21,9 +21,9 @@ const certifications = [
 ];
 
 const resumeSignals = [
-  "AI 프로젝트를 문제, 구현 방식, 배운 점 기준으로 정리해 설명할 수 있습니다.",
-  "Docker, AWS/NCP, CI/CD 등 실행과 배포에 필요한 기초를 함께 학습하고 있습니다.",
-  "문서 처리, 연합학습, 브라우저 자동화처럼 다른 성격의 문제를 직접 구현해본 경험이 있습니다.",
+  "AI 프로젝트를 문제 정의, 시스템 설계, 검증 흐름, 배포 관점으로 정리합니다.",
+  "Docker, AWS/NCP, CI/CD 기반의 실행 환경과 운영 흐름을 함께 학습하고 적용합니다.",
+  "문서 처리, RAG, 브라우저 자동화처럼 실제 사용자의 반복 업무를 줄이는 시스템을 구현해왔습니다.",
 ];
 
 export default function ResumePage() {
@@ -31,8 +31,8 @@ export default function ResumePage() {
     <div className="subpage-shell">
       <section className="subpage-hero">
         <p className="section-kicker">Resume</p>
-        <h1>학습 이력과 기술 경험을 한눈에 정리했습니다.</h1>
-        <p>전공, 프로젝트에서 사용한 기술, 클라우드 관련 자격을 역할과 연결해 볼 수 있도록 구성했습니다.</p>
+        <h1>이력은 간단히, 판단 근거는 명확하게 정리했습니다.</h1>
+        <p>학업, 기술 기반, 인증은 AI 제품을 안정적으로 만들기 위한 실행 근거로 연결됩니다.</p>
       </section>
 
       <section className="resume-layout">
@@ -56,7 +56,7 @@ export default function ResumePage() {
       <section className="section-block">
         <div className="section-heading">
           <p className="section-kicker">Technical Skills</p>
-          <h2>프로젝트에서 사용한 기술</h2>
+          <h2>제품 구현에 사용하는 기술</h2>
         </div>
         <div className="stack-grid">
           {skillGroups.map((group) => (
@@ -75,7 +75,7 @@ export default function ResumePage() {
       <section className="section-block">
         <div className="section-heading">
           <p className="section-kicker">Certifications</p>
-          <h2>자격과 어학</h2>
+          <h2>인증과 학습 이력</h2>
         </div>
         <div className="credential-list">
           {certifications.map((cert) => (

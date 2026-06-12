@@ -1,57 +1,35 @@
 const projects = [
   {
-    title: "Budgetly",
+    title: "Orbit",
+    year: "2026",
+    category: "Browser Agent",
+    problem: "브라우저 기반 업무는 탭과 문서, 검색 기록이 흩어지며 작업 맥락을 쉽게 잃습니다.",
+    system: "브라우징 이벤트와 세션 상태를 저장하고, 사용자가 돌아왔을 때 필요한 작업 경로를 복원하는 에이전트 구조를 설계했습니다.",
+    tags: ["Browser Automation", "Agent", "Context Memory", "Product Design"],
+  },
+  {
+    title: "Enterprise RAG Platform",
+    year: "2026",
+    category: "Enterprise RAG",
+    problem: "사내 규정과 문서가 많을수록 사용자는 검색어보다 업무 판단에 필요한 근거를 원합니다.",
+    system: "Qdrant, Hybrid Search, Reranking, Local LLM을 결합해 답변과 근거를 함께 제공하는 내부 검색 플랫폼을 구성했습니다.",
+    tags: ["Qdrant", "Hybrid Search", "Reranking", "Local LLM"],
+  },
+  {
+    title: "K8s Survival Camp",
+    year: "2026",
+    category: "AI Training System",
+    problem: "쿠버네티스 장애 대응은 실제 장애 신호를 해석하고 복구 결정을 내려보는 경험이 필요합니다.",
+    system: "Chaos Engineering 시나리오와 AI Tutor를 결합해 사고 과정과 복구 루틴을 학습하는 훈련 플랫폼을 설계했습니다.",
+    tags: ["Kubernetes", "Chaos Engineering", "AI Tutor", "Incident Response"],
+  },
+  {
+    title: "OCR & Document Intelligence",
     year: "2025",
     category: "Document AI",
-    problem: "예산 증빙 자료를 찾고 확인하는 과정이 반복적이고 오래 걸렸습니다.",
-    system: "OCR 결과를 검색 가능한 PWA 화면으로 옮기고, AWS EC2에서 실행할 수 있도록 구성했습니다.",
-    tags: ["Vue.js", "Vite", "Tailwind CSS", "OCR", "AWS EC2"],
-    link: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
-  },
-  {
-    title: "Federated Learning with ADM & BWA",
-    year: "2025",
-    category: "AI Experiment",
-    problem: "IoT 환경을 가정해 연합학습 알고리즘을 조건별로 비교할 실험 흐름이 필요했습니다.",
-    system: "PyTorch, Flower, Docker를 사용해 클라이언트 학습과 실행 환경을 분리했습니다.",
-    tags: ["Python", "Flower", "Flask", "PyTorch", "Docker", "Raspberry Pi"],
-    link: "https://github.com/Hanbat-IoT/Lab2",
-  },
-  {
-    title: "Dev Card Hunter",
-    year: "2025",
-    category: "Learning Automation",
-    problem: "개발 학습 활동을 꾸준히 기록하고 돌아볼 수 있는 가벼운 도구가 필요했습니다.",
-    system: "Chrome Extension으로 브라우저 안에서 학습 활동을 기록하고 진행 상태를 보여줬습니다.",
-    tags: ["HTML5", "CSS3", "Vanilla JavaScript", "Chrome Extension"],
-    link: "https://github.com/2025-Kraftonweek2-401-7/frontEnd",
-  },
-  {
-    title: "Drone Delivery System",
-    year: "2025",
-    category: "Realtime Control",
-    problem: "드론 배송 시나리오에서 상태 확인과 조작 흐름을 한 화면에서 다뤄야 했습니다.",
-    system: "PWA, Flask, Parrot Olympe SDK를 연결해 웹 기반 제어 흐름을 구성했습니다.",
-    tags: ["Next.js", "TypeScript", "React", "Python Flask", "Parrot Olympe SDK"],
-    link: "https://github.com/DroneDelivery2/Embedded_PJ",
-  },
-  {
-    title: "Campus Facility Status System",
-    year: "2025",
-    category: "Operations Dashboard",
-    problem: "캠퍼스 시설 상태를 빠르게 확인하고 관리할 수 있는 화면이 필요했습니다.",
-    system: "Flask, MongoDB, Ajax 기반으로 상태 조회와 관리 기능을 구현했습니다.",
-    tags: ["Vanilla JavaScript", "Bootstrap 5", "jQuery Ajax", "Python Flask", "MongoDB"],
-    link: "https://github.com/2025-Krafton-401-6/Only_My_Web",
-  },
-  {
-    title: "Heterogeneous Federated Learning Testbed",
-    year: "2026",
-    category: "AI Evaluation",
-    problem: "성능이 다른 클라이언트 조건에서 연합학습 알고리즘을 비교해야 했습니다.",
-    system: "BWA와 ADM 비교를 위해 Docker 기반 실험 환경을 구성했습니다.",
-    tags: ["Python", "Flower", "Flask", "PyTorch", "Docker"],
-    link: "https://github.com/2026-Feb-Winter-Institute/FL",
+    problem: "반복되는 문서 확인과 정보 추출 작업은 시간이 오래 걸리고 검증 흐름이 분리되기 쉽습니다.",
+    system: "OCR 결과를 구조화하고 사람이 검수할 수 있는 화면과 API 흐름으로 연결해 문서 처리 자동화의 기반을 만들었습니다.",
+    tags: ["OCR", "Document AI", "Review Workflow", "AWS EC2"],
   },
 ];
 
@@ -59,15 +37,15 @@ export default function ProjectsPage() {
   return (
     <div className="subpage-shell">
       <section className="subpage-hero">
-        <p className="section-kicker">Projects</p>
-        <h1>프로젝트를 문제와 구현 흐름 중심으로 정리했습니다.</h1>
-        <p>각 항목에서 어떤 문제가 있었고, 어떤 구조로 풀었는지 빠르게 확인할 수 있습니다.</p>
+        <p className="section-kicker">Systems</p>
+        <h1>프로젝트보다 시스템의 문제, 접근, 운영 가능성을 기준으로 정리했습니다.</h1>
+        <p>각 작업은 기술 목록이 아니라 실제 사용자 흐름에서 어떤 병목을 줄였는지에 초점을 둡니다.</p>
       </section>
 
       <section className="project-index">
         {projects.map((project, index) => (
-          <a key={project.title} href={project.link} target="_blank" rel="noopener noreferrer" className="project-row">
-            <div className="project-row__number">0{index + 1}</div>
+          <article key={project.title} className="project-row">
+            <div className="project-row__number">{String(index + 1).padStart(2, "0")}</div>
             <div className="project-row__body">
               <div className="project-row__meta">
                 <span>{project.category}</span>
@@ -80,7 +58,7 @@ export default function ProjectsPage() {
                   <p>{project.problem}</p>
                 </div>
                 <div>
-                  <strong>구현 방식</strong>
+                  <strong>구현 방향</strong>
                   <p>{project.system}</p>
                 </div>
               </div>
@@ -90,7 +68,7 @@ export default function ProjectsPage() {
                 ))}
               </div>
             </div>
-          </a>
+          </article>
         ))}
       </section>
     </div>

@@ -50,10 +50,10 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
       <section className="subpage-hero subpage-hero--row">
         <div>
           <p className="section-kicker">Learning Notes</p>
-          <h1>프로젝트를 하며 정리한 기록을 모았습니다.</h1>
+          <h1>제품을 만들며 정리한 기술 노트를 모았습니다.</h1>
           <p>
-            구현하면서 막혔던 부분, 선택한 기술의 이유, 다시 정리해두고 싶은 내용을 블로그에 남기고 있습니다.
-            포트폴리오의 프로젝트와 함께 보면 작업 과정을 더 자세히 볼 수 있습니다.
+            구현하면서 막혔던 지점, 선택한 기술의 이유, 다시 정리해둘 만한 내용을 블로그에 남깁니다. 시스템이 만들어지는
+            과정을 더 자세히 볼 수 있습니다.
           </p>
         </div>
         <a href="https://exit0.tistory.com" target="_blank" rel="noopener noreferrer" className="button-secondary">
