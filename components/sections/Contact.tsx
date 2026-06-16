@@ -68,45 +68,50 @@ export function Contact() {
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <ul className="grid h-fit gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200">
-          {contactLinks.map((item) => (
-            <li
-              key={item.label}
-              className="flex items-baseline justify-between gap-4 bg-white px-6 py-5"
-            >
-              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
-                {item.label}
-              </span>
-              {item.href ? (
-                <a
-                  href={item.href}
-                  className="break-all text-right text-sm font-medium text-slate-900 transition-colors hover:text-brand"
-                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                >
-                  {item.value}
-                </a>
-              ) : (
-                <span className="text-right text-sm font-medium text-slate-900">{item.value}</span>
-              )}
-            </li>
-          ))}
+          {contactLinks.map((item) => {
+            const externalProps = item.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {};
+
+            return (
+              <li
+                key={item.label}
+                className="flex items-baseline justify-between gap-4 bg-white px-6 py-5"
+              >
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  {item.label}
+                </span>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    className="break-all text-right text-sm font-medium text-slate-900 transition-colors hover:text-brand"
+                    {...externalProps}
+                  >
+                    {item.value}
+                  </a>
+                ) : (
+                  <span className="text-right text-sm font-medium text-slate-900">{item.value}</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <form onSubmit={handleSubmit} className="card p-7 sm:p-8">
           {submitStatus.type && (
-            <div
-              role="status"
-              className={`mb-5 rounded-lg border px-4 py-3 text-sm form-status form-status--${submitStatus.type} ${
+            <output
+              className={`mb-5 block rounded-lg border px-4 py-3 text-sm form-status form-status--${submitStatus.type} ${
                 submitStatus.type === "success"
                   ? "border-brand/30 bg-brand-soft text-slate-700"
                   : "border-red-200 bg-red-50 text-red-700"
               }`}
             >
               {submitStatus.message}
-            </div>
+            </output>
           )}
 
-          <label className="block text-sm font-semibold text-slate-800">
-            이름
+          <label className="block">
+            <span className="text-sm font-semibold text-slate-800">이름</span>
             <input
               type="text"
               name="name"
@@ -119,8 +124,8 @@ export function Contact() {
             />
           </label>
 
-          <label className="mt-5 block text-sm font-semibold text-slate-800">
-            이메일
+          <label className="mt-5 block">
+            <span className="text-sm font-semibold text-slate-800">이메일</span>
             <input
               type="email"
               name="email"
@@ -133,8 +138,8 @@ export function Contact() {
             />
           </label>
 
-          <label className="mt-5 block text-sm font-semibold text-slate-800">
-            메시지
+          <label className="mt-5 block">
+            <span className="text-sm font-semibold text-slate-800">메시지</span>
             <textarea
               name="message"
               value={formData.message}

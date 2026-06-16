@@ -8,7 +8,7 @@ type ProjectCardProps = {
  * "문제 → 해결 방법 → 성과" 흐름으로 읽히는 플랫 카드.
  * 인프라/AI 최적화 경험이 텍스트 위주로 깔끔하게 읽히도록 구성한다.
  */
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
   return (
     <article className="card card-hover group p-7 sm:p-9">
       <header className="flex flex-col gap-4 border-b border-gray-100 pb-7 sm:flex-row sm:items-start sm:justify-between">

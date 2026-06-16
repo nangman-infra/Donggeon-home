@@ -16,7 +16,7 @@ type SectionProps = {
  * 모든 섹션의 공통 골격.
  * 넉넉한 세로 여백(py-24~32)과 중앙 정렬 컨테이너를 일관되게 제공한다.
  */
-export function Section({ id, labelledby, band, wide, className, children }: SectionProps) {
+export function Section({ id, labelledby, band, wide, className, children }: Readonly<SectionProps>) {
   return (
     <SectionReveal
       as="section"
@@ -51,7 +51,7 @@ type PageHeaderProps = {
 };
 
 /** 서브페이지 상단 히어로 (sticky 헤더 아래 여백 포함). */
-export function PageHeader({ eyebrow, title, desc, action }: PageHeaderProps) {
+export function PageHeader({ eyebrow, title, desc, action }: Readonly<PageHeaderProps>) {
   return (
     <header className="mx-auto w-full max-w-5xl px-6 pb-4 pt-32 sm:px-8 sm:pt-40">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -66,7 +66,7 @@ export function PageHeader({ eyebrow, title, desc, action }: PageHeaderProps) {
   );
 }
 
-export function SectionHeader({ eyebrow, title, titleId, desc, action }: SectionHeaderProps) {
+export function SectionHeader({ eyebrow, title, titleId, desc, action }: Readonly<SectionHeaderProps>) {
   return (
     <div className="mb-14 flex flex-col gap-6 sm:mb-20 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-2xl">

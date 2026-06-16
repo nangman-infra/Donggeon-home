@@ -22,7 +22,7 @@ const reveal = {
  * 섹션 진입 시 살짝 올라오며 fade-in 되는 래퍼.
  * 과한 애니메이션 없이 한 번만 재생한다.
  */
-export function SectionReveal({ children, className, delay = 0, as = "div", id, ...rest }: SectionRevealProps) {
+export function SectionReveal({ children, className, delay = 0, as = "div", id, ...rest }: Readonly<SectionRevealProps>) {
   const MotionTag = motion[as] as ElementType;
   const reduceMotion = useReducedMotion();
 

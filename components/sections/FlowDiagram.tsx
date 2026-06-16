@@ -28,7 +28,7 @@ const railVariant = {
  * 스크롤로 들어올 때 단계가 위→아래로 순차적으로 그려진다.
  * 단계 순서가 곧 정보이므로(실제 파이프라인) 순차 리빌은 장식이 아니라 의미가 있다.
  */
-export function FlowDiagram({ steps, label = "처리 흐름도" }: FlowDiagramProps) {
+export function FlowDiagram({ steps, label = "처리 흐름도" }: Readonly<FlowDiagramProps>) {
   const reduceMotion = useReducedMotion();
 
   return (

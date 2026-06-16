@@ -8,7 +8,7 @@ type LogoProps = {
  * 포인트 컬러가 장식이 아니라 의미를 갖도록 했다.
  * favicon(app/icon.svg)과 동일한 패스를 사용한다.
  */
-export function Logo({ className = "h-7 w-7" }: LogoProps) {
+export function Logo({ className = "h-7 w-7" }: Readonly<LogoProps>) {
   return (
     <svg viewBox="0 0 64 64" className={className} role="img" aria-hidden="true" focusable="false">
       <rect width="64" height="64" rx="15" fill="#0f172a" />

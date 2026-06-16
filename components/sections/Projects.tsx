@@ -9,7 +9,7 @@ type ProjectsProps = {
   showAllLink?: boolean;
 };
 
-export function Projects({ projects, showAllLink = false }: ProjectsProps) {
+export function Projects({ projects, showAllLink = false }: Readonly<ProjectsProps>) {
   return (
     <Section id="projects" labelledby="projects-title" band>
       <SectionHeader

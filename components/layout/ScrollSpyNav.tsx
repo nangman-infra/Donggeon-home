@@ -23,7 +23,7 @@ export function ScrollSpyNav() {
   const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof globalThis.window === "undefined") return;
 
     const ids = sections.map((section) => section.id);
     let frame = 0;
@@ -41,7 +41,7 @@ export function ScrollSpyNav() {
 
       // 페이지 맨 아래에 닿으면 마지막 섹션을 확실히 활성화
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-        current = ids[ids.length - 1];
+        current = ids.at(-1) ?? current;
       }
 
       setActive(current);
