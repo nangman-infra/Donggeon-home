@@ -23,7 +23,7 @@ export function ScrollSpyNav() {
   const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    if (typeof globalThis.window === "undefined") return;
+    if (globalThis.window === undefined) return;
 
     const ids = sections.map((section) => section.id);
     let frame = 0;
