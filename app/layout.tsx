@@ -5,8 +5,23 @@ import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "임동건 | AI Product Engineer",
-  description: "RAG, Agent, Browser Automation, Local LLM 기반 AI 제품과 운영 가능한 AI 시스템을 만드는 엔지니어.",
+  metadataBase: new URL("https://donggeon.nangman.cloud"),
+  title: "임동건 | AI/AX Engineer",
+  description:
+    "RAG 기반 사내 AI 서비스, 온프레미스 LLM 추론 환경, 폐쇄망 CI/CD 개발환경을 직접 구축하는 AI/AX Engineer 임동건의 포트폴리오.",
+  openGraph: {
+    title: "임동건 | AI/AX Engineer",
+    description:
+      "RAG 기반 사내 AI 서비스부터 온프레미스 LLM 추론 환경, 폐쇄망 CI/CD까지 직접 구축하는 AI/AX Engineer 임동건의 포트폴리오.",
+    siteName: "임동건 · AI/AX Engineer",
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "임동건 | AI/AX Engineer",
+    description: "RAG · On-prem LLM · AI Infra · DevOps를 직접 구축하는 AI/AX Engineer.",
+  },
 };
 
 export default function RootLayout({
@@ -24,15 +39,15 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body>
+      <body className="min-h-screen bg-white text-slate-600 antialiased">
         <Script
           src="https://analytics.nangman.cloud/api/script.js"
           data-site-id="0a830816f2f7"
           strategy="afterInteractive"
         />
         <Header />
-        <div className="site-frame">
-          <main>{children}</main>
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
           <Footer />
         </div>
       </body>

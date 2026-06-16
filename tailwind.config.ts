@@ -9,6 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // 포인트 컬러는 단 하나 — Electric Blue. 호버/핵심 키워드/포커스에만 제한적으로 사용.
+        brand: {
+          DEFAULT: "#2563eb",
+          hover: "#1d4ed8",
+          soft: "#eff4ff",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

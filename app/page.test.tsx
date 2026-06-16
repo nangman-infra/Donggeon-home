@@ -29,41 +29,48 @@ describe("portfolio pages", () => {
     vi.unstubAllGlobals();
   });
 
-  it("renders the home page case studies and core calls to action", () => {
+  it("renders the home hero positioning, featured work, and core calls to action", () => {
     render(React.createElement(Home));
 
-    expect(screen.getAllByText("Orbit").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Enterprise RAG Platform").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("K8s Survival Camp").length).toBeGreaterThanOrEqual(1);
-    expect(document.querySelector('a[href="#systems"]')).not.toBeNull();
-    expect(document.querySelector('a[href="mailto:gunni6112@gmail.com"]')).not.toBeNull();
+    expect(screen.getByText("AI 서비스를 제품 수준으로 구현하고 운영 환경까지 고려하는 엔지니어")).toBeInTheDocument();
+    expect(screen.getAllByText("RAG Application").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("사내 규정 검색 AI Assistant")).toBeInTheDocument();
+    expect(screen.getByText("Federated Learning Testbed & Real Device Validation")).toBeInTheDocument();
+    expect(document.querySelectorAll('a[href="#projects"]').length).toBeGreaterThanOrEqual(1);
+    expect(document.querySelector('a[href^="mailto:gunni6112@gmail.com"]')).not.toBeNull();
   });
 
-  it("renders about and resume evidence sections", () => {
-    const { rerender } = render(React.createElement(AboutPage));
+  it("renders about positioning and tech stack context", () => {
+    render(React.createElement(AboutPage));
 
-    expect(screen.getByText("AI Product")).toBeInTheDocument();
-    expect(screen.getByText("Infrastructure")).toBeInTheDocument();
-    expect(screen.getAllByText("Model Evaluation").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("AI / ML").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Infra / DevOps").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("사내 규정 검색 AI Assistant")).toBeInTheDocument();
+  });
 
-    rerender(React.createElement(ResumePage));
+  it("renders resume awards, publications, and certifications", () => {
+    render(React.createElement(ResumePage));
 
-    expect(screen.getByText("Technical Skills")).toBeInTheDocument();
     expect(screen.getByText("AWS Certified Cloud Practitioner")).toBeInTheDocument();
     expect(screen.getByText("NAVER Cloud Platform Certified Associate")).toBeInTheDocument();
+    expect(screen.getByText("CEDC 2025 Bronze Award")).toBeInTheDocument();
+    expect(
+      screen.getByText("쿠버네티스 기반 연합학습 및 스플릿 컴퓨팅의 최신 연구 동향"),
+    ).toBeInTheDocument();
   });
 
-  it("renders the full projects index", () => {
+  it("renders the full projects index with role separation", () => {
     render(React.createElement(ProjectsPage));
 
-    expect(screen.getAllByText("Orbit").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Enterprise RAG Platform")).toBeInTheDocument();
-    expect(screen.getByText("K8s Survival Camp")).toBeInTheDocument();
-    expect(screen.getAllByText("Qdrant").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("When2Work")).toBeInTheDocument();
+    expect(screen.getByText("Budgetly")).toBeInTheDocument();
+    expect(screen.getAllByText("PyTorch").length).toBeGreaterThanOrEqual(1);
+    // AfterFail 역할 구분 note가 노출되어야 한다
+    expect(screen.getByText(/해당 영역.*팀원이 담당/)).toBeInTheDocument();
   });
 
   it("submits the contact form successfully", async () => {
-    vi.mocked(emailjs.send).mockResolvedValueOnce({ status: 200 });
+    vi.mocked(emailjs.send).mockResolvedValueOnce({ status: 200, text: "OK" });
 
     const { container } = render(React.createElement(ContactPage));
 
@@ -120,12 +127,12 @@ describe("portfolio pages", () => {
     const { container } = render(React.createElement(Header));
     expect(container.querySelector('a[href="/"]')).not.toBeNull();
     fireEvent.click(getRequiredElement<HTMLButtonElement>(container, "button"));
-    expect(container.querySelectorAll('a[href="/#systems"]').length).toBeGreaterThanOrEqual(1);
+    expect(container.querySelectorAll('a[href="/projects"]').length).toBeGreaterThanOrEqual(1);
 
     cleanup();
     render(React.createElement(Footer));
     expect(screen.getByText("GitHub")).toBeInTheDocument();
-    expect(screen.getByText("LinkedIn")).toBeInTheDocument();
+    expect(screen.getByText("Website")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
   });
 });

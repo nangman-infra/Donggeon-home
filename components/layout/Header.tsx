@@ -1,46 +1,80 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Logo } from "./Logo";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
-  { href: "/#systems", label: "Work" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="top-header">
-      <Link href="/" className="top-brand" aria-label="Go to home">
-        <Image src="/icon.svg" alt="" width={32} height={32} className="brand-logo" aria-hidden="true" priority />
-        <strong>임동건</strong>
-      </Link>
+    <header
+      className={`sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md transition-colors duration-300 ${
+        scrolled ? "border-gray-200/70" : "border-transparent"
+      }`}
+    >
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6 sm:px-8">
+        <Link href="/" aria-label="홈으로 이동" className="flex items-center gap-2.5">
+          <Logo className="h-7 w-7" />
+          <span className="text-base font-bold tracking-tight text-slate-900">임동건</span>
+        </Link>
 
-      <nav className="top-nav" aria-label="Primary navigation">
-        {navItems.map((item) => (
-          <Link key={item.href} href={item.href} className={pathname === item.href ? "top-nav__item top-nav__item--active" : "top-nav__item"}>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <button type="button" className="mobile-menu-button" onClick={() => setIsMenuOpen((value) => !value)}>
-        {isMenuOpen ? "닫기" : "메뉴"}
-      </button>
-      {isMenuOpen && (
-        <nav className="mobile-menu" aria-label="Mobile navigation">
+        <nav className="hidden items-center gap-10 md:flex" aria-label="Primary navigation">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={pathname === item.href ? "mobile-menu__item mobile-menu__item--active" : "mobile-menu__item"}
+              className={`text-sm font-medium transition-colors hover:text-brand ${
+                pathname === item.href ? "text-slate-900" : "text-slate-500"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          className="inline-flex h-10 items-center rounded-lg border border-gray-200 px-3.5 text-sm font-semibold text-slate-800 transition-colors hover:border-brand hover:text-brand md:hidden"
+          aria-expanded={isMenuOpen}
+          aria-label="메뉴 열기"
+          onClick={() => setIsMenuOpen((value) => !value)}
+        >
+          {isMenuOpen ? "닫기" : "메뉴"}
+        </button>
+      </div>
+
+      {isMenuOpen && (
+        <nav
+          className="mx-4 mb-3 grid gap-1 rounded-xl border border-gray-200 bg-white p-2 md:hidden"
+          aria-label="Mobile navigation"
+        >
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
               onClick={() => setIsMenuOpen(false)}
+              className={`rounded-lg px-3.5 py-3 text-sm font-medium transition-colors ${
+                pathname === item.href
+                  ? "bg-gray-50 text-slate-900"
+                  : "text-slate-500 hover:bg-gray-50 hover:text-slate-900"
+              }`}
             >
               {item.label}
             </Link>

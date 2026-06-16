@@ -48,6 +48,8 @@ export default defineConfig({
       exclude: [
         "app/**/*.test.{ts,tsx}",
         "app/layout.tsx",
+        // 빌드 타임에 PNG 만 굽는 메타데이터 자산 라우트 — 로직 커버리지 대상 아님
+        "app/opengraph-image.tsx",
         "components/**/*.test.{ts,tsx}",
         "lib/**/*.test.{ts,tsx}",
       ],
