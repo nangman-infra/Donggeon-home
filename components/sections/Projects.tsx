@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Project } from "@/content/portfolio";
+import { sectionHeaders } from "@/content/portfolio";
 import { ProjectCard } from "./ProjectCard";
 import { Section, SectionHeader } from "./Shell";
 
@@ -16,8 +17,8 @@ export function Projects({ projects, showAllLink = false, hideHeader = false }: 
     <Section id="projects" labelledby="projects-title" band>
       {!hideHeader && (
         <SectionHeader
-          eyebrow="Projects"
-          title="프로젝트"
+          eyebrow={sectionHeaders.projects.eyebrow}
+          title={sectionHeaders.projects.title}
           titleId="projects-title"
           action={
             showAllLink ? (
@@ -25,7 +26,7 @@ export function Projects({ projects, showAllLink = false, hideHeader = false }: 
                 href="/projects"
                 className="group shrink-0 text-sm font-semibold text-slate-500 transition-colors hover:text-brand"
               >
-                전체 프로젝트 보기 <span className="link-arrow">↗</span>
+                {sectionHeaders.projects.allLink} <span className="link-arrow">↗</span>
               </Link>
             ) : undefined
           }

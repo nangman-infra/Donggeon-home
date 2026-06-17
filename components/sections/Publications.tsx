@@ -1,10 +1,14 @@
-import { publications } from "@/content/portfolio";
+import { publications, sectionHeaders } from "@/content/portfolio";
 import { Section, SectionHeader } from "./Shell";
 
 export function Publications() {
   return (
     <Section id="publications" labelledby="publications-title">
-      <SectionHeader eyebrow="Research / Publications" title="논문" titleId="publications-title" />
+      <SectionHeader
+        eyebrow={sectionHeaders.publications.eyebrow}
+        title={sectionHeaders.publications.title}
+        titleId="publications-title"
+      />
 
       <ol className="grid gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200">
         {publications.map((paper) => (

@@ -1,4 +1,4 @@
-import { featured } from "@/content/portfolio";
+import { featured, sectionHeaders } from "@/content/portfolio";
 import { FlowDiagram } from "./FlowDiagram";
 import { Section, SectionHeader } from "./Shell";
 
@@ -6,7 +6,7 @@ export function FeaturedExperience() {
   return (
     <Section id="featured" labelledby="featured-title" wide>
       <SectionHeader
-        eyebrow="Featured Work"
+        eyebrow={sectionHeaders.featured.eyebrow}
         title={featured.title}
         titleId="featured-title"
         desc={featured.subtitle}

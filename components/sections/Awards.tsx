@@ -1,10 +1,14 @@
-import { activities, awards, certifications, education } from "@/content/portfolio";
+import { activities, awards, certifications, education, sectionHeaders } from "@/content/portfolio";
 import { Section, SectionHeader } from "./Shell";
 
 export function Awards() {
   return (
     <Section id="awards" labelledby="awards-title" wide>
-      <SectionHeader eyebrow="Awards & Activities" title="수상 · 활동 · 이력" titleId="awards-title" />
+      <SectionHeader
+        eyebrow={sectionHeaders.awards.eyebrow}
+        title={sectionHeaders.awards.title}
+        titleId="awards-title"
+      />
 
       <div className="grid gap-5 lg:grid-cols-3">
         <div className="card card-hover p-7">

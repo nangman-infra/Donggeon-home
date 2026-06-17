@@ -1,4 +1,4 @@
-import { techStack } from "@/content/portfolio";
+import { sectionHeaders, techStack } from "@/content/portfolio";
 import { Section, SectionHeader } from "./Shell";
 
 // 벤토 리듬: 스킬이 많은 카테고리를 2칸으로 넓혀 wide/narrow가 번갈아 깔끔하게 타일링되도록 한다.
@@ -8,10 +8,10 @@ export function TechStack() {
   return (
     <Section id="stack" labelledby="stack-title" band wide>
       <SectionHeader
-        eyebrow="Tech Stack"
-        title="기술 스택"
+        eyebrow={sectionHeaders.techStack.eyebrow}
+        title={sectionHeaders.techStack.title}
         titleId="stack-title"
-        desc="실제 프로젝트에서 직접 다뤄 본 기술을 정리했습니다."
+        desc={sectionHeaders.techStack.desc}
       />
 
       <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">

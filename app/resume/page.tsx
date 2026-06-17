@@ -2,6 +2,7 @@ import { Awards } from "@/components/sections/Awards";
 import { Publications } from "@/components/sections/Publications";
 import { TechStack } from "@/components/sections/TechStack";
 import { PageHeader } from "@/components/sections/Shell";
+import { pageHeaders } from "@/content/portfolio";
 
 export const metadata = {
   title: "Resume | 임동건",
@@ -12,9 +13,9 @@ export default function ResumePage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Resume"
-        title="임동건 · AI/AX Engineer"
-        desc="RAG 기반 사내 AI 서비스와 폐쇄망 CI/CD 환경을 직접 구축해 온 이력입니다."
+        eyebrow={pageHeaders.resume.eyebrow}
+        title={pageHeaders.resume.title}
+        desc={pageHeaders.resume.desc}
       />
       <Awards />
       <Publications />

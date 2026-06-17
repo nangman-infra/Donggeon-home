@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import { contact } from "@/content/portfolio";
+import { contact, sectionHeaders } from "@/content/portfolio";
 import { SectionHeader } from "./Shell";
 
 const contactLinks = [
@@ -60,10 +60,10 @@ export function Contact() {
   return (
     <section id="contact" className="mx-auto w-full max-w-5xl px-6 py-24 sm:px-8 sm:py-32" aria-labelledby="contact-title">
       <SectionHeader
-        eyebrow="Contact"
-        title="함께 만들 것이 있다면"
+        eyebrow={sectionHeaders.contact.eyebrow}
+        title={sectionHeaders.contact.title}
         titleId="contact-title"
-        desc="채용이나 협업 제안 환영합니다. 어떤 일인지 짧게 적어주시면 빠르게 답변드릴게요."
+        desc={sectionHeaders.contact.desc}
       />
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">

@@ -29,6 +29,9 @@ export type Featured = {
   scale: { label: string; value: string }[];
 };
 
+/** 라벨이 붙은 외부 링크 (저장소가 여러 개일 때 사용) */
+export type ProjectLink = { label: string; href: string };
+
 export type Project = {
   id: string;
   title: string;
@@ -40,7 +43,10 @@ export type Project = {
   contributions: string[];
   results?: string[];
   tech: string[];
+  /** 배포된 데모/서비스 링크 */
   link?: string;
+  /** GitHub 저장소 링크. 문자열 하나, 또는 라벨 있는 여러 개. */
+  github?: string | ProjectLink[];
   /** 역할 구분 등 강조해서 분리해야 하는 주의 문구 */
   note?: string;
   /** 카드 상단에 한 줄로 읽히는 문제 정의 */
@@ -173,13 +179,18 @@ export const projects: Project[] = [
     ],
     results: ["정확도 52.77% → 55.47% 개선", "학습 시간 21.3% 단축"],
     tech: ["Python", "PyTorch", "Flower", "Docker", "Docker Compose", "Raspberry Pi", "CIFAR-10"],
+    github: [
+      { label: "논문 Testbed", href: "https://github.com/2026-Feb-Winter-Institute/FL" },
+      // 원본 전공 프로젝트 저장소 주소를 넣으면 두 번째 링크가 함께 표시된다:
+      { label: "전공 프로젝트", href: "https://github.com/Hanbat-IoT/Lab2" },
+    ],
     featured: true,
   },
   {
     id: "afterfail",
     title: "AfterFail",
     description: "Chaos Engineering 기반 Kubernetes 장애 대응 훈련 플랫폼",
-    year: "2025",
+    year: "2026",
     category: "Platform / Frontend",
     role: "프로젝트 총괄(PM) 및 프론트엔드 개발",
     problem:
@@ -192,6 +203,7 @@ export const projects: Project[] = [
       "Docker 기반 개발환경과 실행 자동화 스크립트 작성, 팀원의 개발환경 구축 과정 표준화",
     ],
     tech: ["React", "TypeScript", "xterm.js", "Docker"],
+    github: "https://github.com/why-server-down/cloud-trouble-training-service",
     note:
       "플랫폼은 Chaos Mesh 기반 장애 주입, RAG 기반 AI Tutor, Kubernetes Namespace 격리 구조로 구성되었으며, 해당 영역(Chaos Mesh 장애 주입·AI Tutor·Kubernetes 핵심 구현)은 팀원이 담당했습니다. 본인은 PM과 프론트엔드 개발을 맡았습니다.",
     featured: true,
@@ -200,9 +212,10 @@ export const projects: Project[] = [
     id: "when2work",
     title: "When2Work",
     description: "팀원 일정을 모아 최적의 만남 시간을 찾아주는 웹 서비스",
-    year: "2025",
+    year: "2026",
     category: "Web Service",
     link: "https://when2work.whitejbb.cloud",
+    // github: "https://github.com/WhiteJbb/저장소이름",
     problem: "여러 명의 가능한 시간을 모아 최적의 만남 시간을 찾는 과정이 번거로웠습니다.",
     contributions: [
       "날짜·시간 범위 설정, 드래그 기반 시간 선택, 히트맵 결과 시각화 기능 개발",
@@ -218,7 +231,7 @@ export const projects: Project[] = [
     id: "budgetly",
     title: "Budgetly",
     description: "OCR 기반 조직 예산 관리 플랫폼",
-    year: "2024",
+    year: "2025",
     category: "Document AI",
     problem: "조직의 영수증·예산 처리를 수기로 관리하기 번거롭고 실수가 잦았습니다.",
     contributions: [
@@ -228,6 +241,7 @@ export const projects: Project[] = [
     ],
     results: ["소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상"],
     tech: ["Vue.js", "FastAPI", "Firebase", "Azure Document Intelligence", "OpenCV", "AWS EC2"],
+    github: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
     featured: true,
   },
 ];
@@ -299,4 +313,62 @@ export const contact = {
   website: "https://donggeon.nangman.cloud",
   websiteLabel: "donggeon.nangman.cloud",
   location: "대전, 대한민국",
+};
+
+// ---------------------------------------------------------------------------
+// 화면 머리말 문구 (eyebrow · title · desc).
+// 데이터(projects/awards 등)와 분리해, 화면에 보이는 "제목 문구"는 전부 여기서 수정한다.
+// ---------------------------------------------------------------------------
+
+// 홈 화면 각 섹션의 머리말. (본문 데이터는 위 about/featured/projects 등에서 관리)
+export const sectionHeaders = {
+  about: { eyebrow: "About" },
+  featured: { eyebrow: "Featured Work" },
+  projects: {
+    eyebrow: "Projects",
+    title: "프로젝트",
+    allLink: "전체 프로젝트 보기",
+  },
+  publications: { eyebrow: "Research / Publications", title: "논문" },
+  awards: { eyebrow: "Awards & Activities", title: "수상 · 활동 · 이력" },
+  techStack: {
+    eyebrow: "Tech Stack",
+    title: "기술 스택",
+    desc: "실제 프로젝트에서 직접 다뤄 본 기술을 정리했습니다.",
+  },
+  contact: {
+    eyebrow: "Contact",
+    title: "함께 만들 것이 있다면",
+    desc: "채용이나 협업 제안 환영합니다. 어떤 일인지 짧게 적어주시면 빠르게 답변드릴게요.",
+  },
+};
+
+// 서브페이지(/about, /projects 등) 상단 헤더 머리말.
+export const pageHeaders = {
+  about: {
+    eyebrow: "About",
+    title: "AI 서비스와 인프라를 실제로 구현해 온 AI/AX Engineer",
+    desc: "모델을 붙이는 데서 끝내지 않고, 보안 환경과 운영까지 고려한 AI 서비스를 만드는 데 집중합니다.",
+  },
+  projects: {
+    eyebrow: "Projects",
+    title: "문제 · 해결 · 성과로 정리한 전체 프로젝트",
+    desc: "기술 나열이 아니라 실제로 맡은 역할과 해결한 문제 중심으로 정리했습니다.",
+  },
+  contact: {
+    eyebrow: "Contact",
+    title: "AI 서비스 개발과 운영에 대해 이야기하고 싶다면",
+    desc: "채용이나 협업 제안 모두 환영합니다. 어떤 일인지 간단히 적어주시면 빠르게 확인하겠습니다.",
+  },
+  resume: {
+    eyebrow: "Resume",
+    title: "임동건 · AI/AX Engineer",
+    desc: "RAG 기반 사내 AI 서비스와 폐쇄망 CI/CD 환경을 직접 구축해 온 이력입니다.",
+  },
+  blog: {
+    eyebrow: "Learning Notes",
+    title: "직접 경험하며 정리한 기술 노트",
+    desc: "공부하다 막혔던 지점, 기술을 선택한 이유, 나중에 다시 찾아볼 내용을 정리합니다.",
+    action: "Tistory 열기",
+  },
 };

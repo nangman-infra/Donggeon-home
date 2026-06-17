@@ -9,6 +9,14 @@ type ProjectCardProps = {
  * 인프라/AI 최적화 경험이 텍스트 위주로 깔끔하게 읽히도록 구성한다.
  */
 export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
+  // github은 문자열 하나 또는 라벨 있는 여러 개를 받는다 → 렌더링용으로 통일.
+  const githubLinks =
+    !project.github
+      ? []
+      : typeof project.github === "string"
+        ? [{ label: "GitHub", href: project.github }]
+        : project.github;
+
   return (
     <article className="card card-hover group p-7 sm:p-9">
       <header className="flex flex-col gap-4 border-b border-gray-100 pb-7 sm:flex-row sm:items-start sm:justify-between">
@@ -19,15 +27,30 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
           <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{project.title}</h3>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-500">{project.description}</p>
         </div>
-        {project.link && (
-          <a
-            className="shrink-0 font-mono text-xs font-semibold text-slate-500 transition-colors hover:text-brand"
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {project.link.replace(/^https?:\/\//, "")} <span className="link-arrow">↗</span>
-          </a>
+        {(project.link || githubLinks.length > 0) && (
+          <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+            {project.link && (
+              <a
+                className="font-mono text-xs font-semibold text-slate-500 transition-colors hover:text-brand"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.link.replace(/^https?:\/\//, "")} <span className="link-arrow">↗</span>
+              </a>
+            )}
+            {githubLinks.map((repo) => (
+              <a
+                key={repo.href}
+                className="font-mono text-xs font-semibold text-slate-500 transition-colors hover:text-brand"
+                href={repo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {repo.label} <span className="link-arrow">↗</span>
+              </a>
+            ))}
+          </div>
         )}
       </header>
 

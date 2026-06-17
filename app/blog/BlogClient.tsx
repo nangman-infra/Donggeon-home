@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/sections/Shell";
+import { pageHeaders } from "@/content/portfolio";
 import type { TistoryPost } from "@/lib/tistory";
 import { fetchTistoryPosts } from "@/lib/tistory";
 
@@ -47,12 +48,12 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
   return (
     <div>
       <PageHeader
-        eyebrow="Learning Notes"
-        title="직접 경험하며 정리한 기술 노트"
-        desc="공부하다 막혔던 지점, 기술을 선택한 이유, 나중에 다시 찾아볼 내용을 정리합니다."
+        eyebrow={pageHeaders.blog.eyebrow}
+        title={pageHeaders.blog.title}
+        desc={pageHeaders.blog.desc}
         action={
           <a href={TISTORY_URL} target="_blank" rel="noopener noreferrer" className="group btn-ghost shrink-0">
-            Tistory 열기 <span className="link-arrow">↗</span>
+            {pageHeaders.blog.action} <span className="link-arrow">↗</span>
           </a>
         }
       />

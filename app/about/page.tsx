@@ -2,6 +2,7 @@ import { About } from "@/components/sections/About";
 import { FeaturedExperience } from "@/components/sections/FeaturedExperience";
 import { TechStack } from "@/components/sections/TechStack";
 import { PageHeader } from "@/components/sections/Shell";
+import { pageHeaders } from "@/content/portfolio";
 
 export const metadata = {
   title: "About | 임동건",
@@ -12,9 +13,9 @@ export default function AboutPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="About"
-        title="AI 서비스와 인프라를 실제로 구현해 온 AI/AX Engineer"
-        desc="모델을 붙이는 데서 끝내지 않고, 보안 환경과 운영까지 고려한 AI 서비스를 만드는 데 집중합니다."
+        eyebrow={pageHeaders.about.eyebrow}
+        title={pageHeaders.about.title}
+        desc={pageHeaders.about.desc}
       />
       <About />
       <FeaturedExperience />
