@@ -1,21 +1,22 @@
-import type { Project } from "@/content/portfolio";
+import type { Project, ProjectLink } from "@/content/portfolio";
 
 type ProjectCardProps = {
   project: Project;
 };
+
+// github은 문자열 하나 또는 라벨 있는 여러 개를 받는다 → 렌더링용 배열로 통일.
+function toGithubLinks(github: Project["github"]): ProjectLink[] {
+  if (Array.isArray(github)) return github;
+  if (github) return [{ label: "GitHub", href: github }];
+  return [];
+}
 
 /**
  * "문제 → 해결 방법 → 성과" 흐름으로 읽히는 플랫 카드.
  * 인프라/AI 최적화 경험이 텍스트 위주로 깔끔하게 읽히도록 구성한다.
  */
 export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
-  // github은 문자열 하나 또는 라벨 있는 여러 개를 받는다 → 렌더링용으로 통일.
-  const githubLinks =
-    !project.github
-      ? []
-      : typeof project.github === "string"
-        ? [{ label: "GitHub", href: project.github }]
-        : project.github;
+  const githubLinks = toGithubLinks(project.github);
 
   return (
     <article className="card card-hover group p-7 sm:p-9">
