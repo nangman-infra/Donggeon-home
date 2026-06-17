@@ -9,9 +9,9 @@ export function TechStack() {
     <Section id="stack" labelledby="stack-title" band wide>
       <SectionHeader
         eyebrow="Tech Stack"
-        title="실제 사용 맥락 기반 기술 스택"
+        title="기술 스택"
         titleId="stack-title"
-        desc="실제 프로젝트에서 직접 다뤄 본 기술을 역할별로 정리했습니다."
+        desc="실제 프로젝트에서 직접 다뤄 본 기술을 정리했습니다."
       />
 
       <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">

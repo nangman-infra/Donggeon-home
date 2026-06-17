@@ -76,7 +76,7 @@ export type SkillGroup = {
 
 // 이력서는 파일로만 보유 중 → 우선 /resume 페이지로 연결.
 // 추후 외부 파일 URL(예: Drive/Notion/PDF)로 이 값만 교체하면 된다.
-export const resumeUrl = "/resume";
+export const resumeUrl = "/임동건_이력서.pdf";
 
 export const profile: Profile = {
   name: "임동건",
@@ -89,7 +89,7 @@ export const profile: Profile = {
   ctas: [
     { label: "프로젝트 보기", href: "#projects", variant: "primary" },
     { label: "GitHub 보기", href: "https://github.com/WhiteJbb", variant: "secondary", external: true },
-    { label: "이력서 보기", href: resumeUrl, variant: "secondary" },
+    { label: "이력서 보기", href: resumeUrl, variant: "secondary", external: true },
   ],
 };
 
@@ -111,9 +111,9 @@ export const hero = {
 };
 
 export const about = {
-  heading: "외부망과 분리된 보안 환경에서 RAG 기반 AI 서비스를 설계·개발하고, 온프레미스 LLM 추론 환경을 구축해 온 AI/AX Engineer입니다.",
+  heading: "보안 요건이 있는 사내 환경에서\nRAG 기반 AI 서비스를 설계·개발하고,\n온프레미스 LLM 추론 환경을 구축해 온\nAI/AX Engineer입니다.",
   body:
-    "인턴 기간 동안 약 60명 규모의 사내 규정 검색 AI Assistant를 혼자 설계·개발해 왔고, 사내 폐쇄망 CI/CD 환경도 직접 구축했습니다. Hybrid Search 기반 RAG 파이프라인부터 Docker 실행 환경, Jenkins·GitLab 개발환경까지 직접 다루며 AI 서비스를 만들고 운영하는 경험을 함께 쌓고 있습니다.",
+    "인턴 기간 동안 약 60명 규모의 사내 규정 검색 AI Assistant를 요구사항 분석부터 설계·개발까지 단독 수행했고, 사내 폐쇄망 CI/CD 환경도 직접 구축했습니다. Hybrid Search 기반 RAG 파이프라인부터 Docker 실행 환경, Jenkins·GitLab 개발환경까지 직접 다루며 AI 서비스를 만들고 운영하는 경험을 함께 쌓고 있습니다.",
   capabilities: [
     { title: "RAG Application", desc: "Hybrid Search 기반 검색·답변 파이프라인 설계와 구현" },
     { title: "On-premise LLM", desc: "외부 API 없이 사내에서 LLM·임베딩을 추론하는 환경 구성" },
@@ -126,7 +126,7 @@ export const featured: Featured = {
   title: "사내 규정 검색 AI Assistant",
   subtitle: "약 60명 규모 사용자를 위한 RAG 기반 사내 문서 검색 플랫폼",
   problem:
-    "사내 규정이 이미지 PDF로만 보관되어 약 60명의 직원이 필요한 조항을 제때 찾기 어려웠습니다. 보안 정책상 외부 AI API도 사용할 수 없는 환경이었습니다.",
+    "사내 규정이 이미지 PDF로만 보관되어 약 60명의 직원이 필요한 조항을 제때 찾기 어려웠습니다. 사내 규정 문서를 외부에 노출할 수 없어 온프레미스 LLM 추론 환경을 직접 구축했습니다.",
   approach: [
     "이미지 PDF에서 텍스트를 추출해 검색 가능한 구조로 재구성",
     "의미 기반 검색과 키워드 검색을 결합한 Hybrid Search 파이프라인 구현",
@@ -136,7 +136,7 @@ export const featured: Featured = {
   ],
   result: [
     "실시간 응답·멀티턴 대화·답변 출처 표시까지 핵심 기능 구현 완료",
-    "외부망과 분리된 폐쇄망에서 100% 사내 추론으로 동작",
+    "100% 사내 추론으로 동작",
     "현재 사내 약 60명 대상 베타 테스트 준비 단계",
   ],
   tech: ["Python", "FastAPI", "React", "Qdrant", "PostgreSQL", "Docker", "LLM Serving", "Hybrid Search", "RAG"],
@@ -150,7 +150,7 @@ export const featured: Featured = {
   ],
   scale: [
     { label: "사용자", value: "약 60명" },
-    { label: "운영 환경", value: "폐쇄망 · 온프레미스" },
+    { label: "운영 환경", value: "온프레미스" },
     { label: "외부 API 호출", value: "0" },
   ],
 };
@@ -282,7 +282,7 @@ export const techStack: SkillGroup[] = [
     category: "AI / ML",
     skills: ["LLM Application", "RAG", "Hybrid Search", "Vector Search", "Federated Learning", "Prompt Engineering"],
   },
-  { category: "AI Infra", skills: ["LLM Serving", "Vector Database", "Embedding Model"] },
+  { category: "AI Infra", skills: ["LLM Serving(vLLM, Ollama)", "Vector Database", "Embedding Model"] },
   { category: "Backend", skills: ["Python", "FastAPI", "REST API", "SSE", "PostgreSQL"] },
   { category: "Frontend", skills: ["React", "TypeScript", "JavaScript", "Vue.js", "Next.js"] },
   {

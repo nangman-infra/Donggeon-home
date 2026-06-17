@@ -1,0 +1,119 @@
+cv:
+  name: 임동건
+  location: 대전, 대한민국
+  email: gunni6112@gmail.com
+  social_networks:
+    - network: GitHub
+      username: WhiteJbb
+
+  sections:
+    소개:
+      - RAG 기반 AI 서비스 개발, 로컬 LLM 추론 환경 구축, Federated Learning 연구 경험을 보유한 AI Engineer입니다.
+      - 인턴 기간 동안 약 60명 규모 사내 사용자를 대상으로 하는 규정 검색 AI Assistant를 단독 설계·개발·운영했으며, vLLM, Qdrant, BGE-M3 기반 Hybrid Search와 Docker 기반 개발/운영 환경 구축 경험을 보유하고 있습니다.
+
+    기술 스택:
+      - label: AI / ML
+        details: LLM Application, RAG, Hybrid Search, Vector Search, Federated Learning, Agent System Design, Prompt Engineering
+      - label: AI Infra
+        details: vLLM, Qdrant, BGE-M3, Docker, Kubernetes
+      - label: Backend
+        details: Python, FastAPI, REST API, SSE, PostgreSQL, Redis
+      - label: Frontend
+        details: React, TypeScript, JavaScript, Vue.js, Next.js
+      - label: Cloud
+        details: AWS, NAVER Cloud Platform, Firebase
+
+    경력:
+      - company: (주)엑스코어시스템
+        position: AI Engineer Intern
+        location: 대한민국
+        start_date: 2026-03
+        end_date: 2026-08
+        highlights:
+          - 약 60명 규모 사내 사용자를 위한 규정 검색 AI Assistant(XCoreChat) 단독 설계 및 개발
+          - vLLM 기반 로컬 LLM 추론 서버 연동 및 동시 사용자 15명 수준 질의응답 처리 환경 구축
+          - Qdrant와 BGE-M3 기반 Hybrid Search 파이프라인 설계 및 구현
+          - FastAPI 기반 RAG API 서버 개발 및 SSE 기반 실시간 응답 스트리밍 구현
+          - React 기반 사용자 챗봇 UI 및 관리자 문서 관리 시스템 개발
+          - 서비스 내 위키 편집기 형식의 문서 입력, 문서 버전 관리, 변경 이력 추적 기능 구현
+          - 출처 기반 응답 생성 및 문서 근거 추적 기능 구현
+          - Docker 기반 개발/운영 환경 분리 및 AI 서비스 배포 환경 구축
+
+    프로젝트:
+      - name: Federated Learning Testbed
+        date: 2026
+        summary: 이질적 연합학습 환경을 위한 Docker 기반 실험 플랫폼
+        highlights:
+          - Docker 기반 Heterogeneous Client 환경을 구축하여 서로 다른 CPU/Memory 성능을 가진 클라이언트 시뮬레이션
+          - Flower 기반 Federated Learning 파이프라인 개발
+          - BWA 알고리즘 구현 및 PPO 기반 동적 배치 크기 최적화
+          - ADM 알고리즘 구현 및 클라이언트 성능 기반 데이터 사용량 조절
+          - BWA 적용 시 정확도 52.77%에서 55.47%로 2.7%p 향상
+          - ADM 적용 시 학습 시간 963.8초에서 758.9초로 21.3% 단축
+          - "기술 스택: Python, PyTorch, Flower, Docker, Docker Compose, CIFAR-10"
+
+      - name: AfterFail
+        date: 2026
+        summary: Chaos Engineering 기반 Kubernetes 장애 대응 훈련 플랫폼
+        highlights:
+          - Kubernetes 장애를 직접 주입하고 해결하는 DevOps 장애 대응 훈련 플랫폼 개발
+          - Chaos Mesh 기반 장애 주입 환경 설계
+          - RAG 기반 AI Tutor 및 소크라테스식 힌트 학습 흐름 설계
+          - xterm.js 기반 웹 터미널 구축 및 kubectl 실습 환경 제공
+          - Grafana 기반 실시간 모니터링 환경 연동
+          - 사용자별 Kubernetes Namespace 격리 구조 설계
+          - "기술 스택: React, TypeScript, FastAPI, Kubernetes, Chaos Mesh, Prometheus, Grafana, Qdrant"
+
+      - name: Budgetly
+        date: 2025
+        summary: OCR 기반 조직 예산 관리 플랫폼
+        highlights:
+          - Azure Document Intelligence 기반 영수증 OCR 기능을 활용한 예산 관리 PWA 개발
+          - Vue 기반 프론트엔드 및 예산 관리 UI 개발
+          - Firebase 연동 및 AWS EC2 기반 서비스 배포
+          - 소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상
+          - "기술 스택: Vue.js, FastAPI, Firebase, Azure Document Intelligence, OpenCV, AWS EC2"
+
+    논문:
+      # PublicationEntry는 highlights를 렌더링하지 않습니다.
+      # "제1저자" 같은 정보는 journal 필드에 함께 적거나 authors에 반영하세요.
+      - title: 이질적 연합학습을 위한 도커 기반 테스트베드 구축 및 BWA·ADM 기법 성능 검증
+        authors:
+          - 임동건 외
+        date: 2026
+        journal: 한국통신학회 동계종합학술대회 (제1저자)
+
+      - title: 쿠버네티스 기반 연합학습 및 스플릿 컴퓨팅의 최신 연구 동향
+        authors:
+          - 임동건 외
+        date: 2025
+        journal: 한국통신학회 추계종합학술대회
+
+    수상:
+      - bullet: 소중한 오픈소스 활용 SW 경진대회 1등, 총장상
+      - bullet: CEDC 2025 Bronze Award
+      - bullet: KRAFTON Jungle 웹개발 집중캠프 3기 우수 수료생
+      - bullet: AI Rookie Competition 2026 예선 통과 - AI Browser Agent Orbit
+
+    자격증:
+      - bullet: NAVER Cloud Platform Certified Professional
+      - bullet: AWS Certified Cloud Practitioner
+      - bullet: NAVER Cloud Platform Certified Associate
+      - bullet: 정보처리기능사
+
+design:
+  theme: classic
+  # ── 한글 폰트 설정 ────────────────────────────────────────────────
+  # 폰트를 지정하지 않으면 영문은 Source Sans 3로, 한글은 시스템에 설치된
+  # 한글 폰트로 자동 처리됩니다. (Windows/macOS는 기본 한글 폰트가 있어 바로 됨)
+  #
+  # 한글 폰트가 없는 환경(일부 Linux/CI)에서 깨지는 것을 막거나, 한글·영문을
+  # 하나의 폰트로 통일하려면 아래 typography 주석을 풀고 설치된 폰트명을 적으세요.
+  # 폰트명은 OS 폰트 목록 또는 `fc-list`(mac/linux)로 정확히 확인해야 합니다.
+  #
+  typography:
+     font_family: Pretendard          # 한국 개발자에게 인기. 별도 설치 필요
+  #   # font_family: Noto Sans KR      # 구글 폰트. 설치 쉬움
+  #   # font_family: Malgun Gothic     # Windows 기본 (맑은 고딕)
+  #   # font_family: Apple SD Gothic Neo  # macOS 기본
+  # ──────────────────────────────────────────────────────────────────

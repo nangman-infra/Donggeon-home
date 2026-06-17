@@ -9,7 +9,7 @@ export function About() {
           <p className="eyebrow" id="about-label">
             About
           </p>
-          <h2 className="mt-5 text-2xl font-semibold leading-snug tracking-tight text-slate-900 sm:text-3xl">
+          <h2 className="mt-5 whitespace-pre-line text-2xl font-semibold leading-snug tracking-tight text-slate-900 sm:text-3xl">
             {about.heading}
           </h2>
         </div>

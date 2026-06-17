@@ -12,7 +12,7 @@ export default function ContactPage() {
       <PageHeader
         eyebrow="Contact"
         title="AI 서비스 개발과 운영에 대해 이야기하고 싶다면"
-        desc="채용, 협업, 기술 자문 모두 환영합니다. 맥락과 기대하는 결과를 함께 보내주시면 더 빠르게 이해할 수 있습니다."
+        desc="채용이나 협업 제안 모두 환영합니다. 어떤 일인지 간단히 적어주시면 빠르게 확인하겠습니다."
       />
       <Contact />
     </div>

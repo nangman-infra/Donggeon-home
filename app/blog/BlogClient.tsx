@@ -48,8 +48,8 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
     <div>
       <PageHeader
         eyebrow="Learning Notes"
-        title="제품을 만들며 정리한 기술 노트"
-        desc="구현하면서 막혔던 지점, 선택한 기술의 이유, 다시 정리해둘 만한 내용을 블로그에 남깁니다."
+        title="직접 경험하며 정리한 기술 노트"
+        desc="공부하다 막혔던 지점, 기술을 선택한 이유, 나중에 다시 찾아볼 내용을 정리합니다."
         action={
           <a href={TISTORY_URL} target="_blank" rel="noopener noreferrer" className="group btn-ghost shrink-0">
             Tistory 열기 <span className="link-arrow">↗</span>

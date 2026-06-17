@@ -63,7 +63,7 @@ export function Contact() {
         eyebrow="Contact"
         title="함께 만들 것이 있다면"
         titleId="contact-title"
-        desc="채용, 협업, 기술 자문 모두 환영합니다. 맥락과 기대하는 결과를 함께 보내주세요."
+        desc="채용이나 협업 제안 환영합니다. 어떤 일인지 짧게 적어주시면 빠르게 답변드릴게요."
       />
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
