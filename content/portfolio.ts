@@ -1,4 +1,4 @@
-// 포트폴리오 콘텐츠 단일 소스.
+﻿// 포트폴리오 콘텐츠 단일 소스.
 // 모든 섹션 텍스트/데이터를 이 파일에서 관리한다. (회사 내부 정보는 익명화)
 
 export type Cta = {
@@ -163,6 +163,69 @@ export const featured: Featured = {
 
 export const projects: Project[] = [
   {
+    id: "federated-learning-testbed",
+    title: "Federated Learning Testbed & Real Device Validation",
+    description: "이질적 연합학습 환경을 위한 Docker 및 실디바이스 기반 실험 플랫폼",
+    year: "2026",
+    category: "Federated Learning",
+    problem:
+      "성능이 제각각인 디바이스로 구성된 이질적 연합학습 환경을 표준화된 방식으로 실험·검증할 수단이 없었습니다.",
+    contributions: [
+      "Docker 기반 Heterogeneous Client 환경을 구성하여 CPU/Memory 성능이 다른 클라이언트 시뮬레이션",
+      "Raspberry Pi·노트북 등 실제 디바이스 환경에서도 이질적 클라이언트 학습 과정 검증",
+      "Flower 기반 Federated Learning 파이프라인 개발 및 실험 자동화",
+      "BWA 알고리즘 구현 및 PPO 기반 동적 배치 크기 최적화",
+      "ADM 알고리즘 구현으로 클라이언트 성능에 따른 데이터 사용량 조절",
+    ],
+    results: ["정확도 52.77% → 55.47% 개선", "학습 시간 21.3% 단축"],
+    tech: ["Python", "PyTorch", "Flower", "Docker", "Docker Compose", "Raspberry Pi", "CIFAR-10"],
+    github: [
+      { label: "논문 Testbed", href: "https://github.com/2026-Feb-Winter-Institute/FL" },
+      // 원본 전공 프로젝트 저장소 주소를 넣으면 두 번째 링크가 함께 표시된다:
+      { label: "전공 프로젝트", href: "https://github.com/Hanbat-IoT/Lab2" },
+    ],
+    featured: true,
+  },
+  {
+    id: "budgetly",
+    title: "Budgetly",
+    description: "OCR 기반 조직 예산 관리 플랫폼",
+    year: "2025",
+    category: "Document AI",
+    problem: "조직의 영수증·예산 처리를 수기로 관리하기 번거롭고 실수가 잦았습니다.",
+    contributions: [
+      "Azure Document Intelligence로 영수증을 자동 인식하는 예산 관리 PWA 개발",
+      "Vue.js 기반 프론트엔드 개발 및 예산 현황 대시보드 UI 구성",
+      "Firebase 인증·DB 연동 및 AWS EC2 기반 배포",
+    ],
+    results: ["소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상"],
+    tech: ["Vue.js", "FastAPI", "Firebase", "Azure Document Intelligence", "OpenCV", "AWS EC2"],
+    github: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
+    featured: true,
+  },
+  {
+    id: "afterfail",
+    title: "AfterFail",
+    description: "Chaos Engineering 기반 Kubernetes 장애 대응 훈련 플랫폼",
+    year: "2026",
+    category: "Platform / Frontend",
+    role: "프로젝트 총괄(PM) 및 프론트엔드 개발",
+    problem:
+      "Kubernetes 장애 대응은 실제 장애 상황을 안전하게 재현할 환경이 없으면 훈련하기 어렵습니다.",
+    contributions: [
+      "기획, 일정, 역할 분담, 서비스 통합 및 최종 발표 진행",
+      "React·TypeScript 기반 사용자 인터페이스와 미션 진행 화면 개발",
+      "랭킹·업적 시스템 등 프론트엔드 전반 구현",
+      "xterm.js 기반 웹 터미널 구축으로 브라우저에서 kubectl 실습이 가능한 환경 구현",
+      "Docker 기반 개발환경과 실행 자동화 스크립트 작성, 팀원의 개발환경 구축 과정 표준화",
+    ],
+    tech: ["React", "TypeScript", "xterm.js", "Docker"],
+    github: "https://github.com/why-server-down/cloud-trouble-training-service",
+    note:
+      "플랫폼은 Chaos Mesh 기반 장애 주입, RAG 기반 AI Tutor, Kubernetes Namespace 격리 구조로 구성되었으며, 해당 영역(Chaos Mesh 장애 주입·AI Tutor·Kubernetes 핵심 구현)은 팀원이 담당했습니다. 본인은 PM과 프론트엔드 개발을 맡았습니다.",
+    featured: true,
+  },
+  {
     id: "local-rag-pipeline",
     title: "로컬 RAG 파이프라인 — 사내 문서 QA 챗봇",
     description:
@@ -200,22 +263,22 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: "kisa-unix-check",
-    title: "KISA UNIX 서버 취약점 자동 점검 스크립트",
-    description:
-      "KISA 2026 가이드 기반 67개 보안 항목을 자동 점검하고, 인터랙티브 체크리스트를 포함한 반응형 HTML 리포트를 생성하는 Shell 스크립트.",
+    id: "when2work",
+    title: "When2Work",
+    description: "팀원 일정을 모아 최적의 만남 시간을 찾아주는 웹 서비스",
     year: "2026",
-    category: "Security / Shell",
-    problem:
-      "KISA 취약점 가이드 67개 항목을 수동으로 점검하면 누락이 생기고 결과를 문서화하기 번거로웠습니다.",
+    category: "Web Service",
+    link: "https://when2work.whitejbb.cloud",
+    // github: "https://github.com/WhiteJbb/저장소이름",
+    problem: "여러 명의 가능한 시간을 모아 최적의 만남 시간을 찾는 과정이 번거로웠습니다.",
     contributions: [
-      "계정관리·파일권한·서비스·패치·로그 관리 5개 분류, 67개 항목(중요도 상/중/하) 완전 자동 점검 구현",
-      "SSH 설정 다중 파일(sshd_config.d/*.conf) 검사, 심볼릭 링크 실제 파일 권한 추적, 숫자·문자열 권한 형식 모두 지원",
-      "반응형 HTML 리포트 생성 — 그라데이션 카드 레이아웃, U-01~U-67 클릭 가능한 인터랙티브 체크리스트, 취약 항목 자동 조치 가이드 포함",
-      "Rocky Linux / CentOS / RHEL / Ubuntu / Debian 5개 OS 지원",
+      "날짜·시간 범위 설정, 드래그 기반 시간 선택, 히트맵 결과 시각화 기능 개발",
+      "참여자 응답을 분석해 최적 시간대를 자동 추천하는 추천 알고리즘 구현",
+      "Supabase 기반 실시간 데이터 동기화 및 방 자동 삭제 기능 적용",
+      "GitHub Actions 기반 자동 배포 파이프라인 구성",
     ],
-    tech: ["Shell (Bash)", "HTML", "Linux", "systemd", "KISA 2026"],
-    github: "https://github.com/WhiteJbb/Kisa_unix_check",
+    results: ["스터디·캡스톤 팀에서 실사용 중인 운영형 웹 서비스"],
+    tech: ["React", "Vite", "Tailwind CSS", "Supabase", "GitHub Actions"],
     featured: false,
   },
   {
@@ -243,6 +306,25 @@ export const projects: Project[] = [
     featured: false,
   },
   {
+    id: "kisa-unix-check",
+    title: "KISA UNIX 서버 취약점 자동 점검 스크립트",
+    description:
+      "KISA 2026 가이드 기반 67개 보안 항목을 자동 점검하고, 인터랙티브 체크리스트를 포함한 반응형 HTML 리포트를 생성하는 Shell 스크립트.",
+    year: "2026",
+    category: "Security / Shell",
+    problem:
+      "KISA 취약점 가이드 67개 항목을 수동으로 점검하면 누락이 생기고 결과를 문서화하기 번거로웠습니다.",
+    contributions: [
+      "계정관리·파일권한·서비스·패치·로그 관리 5개 분류, 67개 항목(중요도 상/중/하) 완전 자동 점검 구현",
+      "SSH 설정 다중 파일(sshd_config.d/*.conf) 검사, 심볼릭 링크 실제 파일 권한 추적, 숫자·문자열 권한 형식 모두 지원",
+      "반응형 HTML 리포트 생성 — 그라데이션 카드 레이아웃, U-01~U-67 클릭 가능한 인터랙티브 체크리스트, 취약 항목 자동 조치 가이드 포함",
+      "Rocky Linux / CentOS / RHEL / Ubuntu / Debian 5개 OS 지원",
+    ],
+    tech: ["Shell (Bash)", "HTML", "Linux", "systemd", "KISA 2026"],
+    github: "https://github.com/WhiteJbb/Kisa_unix_check",
+    featured: false,
+  },
+  {
     id: "drone-delivery-pwa",
     title: "드론 배송 시스템 PWA",
     description:
@@ -260,26 +342,6 @@ export const projects: Project[] = [
     tech: ["Next.js 14", "TypeScript", "React 18", "Python", "Flask", "Parrot Olympe SDK", "PWA"],
     github: "https://github.com/DroneDelivery2/Embedded_PJ",
     note: "Parrot Anafi 드론 하드웨어와 Olympe SDK를 팀 공유 자산으로 활용했습니다.",
-    featured: false,
-  },
-  {
-    id: "laundry-room-status",
-    title: "기숙사 세탁실 실시간 현황 시스템",
-    description:
-      "정글캠퍼스 기숙사 세탁기·건조기 사용 현황을 실시간 타이머와 함께 보여주고 사용 등록·중지를 관리하는 웹 앱.",
-    year: "2025",
-    category: "Web Service",
-    role: "Full-Stack 개발 (3인 팀)",
-    problem:
-      "기숙사 세탁기·건조기가 비어 있는지 확인하려면 직접 세탁실까지 가야 했습니다.",
-    contributions: [
-      "ES6 모듈 기반 프론트엔드 아키텍처 설계 — WasherState·WasherEvent·WasherUI·request 4개 모듈로 관심사 분리",
-      "Python Flask REST API 및 MongoDB 데이터 접근 계층(status_dao) 구현",
-      "페이지 새로고침 후 진행 중인 세탁·건조 상태를 서버에서 복원하는 타이머 재시작 로직 구현",
-      "드럼 회전 CSS 애니메이션, 상태별 색상(사용가능/사용중/점검중) 구분 UI 제작",
-    ],
-    tech: ["Python", "Flask", "MongoDB", "Vanilla JS (ES6 Modules)", "Bootstrap 5", "jQuery"],
-    github: "https://github.com/2025-Krafton-401-6/Only_My_Web",
     featured: false,
   },
   {
@@ -315,86 +377,24 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: "federated-learning-testbed",
-    title: "Federated Learning Testbed & Real Device Validation",
-    description: "이질적 연합학습 환경을 위한 Docker 및 실디바이스 기반 실험 플랫폼",
-    year: "2026",
-    category: "Federated Learning",
-    problem:
-      "성능이 제각각인 디바이스로 구성된 이질적 연합학습 환경을 표준화된 방식으로 실험·검증할 수단이 없었습니다.",
-    contributions: [
-      "Docker 기반 Heterogeneous Client 환경을 구성하여 CPU/Memory 성능이 다른 클라이언트 시뮬레이션",
-      "Raspberry Pi·노트북 등 실제 디바이스 환경에서도 이질적 클라이언트 학습 과정 검증",
-      "Flower 기반 Federated Learning 파이프라인 개발 및 실험 자동화",
-      "BWA 알고리즘 구현 및 PPO 기반 동적 배치 크기 최적화",
-      "ADM 알고리즘 구현으로 클라이언트 성능에 따른 데이터 사용량 조절",
-    ],
-    results: ["정확도 52.77% → 55.47% 개선", "학습 시간 21.3% 단축"],
-    tech: ["Python", "PyTorch", "Flower", "Docker", "Docker Compose", "Raspberry Pi", "CIFAR-10"],
-    github: [
-      { label: "논문 Testbed", href: "https://github.com/2026-Feb-Winter-Institute/FL" },
-      // 원본 전공 프로젝트 저장소 주소를 넣으면 두 번째 링크가 함께 표시된다:
-      { label: "전공 프로젝트", href: "https://github.com/Hanbat-IoT/Lab2" },
-    ],
-    featured: true,
-  },
-  {
-    id: "afterfail",
-    title: "AfterFail",
-    description: "Chaos Engineering 기반 Kubernetes 장애 대응 훈련 플랫폼",
-    year: "2026",
-    category: "Platform / Frontend",
-    role: "프로젝트 총괄(PM) 및 프론트엔드 개발",
-    problem:
-      "Kubernetes 장애 대응은 실제 장애 상황을 안전하게 재현할 환경이 없으면 훈련하기 어렵습니다.",
-    contributions: [
-      "기획, 일정, 역할 분담, 서비스 통합 및 최종 발표 진행",
-      "React·TypeScript 기반 사용자 인터페이스와 미션 진행 화면 개발",
-      "랭킹·업적 시스템 등 프론트엔드 전반 구현",
-      "xterm.js 기반 웹 터미널 구축으로 브라우저에서 kubectl 실습이 가능한 환경 구현",
-      "Docker 기반 개발환경과 실행 자동화 스크립트 작성, 팀원의 개발환경 구축 과정 표준화",
-    ],
-    tech: ["React", "TypeScript", "xterm.js", "Docker"],
-    github: "https://github.com/why-server-down/cloud-trouble-training-service",
-    note:
-      "플랫폼은 Chaos Mesh 기반 장애 주입, RAG 기반 AI Tutor, Kubernetes Namespace 격리 구조로 구성되었으며, 해당 영역(Chaos Mesh 장애 주입·AI Tutor·Kubernetes 핵심 구현)은 팀원이 담당했습니다. 본인은 PM과 프론트엔드 개발을 맡았습니다.",
-    featured: true,
-  },
-  {
-    id: "when2work",
-    title: "When2Work",
-    description: "팀원 일정을 모아 최적의 만남 시간을 찾아주는 웹 서비스",
-    year: "2026",
-    category: "Web Service",
-    link: "https://when2work.whitejbb.cloud",
-    // github: "https://github.com/WhiteJbb/저장소이름",
-    problem: "여러 명의 가능한 시간을 모아 최적의 만남 시간을 찾는 과정이 번거로웠습니다.",
-    contributions: [
-      "날짜·시간 범위 설정, 드래그 기반 시간 선택, 히트맵 결과 시각화 기능 개발",
-      "참여자 응답을 분석해 최적 시간대를 자동 추천하는 추천 알고리즘 구현",
-      "Supabase 기반 실시간 데이터 동기화 및 방 자동 삭제 기능 적용",
-      "GitHub Actions 기반 자동 배포 파이프라인 구성",
-    ],
-    results: ["스터디·캡스톤 팀에서 실사용 중인 운영형 웹 서비스"],
-    tech: ["React", "Vite", "Tailwind CSS", "Supabase", "GitHub Actions"],
-    featured: false,
-  },
-  {
-    id: "budgetly",
-    title: "Budgetly",
-    description: "OCR 기반 조직 예산 관리 플랫폼",
+    id: "laundry-room-status",
+    title: "기숙사 세탁실 실시간 현황 시스템",
+    description:
+      "정글캠퍼스 기숙사 세탁기·건조기 사용 현황을 실시간 타이머와 함께 보여주고 사용 등록·중지를 관리하는 웹 앱.",
     year: "2025",
-    category: "Document AI",
-    problem: "조직의 영수증·예산 처리를 수기로 관리하기 번거롭고 실수가 잦았습니다.",
+    category: "Web Service",
+    role: "Full-Stack 개발 (3인 팀)",
+    problem:
+      "기숙사 세탁기·건조기가 비어 있는지 확인하려면 직접 세탁실까지 가야 했습니다.",
     contributions: [
-      "Azure Document Intelligence로 영수증을 자동 인식하는 예산 관리 PWA 개발",
-      "Vue.js 기반 프론트엔드 개발 및 예산 현황 대시보드 UI 구성",
-      "Firebase 인증·DB 연동 및 AWS EC2 기반 배포",
+      "ES6 모듈 기반 프론트엔드 아키텍처 설계 — WasherState·WasherEvent·WasherUI·request 4개 모듈로 관심사 분리",
+      "Python Flask REST API 및 MongoDB 데이터 접근 계층(status_dao) 구현",
+      "페이지 새로고침 후 진행 중인 세탁·건조 상태를 서버에서 복원하는 타이머 재시작 로직 구현",
+      "드럼 회전 CSS 애니메이션, 상태별 색상(사용가능/사용중/점검중) 구분 UI 제작",
     ],
-    results: ["소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상"],
-    tech: ["Vue.js", "FastAPI", "Firebase", "Azure Document Intelligence", "OpenCV", "AWS EC2"],
-    github: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
-    featured: true,
+    tech: ["Python", "Flask", "MongoDB", "Vanilla JS (ES6 Modules)", "Bootstrap 5", "jQuery"],
+    github: "https://github.com/2025-Krafton-401-6/Only_My_Web",
+    featured: false,
   },
 ];
 
