@@ -163,6 +163,158 @@ export const featured: Featured = {
 
 export const projects: Project[] = [
   {
+    id: "local-rag-pipeline",
+    title: "로컬 RAG 파이프라인 — 사내 문서 QA 챗봇",
+    description:
+      "PDF·PPTX·MD 규정 문서를 인덱싱하고 자연어로 질문하면 근거 출처와 함께 답변하는 완전 로컬 RAG 챗봇. 외부 API 없이 Ollama + Qdrant로 동작.",
+    year: "2026",
+    category: "RAG / LLM",
+    problem:
+      "사내 규정 문서를 외부 API에 전송할 수 없는 환경에서, 직원들이 필요한 조항을 빠르게 찾기 어려웠습니다.",
+    contributions: [
+      "PDF·PPTX·MD 문서를 로드·전처리하는 document_loader 설계 — 150자 미만 청크 병합, 800자 초과 재분할로 쓸모없는 소형 청크 81개 → 0개 제거",
+      "LangChain LCEL 기반 RAG 체인 구성 — 유사도 임계값 미달 시 LLM 호출 없이 즉시 '검색 결과 없음' 반환해 할루시네이션 방지",
+      "Chainlit 웹 UI 및 CLI 양쪽 인터페이스 구현, 답변마다 파일명·페이지/섹션 출처 표시",
+      "Docker Compose로 Qdrant 컨테이너화, Ollama 로컬 모델(gemma4:e2b)과 연동",
+      "한국어 임베딩(jhgan/ko-sroberta-multitask)과 다국어 임베딩(intfloat/multilingual-e5-large) 교체 실험 및 벤치마크 비교 — Rag-Test 프로토타입에서 성능 측정 후 본 프로젝트에 반영",
+    ],
+    results: [
+      "완전 로컬 동작 — 외부 API 호출 0, 인터넷 불필요",
+      "어댑티브 청킹으로 평균 청크 품질 개선 (평균 280자 → 442자)",
+    ],
+    tech: [
+      "Python",
+      "LangChain",
+      "Qdrant",
+      "Ollama",
+      "ChromaDB",
+      "Chainlit",
+      "Streamlit",
+      "Docker Compose",
+      "ko-sroberta-multitask",
+    ],
+    github: [
+      { label: "local-rag-policy-chat", href: "https://github.com/WhiteJbb/local-rag-policy-chat" },
+      { label: "Rag-Test (프로토타입)", href: "https://github.com/WhiteJbb/Rag-Test" },
+    ],
+    featured: false,
+  },
+  {
+    id: "kisa-unix-check",
+    title: "KISA UNIX 서버 취약점 자동 점검 스크립트",
+    description:
+      "KISA 2026 가이드 기반 67개 보안 항목을 자동 점검하고, 인터랙티브 체크리스트를 포함한 반응형 HTML 리포트를 생성하는 Shell 스크립트.",
+    year: "2026",
+    category: "Security / Shell",
+    problem:
+      "KISA 취약점 가이드 67개 항목을 수동으로 점검하면 누락이 생기고 결과를 문서화하기 번거로웠습니다.",
+    contributions: [
+      "계정관리·파일권한·서비스·패치·로그 관리 5개 분류, 67개 항목(중요도 상/중/하) 완전 자동 점검 구현",
+      "SSH 설정 다중 파일(sshd_config.d/*.conf) 검사, 심볼릭 링크 실제 파일 권한 추적, 숫자·문자열 권한 형식 모두 지원",
+      "반응형 HTML 리포트 생성 — 그라데이션 카드 레이아웃, U-01~U-67 클릭 가능한 인터랙티브 체크리스트, 취약 항목 자동 조치 가이드 포함",
+      "Rocky Linux / CentOS / RHEL / Ubuntu / Debian 5개 OS 지원",
+    ],
+    tech: ["Shell (Bash)", "HTML", "Linux", "systemd", "KISA 2026"],
+    github: "https://github.com/WhiteJbb/Kisa_unix_check",
+    featured: false,
+  },
+  {
+    id: "oracle-schema-drift",
+    title: "Oracle 스키마 드리프트 검증 시스템",
+    description:
+      "운영 DB와 테스트 DB 간 12개 스키마 요소를 자동 검증해 배포 전 불일치를 조기 발견하는 Spring Boot 기반 시스템.",
+    year: "2026",
+    category: "Backend / DB",
+    problem:
+      "운영·테스트 Oracle DB 간 스키마가 조용히 어긋나 배포 후 장애가 발생하는 문제를 사전에 차단할 수단이 없었습니다.",
+    contributions: [
+      "Docker Compose로 Oracle XE 이중 컨테이너(포트 1521/1522) 환경 구성",
+      "12개 스키마 검증 항목 구현 — PK·FK·UNIQUE·NOT NULL 제약조건, 인덱스·시퀀스·뷰·트리거·패키지, 칼럼 길이·순서까지 포함",
+      "읽기 전용 schema_checker 계정(SELECT ANY DICTIONARY) 설계로 프로덕션 데이터 접근 최소화",
+      "뷰·트리거·패키지 검증 시 환경별 스키마명 정규화 처리로 오탐 방지",
+      "JUnit 5 + AssertJ 기반 테스트 파일 13개 작성, ✅/❌ 시각적 차이 리포트 출력",
+    ],
+    results: [
+      "12개 스키마 요소 자동 검증으로 배포 전 불일치 100% 감지",
+      "GitHub Actions 통합 예시 포함 — CI/CD 파이프라인에 즉시 적용 가능",
+    ],
+    tech: ["Java 17", "Spring Boot 3.2", "Oracle XE 21c", "JUnit 5", "AssertJ", "Gradle", "Docker Compose"],
+    github: "https://github.com/WhiteJbb/Oracledb",
+    featured: false,
+  },
+  {
+    id: "drone-delivery-pwa",
+    title: "드론 배송 시스템 PWA",
+    description:
+      "Parrot Anafi 드론을 WiFi로 연결해 실시간 상태를 모니터링하고 웨이포인트 기반 자동 배송 미션을 실행하는 Next.js 14 PWA.",
+    year: "2025",
+    category: "Embedded / Web",
+    problem:
+      "드론 제어 SDK가 Linux 전용이고, 웹에서 실시간으로 드론 상태를 확인하며 배송 미션을 지시하는 통합 인터페이스가 없었습니다.",
+    contributions: [
+      "Next.js 14 App Router 기반 PWA 프론트엔드 개발 — 드론 연결·배송 요청·실시간 현황 3개 화면 구현",
+      "Python Flask REST API 서버 작성, Parrot Olympe SDK와 연동해 이륙·착륙·위치 이동·자동 미션 엔드포인트 제공",
+      "WSL2 환경에서 Linux 전용 Olympe SDK를 Windows에서 실행하는 개발 환경 구성 가이드(QUICKSTART_WINDOWS.md) 작성",
+      "PWA manifest 설정으로 모바일 홈 화면 설치 지원",
+    ],
+    tech: ["Next.js 14", "TypeScript", "React 18", "Python", "Flask", "Parrot Olympe SDK", "PWA"],
+    github: "https://github.com/DroneDelivery2/Embedded_PJ",
+    note: "Parrot Anafi 드론 하드웨어와 Olympe SDK를 팀 공유 자산으로 활용했습니다.",
+    featured: false,
+  },
+  {
+    id: "laundry-room-status",
+    title: "기숙사 세탁실 실시간 현황 시스템",
+    description:
+      "정글캠퍼스 기숙사 세탁기·건조기 사용 현황을 실시간 타이머와 함께 보여주고 사용 등록·중지를 관리하는 웹 앱.",
+    year: "2025",
+    category: "Web Service",
+    role: "Full-Stack 개발 (3인 팀)",
+    problem:
+      "기숙사 세탁기·건조기가 비어 있는지 확인하려면 직접 세탁실까지 가야 했습니다.",
+    contributions: [
+      "ES6 모듈 기반 프론트엔드 아키텍처 설계 — WasherState·WasherEvent·WasherUI·request 4개 모듈로 관심사 분리",
+      "Python Flask REST API 및 MongoDB 데이터 접근 계층(status_dao) 구현",
+      "페이지 새로고침 후 진행 중인 세탁·건조 상태를 서버에서 복원하는 타이머 재시작 로직 구현",
+      "드럼 회전 CSS 애니메이션, 상태별 색상(사용가능/사용중/점검중) 구분 UI 제작",
+    ],
+    tech: ["Python", "Flask", "MongoDB", "Vanilla JS (ES6 Modules)", "Bootstrap 5", "jQuery"],
+    github: "https://github.com/2025-Krafton-401-6/Only_My_Web",
+    featured: false,
+  },
+  {
+    id: "dev-card-hunter",
+    title: "DEV CARD HUNTER",
+    description:
+      "개발자 관련 사이트 방문 시 자동으로 사이트 로고 카드를 획득하는 Chrome Extension + 게임화 웹 앱.",
+    year: "2025",
+    category: "Chrome Extension / Frontend",
+    problem:
+      "개발자들이 다양한 기술 사이트를 탐색하는 행동에 수집·성장의 재미를 부여할 방법이 필요했습니다.",
+    contributions: [
+      "Chrome Extension Manifest V3 구현 — Content Script로 개발 관련 사이트 방문 자동 감지, Background Service Worker로 카드 획득 처리",
+      "Vanilla JS ES6 모듈 시스템으로 웹 앱 설계 — StampBookApp·DataManager·StampBook·Collection·Synthesis 5개 클래스 구조",
+      "Common/Rare/Epic/Legendary 4단계 희귀도, 7개 카테고리(BACKEND·FRONTEND·DEVOPS·AI 등) 카드 시스템 구현",
+      "동일 카드 5장 합성으로 상위 등급 생성하는 오각형 5-슬롯 합성 UI 구현",
+      "JWT 인증·OAuth2 로그인 연동, 카드 획득 시 실시간 팝업 알림",
+    ],
+    tech: [
+      "Vanilla JS (ES6 Modules)",
+      "HTML5",
+      "CSS3",
+      "Chrome Extension (Manifest V3)",
+      "RESTful API",
+      "JWT",
+      "OAuth2",
+    ],
+    github: [
+      { label: "frontEnd", href: "https://github.com/2025-Kraftonweek2-401-7/frontEnd" },
+      { label: "backEnd", href: "https://github.com/2025-Kraftonweek2-401-7/backEnd" },
+    ],
+    note: "백엔드(Java Spring Boot) 구현은 팀원이 담당했습니다. 본인은 Chrome Extension과 웹 프론트엔드를 맡았습니다.",
+    featured: false,
+  },
+  {
     id: "federated-learning-testbed",
     title: "Federated Learning Testbed & Real Device Validation",
     description: "이질적 연합학습 환경을 위한 Docker 및 실디바이스 기반 실험 플랫폼",
