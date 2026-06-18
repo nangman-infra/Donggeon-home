@@ -82,7 +82,10 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
           </div>
         ) : (
           <div className="grid gap-4">
-            {posts.map((post) => (
+            {posts.map((post) => {
+              const p = { bg: "from-brand-soft to-blue-100/60", border: "border-blue-100", initial: "text-brand" };
+
+              return (
               <a
                 key={post.link}
                 href={post.link}
@@ -95,8 +98,12 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
                     <Image src={post.thumbnail} alt="" fill className="object-cover" unoptimized sizes="220px" />
                   </div>
                 ) : (
-                  <div className="grid h-40 w-full shrink-0 place-items-center rounded-xl border border-gray-100 bg-gray-50 font-mono text-xs font-semibold text-slate-400 sm:h-24 sm:w-40">
-                    Note
+                  <div className={`grid h-40 w-full shrink-0 place-items-center overflow-hidden rounded-xl border bg-gradient-to-br ${p.bg} ${p.border} sm:h-24 sm:w-40`}>
+                    {post.category && (
+                      <span className={`font-mono text-xs font-semibold uppercase tracking-widest ${p.initial}`}>
+                        {post.category}
+                      </span>
+                    )}
                   </div>
                 )}
                 <div className="min-w-0 sm:py-1">
@@ -108,7 +115,8 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
                   <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-500">{post.description}</p>
                 </div>
               </a>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>
