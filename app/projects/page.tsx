@@ -1,4 +1,4 @@
-import { Projects } from "@/components/sections/Projects";
+import { ProjectsFilter } from "@/components/sections/ProjectsFilter";
 import { PageHeader } from "@/components/sections/Shell";
 import { pageHeaders, projects } from "@/content/portfolio";
 
@@ -15,7 +15,9 @@ export default function ProjectsPage() {
         title={pageHeaders.projects.title}
         desc={pageHeaders.projects.desc}
       />
-      <Projects projects={projects} hideHeader />
+      <div className="mx-auto w-full max-w-5xl px-6 py-16 sm:px-8 sm:py-20">
+        <ProjectsFilter projects={projects} />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { About } from "@/components/sections/About";
+import { Activities } from "@/components/sections/Activities";
 import { Awards } from "@/components/sections/Awards";
 import { Contact } from "@/components/sections/Contact";
 import { FeaturedExperience } from "@/components/sections/FeaturedExperience";
@@ -20,6 +21,7 @@ export default function Home() {
       <FeaturedExperience />
       <Projects projects={featuredProjects} showAllLink />
       <Publications />
+      <Activities />
       <Awards />
       <TechStack />
       <Contact />

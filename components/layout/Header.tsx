@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Logo } from "./Logo";
 
 const navItems = [
@@ -14,21 +14,9 @@ const navItems = [
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b bg-white/80 backdrop-blur-md transition-colors duration-300 ${
-        scrolled ? "border-gray-200/70" : "border-transparent"
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-gray-200/70 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6 sm:px-8">
         <Link href="/" aria-label="홈으로 이동" className="flex items-center gap-2.5">
           <Logo className="h-7 w-7" />
@@ -51,12 +39,23 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 items-center rounded-lg border border-gray-200 px-3.5 text-sm font-semibold text-slate-800 transition-colors hover:border-brand hover:text-brand md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-slate-800 transition-colors hover:border-brand hover:text-brand md:hidden"
           aria-expanded={isMenuOpen}
-          aria-label="메뉴 열기"
+          aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
           onClick={() => setIsMenuOpen((value) => !value)}
         >
-          {isMenuOpen ? "닫기" : "메뉴"}
+          {isMenuOpen ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="3" x2="15" y2="15" />
+              <line x1="15" y1="3" x2="3" y2="15" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="5" x2="15" y2="5" />
+              <line x1="3" y1="9" x2="15" y2="9" />
+              <line x1="3" y1="13" x2="15" y2="13" />
+            </svg>
+          )}
         </button>
       </div>
 

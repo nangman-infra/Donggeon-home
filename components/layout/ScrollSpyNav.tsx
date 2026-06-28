@@ -9,6 +9,7 @@ const sections: Section[] = [
   { id: "featured", label: "Work" },
   { id: "projects", label: "Projects" },
   { id: "publications", label: "Research" },
+  { id: "activities", label: "Activities" },
   { id: "awards", label: "Awards" },
   { id: "stack", label: "Stack" },
   { id: "contact", label: "Contact" },
@@ -53,7 +54,7 @@ export function ScrollSpyNav() {
 
     compute();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);

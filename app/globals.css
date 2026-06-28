@@ -76,7 +76,7 @@
 
   /* 인터랙티브 카드 hover — 그림자 대신 테두리 강조 한 단계 */
   .card-hover {
-    @apply transition-colors duration-200 hover:border-slate-300;
+    @apply transition duration-200 hover:border-slate-300 hover:shadow-[0_4px_16px_0_rgba(0,0,0,0.06)];
   }
 
   /* 링크 끝 화살표 — 호버 시 살짝 이동 (group 안에서 사용) */

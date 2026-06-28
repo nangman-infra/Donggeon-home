@@ -69,7 +69,7 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
           <ul className="mt-3 grid gap-2.5">
             {project.contributions.map((item) => (
               <li key={item} className="flex gap-3 text-sm leading-relaxed text-slate-600">
-                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" aria-hidden="true" />
                 {item}
               </li>
             ))}

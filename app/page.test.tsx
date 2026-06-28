@@ -62,7 +62,7 @@ describe("portfolio pages", () => {
   it("renders the full projects index with role separation", () => {
     render(React.createElement(ProjectsPage));
 
-    expect(screen.getByText("When2Work")).toBeInTheDocument();
+    expect(screen.getByText(/When2Work/)).toBeInTheDocument();
     expect(screen.getByText("Budgetly")).toBeInTheDocument();
     expect(screen.getAllByText("PyTorch").length).toBeGreaterThanOrEqual(1);
     // AfterFail 역할 구분 note가 노출되어야 한다

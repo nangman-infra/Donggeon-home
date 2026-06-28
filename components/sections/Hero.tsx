@@ -12,7 +12,13 @@ export function Hero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-6 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-44" aria-labelledby="hero-title">
+    <section className="relative w-full overflow-hidden" aria-labelledby="hero-title">
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
+        style={{ backgroundImage: "linear-gradient(215deg, rgba(37,99,235,0.08) 0%, rgba(37,99,235,0.04) 35%, rgba(37,99,235,0) 62%)" }}
+      />
+      <div className="mx-auto w-full max-w-5xl px-6 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-44">
       <motion.div
         initial={reduceMotion ? "show" : "hidden"}
         animate="show"
@@ -41,7 +47,7 @@ export function Hero() {
           {profile.oneLiner}
         </motion.p>
 
-        <motion.p className="mt-4 max-w-xl text-base font-light leading-relaxed text-slate-500" variants={reveal}>
+        <motion.p className="mt-4 max-w-2xl text-base font-light leading-relaxed text-slate-500" variants={reveal}>
           {profile.summary}
         </motion.p>
 
@@ -59,17 +65,18 @@ export function Hero() {
         </motion.div>
 
         <motion.dl
-          className="mt-16 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-3"
+          className="mt-16 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 shadow-sm sm:grid-cols-3"
           variants={reveal}
         >
           {hero.stats.map((stat) => (
-            <div key={stat.label} className="bg-white px-6 py-7">
-              <dt className="text-3xl font-bold tracking-tight text-slate-900">{stat.value}</dt>
-              <dd className="mt-2 text-sm leading-snug text-slate-500">{stat.label}</dd>
+            <div key={stat.label} className="bg-white px-6 py-8">
+              <dt className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</dt>
+              <dd className="mt-2.5 text-sm leading-snug text-slate-500">{stat.label}</dd>
             </div>
           ))}
         </motion.dl>
       </motion.div>
+      </div>
     </section>
   );
 }

@@ -18,7 +18,7 @@ export function About() {
 
           <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-2">
             {about.capabilities.map((cap) => (
-              <li key={cap.title} className="bg-white p-6">
+              <li key={cap.title} className="bg-white p-6 transition-colors duration-200 hover:bg-gray-50">
                 <p className="font-mono text-sm font-semibold text-slate-900">{cap.title}</p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-500">{cap.desc}</p>
               </li>

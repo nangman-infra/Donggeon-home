@@ -27,8 +27,7 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
         const fetchedPosts = await fetchTistoryPosts();
         setPosts(fetchedPosts);
         setError(null);
-      } catch (err) {
-        console.error("Failed to load blog posts:", err);
+      } catch {
         setError("블로그 글을 불러오지 못했습니다.");
       } finally {
         setLoading(false);
@@ -82,7 +81,10 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
           </div>
         ) : (
           <div className="grid gap-4">
-            {posts.map((post) => (
+            {posts.map((post) => {
+              const p = { bg: "from-brand-soft to-blue-100/60", border: "border-blue-100", initial: "text-brand" };
+
+              return (
               <a
                 key={post.link}
                 href={post.link}
@@ -92,11 +94,15 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
               >
                 {post.thumbnail ? (
                   <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50 sm:h-24 sm:w-40">
-                    <Image src={post.thumbnail} alt="" fill className="object-cover" unoptimized sizes="220px" />
+                    <Image src={post.thumbnail} alt={post.title} fill className="object-cover" unoptimized sizes="(max-width: 640px) 100vw, 160px" />
                   </div>
                 ) : (
-                  <div className="grid h-40 w-full shrink-0 place-items-center rounded-xl border border-gray-100 bg-gray-50 font-mono text-xs font-semibold text-slate-400 sm:h-24 sm:w-40">
-                    Note
+                  <div className={`grid h-40 w-full shrink-0 place-items-center overflow-hidden rounded-xl border bg-gradient-to-br ${p.bg} ${p.border} sm:h-24 sm:w-40`}>
+                    {post.category && (
+                      <span className={`font-mono text-xs font-semibold uppercase tracking-widest ${p.initial}`}>
+                        {post.category}
+                      </span>
+                    )}
                   </div>
                 )}
                 <div className="min-w-0 sm:py-1">
@@ -108,7 +114,8 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
                   <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-slate-500">{post.description}</p>
                 </div>
               </a>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>

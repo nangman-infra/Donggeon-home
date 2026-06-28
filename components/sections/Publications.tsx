@@ -21,7 +21,11 @@ export function Publications() {
               <p className="mt-2 text-sm text-slate-600">{paper.authors}</p>
               <p className="mt-1 text-sm text-slate-400">{paper.venue}</p>
             </div>
-            <span className="inline-flex shrink-0 items-center self-start rounded-full border border-gray-200 px-3 py-1 font-mono text-xs font-semibold text-slate-600">
+            <span className={`inline-flex shrink-0 items-center self-start rounded-full border px-3 py-1 font-mono text-xs font-semibold ${
+              paper.role === "제1저자"
+                ? "border-brand/30 bg-brand/5 text-brand"
+                : "border-gray-200 text-slate-600"
+            }`}>
               {paper.role}
             </span>
           </li>
