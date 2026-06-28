@@ -68,7 +68,12 @@ export type Award = {
 
 export type Activity = {
   title: string;
+  role?: string;
+  period?: string;
+  description?: string;
   points: string[];
+  tech?: string[];
+  link?: string;
 };
 
 export type Certification = string;
@@ -555,18 +560,28 @@ export const awards: Award[] = [
 
 export const activities: Activity[] = [
   {
-    title: "낭만인프라 클라우드 인프라 스터디 — Ops 담당",
+    title: "낭만인프라 클라우드 인프라 스터디",
+    role: "DevOps 담당",
+    period: "2025.11 - Present",
+    description: "클라우드 인프라를 주제로 모인 11인 스터디에서 CI/CD 파이프라인 설계·구축을 전담해 전 멤버 프로젝트에 공유 적용했습니다.",
     points: [
       "Jenkins 기반 CI/CD 파이프라인 설계·구축",
       "스터디원 11명의 프로젝트에 공유 적용",
       "멤버별 독립 파이프라인 구성 및 배포 환경 운영 관리",
     ],
+    tech: ["Jenkins", "GitHub", "Harbor", "WatchTower", "SonarQube", "Docker", "CI/CD"],
+    link: "https://www.nangman.cloud",
   },
 ];
 
 export const education = {
   school: "국립한밭대학교 컴퓨터공학과",
   detail: "학사 재학 중",
+  research: {
+    role: "학부연구생",
+    lab: "ICIS Lab",
+    period: "2025.03 – 2026.04",
+  },
 };
 
 export const certifications: Certification[] = [
@@ -580,16 +595,28 @@ export const certifications: Certification[] = [
 export const techStack: SkillGroup[] = [
   {
     category: "AI / ML",
-    skills: ["LLM Application", "RAG", "Hybrid Search", "Vector Search", "Federated Learning", "Prompt Engineering"],
+    skills: ["RAG", "Hybrid Search", "LangChain", "LangGraph", "PyTorch", "Federated Learning", "Prompt Engineering", "Multi-LLM Routing"],
   },
-  { category: "AI Infra", skills: ["LLM Serving(vLLM, Ollama)", "Vector Database", "Embedding Model"] },
-  { category: "Backend", skills: ["Python", "FastAPI", "REST API", "SSE", "PostgreSQL"] },
-  { category: "Frontend", skills: ["React", "TypeScript", "JavaScript", "Vue.js", "Next.js"] },
+  {
+    category: "AI Infra",
+    skills: ["vLLM", "Ollama", "Qdrant", "BGE-M3", "BM25", "ChromaDB"],
+  },
   {
     category: "Infra / DevOps",
-    skills: ["Docker", "Docker Compose", "Jenkins", "GitLab", "Nexus", "SonarQube", "GitHub Actions"],
+    skills: ["Docker", "Docker Compose", "Jenkins", "GitLab", "GitHub Actions", "Nexus", "Shell"],
   },
-  { category: "Cloud", skills: ["AWS", "NAVER Cloud Platform"] },
+  {
+    category: "Cloud",
+    skills: ["AWS EC2", "NAVER Cloud Platform", "Supabase", "Firebase"],
+  },
+  {
+    category: "Frontend",
+    skills: ["React", "TypeScript", "JavaScript", "Vue.js", "Next.js", "Tailwind CSS"],
+  },
+  {
+    category: "Backend",
+    skills: ["Python", "FastAPI", "Flask", "Spring Boot", "PostgreSQL", "MongoDB", "Oracle"],
+  },
 ];
 
 export const contact = {
@@ -616,7 +643,8 @@ export const sectionHeaders = {
     allLink: "전체 프로젝트 보기",
   },
   publications: { eyebrow: "Research / Publications", title: "논문" },
-  awards: { eyebrow: "Awards & Activities", title: "수상 · 활동 · 이력" },
+  activities: { eyebrow: "Activities", title: "활동" },
+  awards: { eyebrow: "Awards · Education · Certifications", title: "수상 · 학력 · 자격증" },
   techStack: {
     eyebrow: "Tech Stack",
     title: "기술 스택",

@@ -1,8 +1,7 @@
 import { sectionHeaders, techStack } from "@/content/portfolio";
 import { Section, SectionHeader } from "./Shell";
 
-// 벤토 리듬: 스킬이 많은 카테고리를 2칸으로 넓혀 wide/narrow가 번갈아 깔끔하게 타일링되도록 한다.
-const wideCategories = new Set(["AI / ML", "Backend", "Infra / DevOps"]);
+const wideCategories = new Set(["AI / ML", "Infra / DevOps", "Backend"]);
 
 export function TechStack() {
   return (

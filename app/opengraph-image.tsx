@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 // 링크 공유 시 노출되는 1200×630 OG 카드 — 빌드 시 정적 PNG로 생성된다.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Donggeon Im — AI/AX Engineer";
+export const alt = "Donggeon Im — AI Product Engineer";
 
 // 브랜드 마크(ㄷㄱ)를 satori 안전하게 CSS 보더로 재구성
 function Mark() {
@@ -70,7 +70,7 @@ export default function OpengraphImage() {
           <Mark />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 18, letterSpacing: 4, color: "#94a3b8", fontWeight: 700 }}>
-              AI / AX ENGINEER
+              AI PRODUCT ENGINEER
             </div>
             <div style={{ fontSize: 30, color: "#0f172a", fontWeight: 700, marginTop: 4 }}>
               Donggeon Im
@@ -89,11 +89,11 @@ export default function OpengraphImage() {
               color: "#0f172a",
             }}
           >
-            On-premise RAG services,
+            AI as a product,
           </div>
           <div style={{ display: "flex", fontSize: 70, lineHeight: 1.08, letterSpacing: -2, fontWeight: 800 }}>
-            <span style={{ color: "#0f172a" }}>{"built "}</span>
-            <span style={{ color: "#2563eb" }}>end-to-end.</span>
+            <span style={{ color: "#0f172a" }}>{"not just "}</span>
+            <span style={{ color: "#2563eb" }}>a demo.</span>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function OpengraphImage() {
           }}
         >
           <div style={{ display: "flex", fontSize: 22, color: "#475569", fontWeight: 600 }}>
-            RAG · On-prem LLM · AI Infra · DevOps
+            RAG · On-premise LLM · LangGraph · AI Infra
           </div>
           <div style={{ display: "flex", fontSize: 20, color: "#94a3b8", fontWeight: 600 }}>
             donggeon.nangman.cloud

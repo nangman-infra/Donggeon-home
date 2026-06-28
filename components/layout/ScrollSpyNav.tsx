@@ -9,6 +9,7 @@ const sections: Section[] = [
   { id: "featured", label: "Work" },
   { id: "projects", label: "Projects" },
   { id: "publications", label: "Research" },
+  { id: "activities", label: "Activities" },
   { id: "awards", label: "Awards" },
   { id: "stack", label: "Stack" },
   { id: "contact", label: "Contact" },
