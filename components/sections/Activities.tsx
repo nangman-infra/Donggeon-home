@@ -15,7 +15,7 @@ export function Activities() {
           <div key={activity.title} className="card card-hover p-8 sm:p-10">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <p className="eyebrow text-slate-400">클라우드 인프라 스터디</p>
+                <p className="eyebrow text-slate-400">Study</p>
                 <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900">
                   {activity.title}
                 </h3>

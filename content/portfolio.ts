@@ -203,7 +203,7 @@ export const featured: Featured[] = [
 ];
 
 export const projects: Project[] = [
-  // --- featured: AI/AX Engineer 포지셔닝 기준 상위 3개 ---
+  // --- featured: AI Product Engineer 포지셔닝 기준 상위 3개 ---
   {
     id: "local-rag-pipeline",
     title: "로컬 RAG 파이프라인 — 사내 문서 QA 챗봇",
@@ -238,65 +238,6 @@ export const projects: Project[] = [
     github: [
       { label: "local-rag-policy-chat", href: "https://github.com/WhiteJbb/local-rag-policy-chat" },
       { label: "Rag-Test (프로토타입)", href: "https://github.com/WhiteJbb/Rag-Test" },
-    ],
-    featured: true,
-  },
-  {
-    id: "xcore-file-agent",
-    title: "사내 파일 검색 AI Agent",
-    description:
-      "자연어로 사내 공유폴더 파일을 탐색하는 LangGraph 기반 에이전트. 파일명·경로 메타 검색과 벡터/BM25를 RRF로 결합한 Hybrid Search로 Hit@5 11% → 100%를 달성했습니다.",
-    year: "2026",
-    category: "RAG / AI Agent",
-    problem:
-      "사내 공유폴더의 업무 산출물을 정확한 파일명 없이 자연어로 찾기 어려웠습니다. 한국어 파일명은 임베딩 모델이 잘 처리하지 못해 파일명 메타 검색과 내용 검색을 별도로 결합하는 구조가 필요했습니다.",
-    contributions: [
-      "LangGraph 5-노드 워크플로우 설계, 인프라 장애 시 해당 노드만 디그레이드되는 Graceful Degradation 적용",
-      "벡터(BGE-M3 1024차원) + BM25 + 파일명·경로 ILIKE 메타 검색을 RRF로 결합하는 Hybrid Search 파이프라인 구현",
-      "메타 검색 전용 불용어 필터 및 키워드 매치 비율 기반 점수 계산 도입",
-      "Qdrant Payload Text Index 미생성으로 BM25가 항상 0건 반환되던 원인 규명 후 MULTILINGUAL 토크나이저로 수정",
-      "HWP(hwp5txt subprocess)·PPTX·XLSX·이미지(EXIF + 파일명 텍스트화) 등 13개 확장자 파서 구현, 스캐너·로더 확장자 목록을 SUPPORTED_EXTENSIONS 단일 변수로 통일",
-      "Hit@K·MRR@K·P@K 정량 측정 스크립트 작성, 12개 실파일 기반 쿼리로 모드별 벤치마크 자동화",
-    ],
-    results: [
-      "vector/hybrid Hit@5 11% → 100%, MRR@5 100% 달성",
-      "레이턴시 p50: vector 2.1s · hybrid 2.2s · agent 5.6s",
-    ],
-    tech: [
-      "Python",
-      "FastAPI",
-      "LangGraph",
-      "LangChain",
-      "Qdrant",
-      "PostgreSQL",
-      "BGE-M3",
-      "BM25",
-      "Hybrid Search",
-      "RRF",
-      "Docker",
-    ],
-    featured: false,
-  },
-  {
-    id: "federated-learning-testbed",
-    title: "Federated Learning Testbed & Real Device Validation",
-    description: "이질적 연합학습 환경을 위한 Docker 및 실디바이스 기반 실험 플랫폼",
-    year: "2026",
-    category: "Federated Learning",
-    problem:
-      "성능이 제각각인 디바이스로 구성된 이질적 연합학습 환경을 표준화된 방식으로 실험·검증할 수단이 없었습니다.",
-    contributions: [
-      "Docker 기반 Heterogeneous Client 환경을 구성하여 CPU/Memory 성능이 다른 클라이언트 시뮬레이션",
-      "Raspberry Pi·노트북 등 실제 디바이스 환경에서도 이질적 클라이언트 학습 과정 검증",
-      "Flower 기반 Federated Learning 파이프라인 개발 및 실험 자동화",
-      "BWA 알고리즘 구현 및 PPO 기반 동적 배치 크기 최적화",
-      "ADM 알고리즘 구현으로 클라이언트 성능에 따른 데이터 사용량 조절",
-    ],
-    results: ["정확도 52.77% → 55.47% 개선", "학습 시간 21.3% 단축"],
-    tech: ["Python", "PyTorch", "Flower", "Docker", "Docker Compose", "Raspberry Pi", "CIFAR-10"],
-    github: [
-      { label: "논문 Testbed", href: "https://github.com/2026-Feb-Winter-Institute/FL" },
-      { label: "전공 프로젝트", href: "https://github.com/Hanbat-IoT/Lab2" },
     ],
     featured: true,
   },
@@ -336,7 +277,30 @@ export const projects: Project[] = [
     github: "https://github.com/WhiteJbb/work-agent",
     featured: true,
   },
-  // --- non-featured: AI/AX Engineer 포지셔닝 순 ---
+  {
+    id: "federated-learning-testbed",
+    title: "Federated Learning Testbed & Real Device Validation",
+    description: "이질적 연합학습 환경을 위한 Docker 및 실디바이스 기반 실험 플랫폼",
+    year: "2026",
+    category: "Federated Learning",
+    problem:
+      "성능이 제각각인 디바이스로 구성된 이질적 연합학습 환경을 표준화된 방식으로 실험·검증할 수단이 없었습니다.",
+    contributions: [
+      "Docker 기반 Heterogeneous Client 환경을 구성하여 CPU/Memory 성능이 다른 클라이언트 시뮬레이션",
+      "Raspberry Pi·노트북 등 실제 디바이스 환경에서도 이질적 클라이언트 학습 과정 검증",
+      "Flower 기반 Federated Learning 파이프라인 개발 및 실험 자동화",
+      "BWA 알고리즘 구현 및 PPO 기반 동적 배치 크기 최적화",
+      "ADM 알고리즘 구현으로 클라이언트 성능에 따른 데이터 사용량 조절",
+    ],
+    results: ["정확도 52.77% → 55.47% 개선", "학습 시간 21.3% 단축"],
+    tech: ["Python", "PyTorch", "Flower", "Docker", "Docker Compose", "Raspberry Pi", "CIFAR-10"],
+    github: [
+      { label: "논문 Testbed", href: "https://github.com/2026-Feb-Winter-Institute/FL" },
+      { label: "전공 프로젝트", href: "https://github.com/Hanbat-IoT/Lab2" },
+    ],
+    featured: true,
+  },
+  // --- non-featured: AI Product Engineer 포지셔닝 순 ---
   {
     id: "kisa-unix-check",
     title: "KISA UNIX 서버 취약점 자동 점검 스크립트",
@@ -381,48 +345,6 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: "drone-delivery-pwa",
-    title: "드론 배송 시스템 PWA",
-    description:
-      "Parrot Anafi 드론을 WiFi로 연결해 실시간 상태를 모니터링하고 웨이포인트 기반 자동 배송 미션을 실행하는 Next.js 14 PWA.",
-    year: "2025",
-    category: "Embedded / Web",
-    problem:
-      "드론 제어 SDK가 Linux 전용이고, 웹에서 실시간으로 드론 상태를 확인하며 배송 미션을 지시하는 통합 인터페이스가 없었습니다.",
-    contributions: [
-      "Next.js 14 App Router 기반 PWA 프론트엔드 개발, 드론 연결·배송 요청·실시간 현황 3개 화면 구현",
-      "Python Flask REST API 서버 작성, Parrot Olympe SDK와 연동해 이륙·착륙·위치 이동·자동 미션 엔드포인트 제공",
-      "WSL2 환경에서 Linux 전용 Olympe SDK를 Windows에서 실행하는 개발 환경 구성 가이드(QUICKSTART_WINDOWS.md) 작성",
-      "PWA manifest 설정으로 모바일 홈 화면 설치 지원",
-    ],
-    tech: ["Next.js 14", "TypeScript", "React 18", "Python", "Flask", "Parrot Olympe SDK", "PWA"],
-    github: "https://github.com/DroneDelivery2/Embedded_PJ",
-    note: "Parrot Anafi 드론 하드웨어와 Olympe SDK를 팀 공유 자산으로 활용했습니다.",
-    featured: false,
-  },
-  {
-    id: "high-school-c-archive",
-    title: "고등학교 C 프로젝트 웹 터미널 아카이브",
-    description:
-      "고등학교 때 만든 C/C++ 콘솔 프로그램 9개를 Emscripten으로 WebAssembly 변환해 브라우저에서 실행 가능하게 복원한 아카이브.",
-    year: "2026",
-    category: "C / WebAssembly",
-    problem:
-      "오래된 C 프로젝트들이 로컬 빌드 환경 없이는 실행이 불가능해, 누구나 바로 체험할 수 있는 형태로 보존하고 싶었습니다.",
-    contributions: [
-      "C/C++ 콘솔 프로그램 9개를 Emscripten으로 WebAssembly 변환, 플랫폼 의존 코드만 최소 수정으로 원본 동작 보존",
-      "공통 웹 터미널 입출력 래퍼(archive_terminal.h) 설계로 프로젝트별 이식 코드 최소화",
-      "단일 HTML 파일(23KB)로 사이드바·Run/Reset·인터랙티브 터미널 포함 웹 터미널 UI 구현",
-      "text-rpg-game에 IndexedDB 세이브 연동으로 새로고침 후에도 캐릭터 상태 유지",
-      "GitHub Actions CI/CD 구성, push 시 전체 프로젝트 빌드 후 GitHub Pages 자동 배포",
-      "커스텀 도메인(c-archive.whitejbb.cloud) 연결 및 CNAME 설정",
-    ],
-    tech: ["C", "C++", "Emscripten", "WebAssembly", "HTML/CSS/JS", "GitHub Actions", "GitHub Pages"],
-    github: "https://github.com/WhiteJbb/high-school-c-archive",
-    link: "https://c-archive.whitejbb.cloud",
-    featured: false,
-  },
-  {
     id: "when2work",
     title: "When2Work — 팀 일정 조율 웹 서비스",
     description:
@@ -445,20 +367,23 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: "budgetly",
-    title: "Budgetly",
-    description: "Azure Document Intelligence를 활용한 조직 예산 관리 플랫폼",
+    id: "drone-delivery-pwa",
+    title: "드론 배송 시스템 PWA",
+    description:
+      "Parrot Anafi 드론을 WiFi로 연결해 실시간 상태를 모니터링하고 웨이포인트 기반 자동 배송 미션을 실행하는 Next.js 14 PWA.",
     year: "2025",
-    category: "Document AI",
-    problem: "조직의 영수증·예산 처리를 수기로 관리하기 번거롭고 실수가 잦았습니다.",
+    category: "Embedded / Web",
+    problem:
+      "드론 제어 SDK가 Linux 전용이고, 웹에서 실시간으로 드론 상태를 확인하며 배송 미션을 지시하는 통합 인터페이스가 없었습니다.",
     contributions: [
-      "Vue.js 기반 프론트엔드 개발 및 예산 현황 대시보드 UI 구성",
-      "Firebase 인증·DB 연동 및 AWS EC2 기반 배포",
+      "Next.js 14 App Router 기반 PWA 프론트엔드 개발, 드론 연결·배송 요청·실시간 현황 3개 화면 구현",
+      "Python Flask REST API 서버 작성, Parrot Olympe SDK와 연동해 이륙·착륙·위치 이동·자동 미션 엔드포인트 제공",
+      "WSL2 환경에서 Linux 전용 Olympe SDK를 Windows에서 실행하는 개발 환경 구성 가이드(QUICKSTART_WINDOWS.md) 작성",
+      "PWA manifest 설정으로 모바일 홈 화면 설치 지원",
     ],
-    results: ["소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상"],
-    tech: ["Vue.js", "Firebase", "Azure Document Intelligence", "AWS EC2"],
-    github: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
-    note: "OCR 기반 영수증 인식(Azure Document Intelligence) 구현은 팀원이 담당했습니다. 본인은 Vue.js 프론트엔드와 Firebase·AWS EC2 배포를 맡았습니다.",
+    tech: ["Next.js 14", "TypeScript", "React 18", "Python", "Flask", "Parrot Olympe SDK", "PWA"],
+    github: "https://github.com/DroneDelivery2/Embedded_PJ",
+    note: "Parrot Anafi 드론 하드웨어와 Olympe SDK를 팀 공유 자산으로 활용했습니다.",
     featured: false,
   },
   {
@@ -481,6 +406,23 @@ export const projects: Project[] = [
     github: "https://github.com/why-server-down/cloud-trouble-training-service",
     note:
       "플랫폼은 Chaos Mesh 기반 장애 주입, RAG 기반 AI Tutor, Kubernetes Namespace 격리 구조로 구성되었으며, 해당 영역(Chaos Mesh 장애 주입·AI Tutor·Kubernetes 핵심 구현)은 팀원이 담당했습니다. 본인은 PM과 프론트엔드 개발을 맡았습니다.",
+    featured: false,
+  },
+  {
+    id: "budgetly",
+    title: "Budgetly",
+    description: "조직 예산·영수증 관리 웹 플랫폼",
+    year: "2025",
+    category: "Web Service",
+    problem: "조직의 영수증·예산 처리를 수기로 관리하기 번거롭고 실수가 잦았습니다.",
+    contributions: [
+      "Vue.js 기반 프론트엔드 개발 및 예산 현황 대시보드 UI 구성",
+      "Firebase 인증·DB 연동 및 AWS EC2 기반 배포",
+    ],
+    results: ["소중한 오픈소스 활용 SW 경진대회 1등, 총장상 수상"],
+    tech: ["Vue.js", "Firebase", "AWS EC2"],
+    github: "https://github.com/HBNU-SWUNIV/ossw-competition25-yee",
+    note: "OCR 기반 영수증 인식(Azure Document Intelligence) 구현은 팀원이 담당했습니다. 본인은 Vue.js 프론트엔드와 Firebase·AWS EC2 배포를 맡았습니다.",
     featured: false,
   },
   {
@@ -513,6 +455,28 @@ export const projects: Project[] = [
       { label: "backEnd", href: "https://github.com/2025-Kraftonweek2-401-7/backEnd" },
     ],
     note: "백엔드(Java Spring Boot) 구현은 팀원이 담당했습니다. 본인은 Chrome Extension과 웹 프론트엔드를 맡았습니다.",
+    featured: false,
+  },
+  {
+    id: "high-school-c-archive",
+    title: "고등학교 C 프로젝트 웹 터미널 아카이브",
+    description:
+      "고등학교 때 만든 C/C++ 콘솔 프로그램 9개를 Emscripten으로 WebAssembly 변환해 브라우저에서 실행 가능하게 복원한 아카이브.",
+    year: "2026",
+    category: "C / WebAssembly",
+    problem:
+      "오래된 C 프로젝트들이 로컬 빌드 환경 없이는 실행이 불가능해, 누구나 바로 체험할 수 있는 형태로 보존하고 싶었습니다.",
+    contributions: [
+      "C/C++ 콘솔 프로그램 9개를 Emscripten으로 WebAssembly 변환, 플랫폼 의존 코드만 최소 수정으로 원본 동작 보존",
+      "공통 웹 터미널 입출력 래퍼(archive_terminal.h) 설계로 프로젝트별 이식 코드 최소화",
+      "단일 HTML 파일(23KB)로 사이드바·Run/Reset·인터랙티브 터미널 포함 웹 터미널 UI 구현",
+      "text-rpg-game에 IndexedDB 세이브 연동으로 새로고침 후에도 캐릭터 상태 유지",
+      "GitHub Actions CI/CD 구성, push 시 전체 프로젝트 빌드 후 GitHub Pages 자동 배포",
+      "커스텀 도메인(c-archive.whitejbb.cloud) 연결 및 CNAME 설정",
+    ],
+    tech: ["C", "C++", "Emscripten", "WebAssembly", "HTML/CSS/JS", "GitHub Actions", "GitHub Pages"],
+    github: "https://github.com/WhiteJbb/high-school-c-archive",
+    link: "https://c-archive.whitejbb.cloud",
     featured: false,
   },
   {

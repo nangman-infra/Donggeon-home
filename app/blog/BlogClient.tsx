@@ -27,8 +27,7 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
         const fetchedPosts = await fetchTistoryPosts();
         setPosts(fetchedPosts);
         setError(null);
-      } catch (err) {
-        console.error("Failed to load blog posts:", err);
+      } catch {
         setError("블로그 글을 불러오지 못했습니다.");
       } finally {
         setLoading(false);
@@ -95,7 +94,7 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
               >
                 {post.thumbnail ? (
                   <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50 sm:h-24 sm:w-40">
-                    <Image src={post.thumbnail} alt="" fill className="object-cover" unoptimized sizes="(max-width: 640px) 100vw, 160px" />
+                    <Image src={post.thumbnail} alt={post.title} fill className="object-cover" unoptimized sizes="(max-width: 640px) 100vw, 160px" />
                   </div>
                 ) : (
                   <div className={`grid h-40 w-full shrink-0 place-items-center overflow-hidden rounded-xl border bg-gradient-to-br ${p.bg} ${p.border} sm:h-24 sm:w-40`}>

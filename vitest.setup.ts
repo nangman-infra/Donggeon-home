@@ -3,6 +3,8 @@ import React from "react";
 import { vi } from "vitest";
 
 vi.mock("framer-motion", () => {
+  const cache = new Map<string, unknown>();
+
   const createMotionComponent = (tag: string) => {
     const MotionComponent = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
       ({ children, ...props }, ref) => {
@@ -25,7 +27,11 @@ vi.mock("framer-motion", () => {
     motion: new Proxy(
       {},
       {
-        get: (_, tag) => createMotionComponent(String(tag)),
+        get: (_, tag) => {
+          const key = String(tag);
+          if (!cache.has(key)) cache.set(key, createMotionComponent(key));
+          return cache.get(key);
+        },
       }
     ),
     useScroll: () => ({ scrollYProgress: 0 }),

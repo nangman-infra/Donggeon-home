@@ -39,12 +39,23 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 items-center rounded-lg border border-gray-200 px-3.5 text-sm font-semibold text-slate-800 transition-colors hover:border-brand hover:text-brand md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-slate-800 transition-colors hover:border-brand hover:text-brand md:hidden"
           aria-expanded={isMenuOpen}
-          aria-label="메뉴 열기"
+          aria-label={isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
           onClick={() => setIsMenuOpen((value) => !value)}
         >
-          {isMenuOpen ? "닫기" : "메뉴"}
+          {isMenuOpen ? (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="3" x2="15" y2="15" />
+              <line x1="15" y1="3" x2="3" y2="15" />
+            </svg>
+          ) : (
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="5" x2="15" y2="5" />
+              <line x1="3" y1="9" x2="15" y2="9" />
+              <line x1="3" y1="13" x2="15" y2="13" />
+            </svg>
+          )}
         </button>
       </div>
 

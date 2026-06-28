@@ -65,13 +65,13 @@ export function Hero() {
         </motion.div>
 
         <motion.dl
-          className="mt-16 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 sm:grid-cols-3"
+          className="mt-16 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200 shadow-sm sm:grid-cols-3"
           variants={reveal}
         >
           {hero.stats.map((stat) => (
-            <div key={stat.label} className="bg-white px-6 py-7">
-              <dt className="text-3xl font-bold tracking-tight text-brand">{stat.value}</dt>
-              <dd className="mt-2 text-sm leading-snug text-slate-500">{stat.label}</dd>
+            <div key={stat.label} className="bg-white px-6 py-8">
+              <dt className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</dt>
+              <dd className="mt-2.5 text-sm leading-snug text-slate-500">{stat.label}</dd>
             </div>
           ))}
         </motion.dl>

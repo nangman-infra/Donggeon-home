@@ -3,6 +3,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { contact, sectionHeaders } from "@/content/portfolio";
+import { SectionReveal } from "./SectionReveal";
 import { SectionHeader } from "./Shell";
 
 const contactLinks = [
@@ -45,8 +46,7 @@ export function Contact() {
         setSubmitStatus({ type: "success", message: "메시지가 전송되었습니다. 확인 후 연락드리겠습니다." });
         setFormData({ name: "", email: "", message: "" });
       }
-    } catch (error) {
-      console.error("EmailJS Error:", error);
+    } catch {
       setSubmitStatus({ type: "error", message: "메시지 전송에 실패했습니다. 이메일로 직접 연락해 주세요." });
     } finally {
       setIsSubmitting(false);
@@ -58,7 +58,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="mx-auto w-full max-w-5xl px-6 py-24 sm:px-8 sm:py-32" aria-labelledby="contact-title">
+    <SectionReveal as="section" id="contact" aria-labelledby="contact-title" className="mx-auto w-full max-w-5xl px-6 py-24 sm:px-8 sm:py-32">
       <SectionHeader
         eyebrow={sectionHeaders.contact.eyebrow}
         title={sectionHeaders.contact.title}
@@ -67,35 +67,44 @@ export function Contact() {
       />
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <ul className="grid h-fit gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200">
-          {contactLinks.map((item) => {
-            const externalProps = item.external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {};
+        <div className="flex h-fit flex-col gap-6">
+          <div className="rounded-2xl border border-gray-200 bg-brand/[0.03] p-6">
+            <p className="text-sm leading-relaxed text-slate-500">
+              채용 문의, 협업 제안, 기술 관련 이야기 모두 환영합니다.
+              <br />
+              보통 <span className="font-semibold text-slate-700">24시간 이내</span>에 답변드립니다.
+            </p>
+          </div>
+          <ul className="grid gap-px overflow-hidden rounded-2xl border border-gray-200 bg-gray-200">
+            {contactLinks.map((item) => {
+              const externalProps = item.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {};
 
-            return (
-              <li
-                key={item.label}
-                className="flex items-baseline justify-between gap-4 bg-white px-6 py-5"
-              >
-                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  {item.label}
-                </span>
-                {item.href ? (
-                  <a
-                    href={item.href}
-                    className="break-all text-right text-sm font-medium text-slate-900 transition-colors hover:text-brand"
-                    {...externalProps}
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  <span className="text-right text-sm font-medium text-slate-900">{item.value}</span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li
+                  key={item.label}
+                  className="flex items-baseline justify-between gap-4 bg-white px-6 py-5"
+                >
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    {item.label}
+                  </span>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="break-all text-right text-sm font-medium text-slate-900 transition-colors hover:text-brand"
+                      {...externalProps}
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <span className="text-right text-sm font-medium text-slate-900">{item.value}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
         <form onSubmit={handleSubmit} className="card p-7 sm:p-8">
           {submitStatus.type && (
@@ -157,6 +166,6 @@ export function Contact() {
           </button>
         </form>
       </div>
-    </section>
+    </SectionReveal>
   );
 }
