@@ -35,6 +35,9 @@ pipeline {
         APP_DIRECTORY = '.'
         WATCHTOWER_URL = 'http://172.16.0.15:18081'
         WATCHTOWER_TOKEN = credentials('nangman-personal-web-watchtower-token')
+        EMAILJS_SERVICE_ID  = credentials('DONGGEON_HOME_EMAILJS_SERVICE_ID')
+        EMAILJS_TEMPLATE_ID = credentials('DONGGEON_HOME_EMAILJS_TEMPLATE_ID')
+        EMAILJS_PUBLIC_KEY  = credentials('DONGGEON_HOME_EMAILJS_PUBLIC_KEY')
         APP_HEALTH_URL = 'http://172.16.0.15:10000'
         DEPLOY_TIMEOUT_SECONDS = '180'
         SONARQUBE_INSTALLATION = 'sonarqube'
@@ -277,6 +280,9 @@ pipeline {
                                         "--tag ${env.IMAGE_VERSION}",
                                         "--tag ${env.IMAGE_LATEST}",
                                         "--cache-to type=registry,ref=${env.IMAGE_CACHE},mode=max",
+                                        "--build-arg NEXT_PUBLIC_EMAILJS_SERVICE_ID=${env.EMAILJS_SERVICE_ID}",
+                                        "--build-arg NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=${env.EMAILJS_TEMPLATE_ID}",
+                                        "--build-arg NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=${env.EMAILJS_PUBLIC_KEY}",
                                         "--label org.opencontainers.image.created=${env.BUILD_TIMESTAMP}",
                                         "--label org.opencontainers.image.revision=${env.FULL_SHA}",
                                         "--label org.opencontainers.image.source=${env.REPO_HTTP_URL}",
