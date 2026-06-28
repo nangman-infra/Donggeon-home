@@ -41,7 +41,7 @@ export function Hero() {
           {profile.oneLiner}
         </motion.p>
 
-        <motion.p className="mt-4 max-w-xl text-base font-light leading-relaxed text-slate-500" variants={reveal}>
+        <motion.p className="mt-4 max-w-2xl text-base font-light leading-relaxed text-slate-500" variants={reveal}>
           {profile.summary}
         </motion.p>
 
