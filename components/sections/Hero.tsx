@@ -12,7 +12,13 @@ export function Hero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-6 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-44" aria-labelledby="hero-title">
+    <section className="relative w-full overflow-hidden" aria-labelledby="hero-title">
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
+        style={{ backgroundImage: "linear-gradient(215deg, rgba(37,99,235,0.08) 0%, rgba(37,99,235,0.04) 35%, rgba(37,99,235,0) 62%)" }}
+      />
+      <div className="mx-auto w-full max-w-5xl px-6 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-44">
       <motion.div
         initial={reduceMotion ? "show" : "hidden"}
         animate="show"
@@ -64,12 +70,13 @@ export function Hero() {
         >
           {hero.stats.map((stat) => (
             <div key={stat.label} className="bg-white px-6 py-7">
-              <dt className="text-3xl font-bold tracking-tight text-slate-900">{stat.value}</dt>
+              <dt className="text-3xl font-bold tracking-tight text-brand">{stat.value}</dt>
               <dd className="mt-2 text-sm leading-snug text-slate-500">{stat.label}</dd>
             </div>
           ))}
         </motion.dl>
       </motion.div>
+      </div>
     </section>
   );
 }

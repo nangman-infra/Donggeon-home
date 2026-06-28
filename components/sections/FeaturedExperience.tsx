@@ -17,7 +17,7 @@ function FeaturedCard({ item }: { item: (typeof featured)[number] }) {
           <ul className="mt-4 grid gap-3">
             {item.approach.map((a) => (
               <li key={a} className="flex gap-3 text-[0.95rem] leading-relaxed text-slate-700">
-                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" aria-hidden="true" />
                 {a}
               </li>
             ))}
@@ -43,7 +43,7 @@ function FeaturedCard({ item }: { item: (typeof featured)[number] }) {
           {item.scale.map((s) => (
             <div key={s.label} className="flex items-baseline justify-between bg-white px-6 py-5">
               <dt className="text-sm text-slate-500">{s.label}</dt>
-              <dd className="font-mono text-sm font-semibold text-slate-900">{s.value}</dd>
+              <dd className="font-mono text-base font-bold text-brand">{s.value}</dd>
             </div>
           ))}
         </dl>

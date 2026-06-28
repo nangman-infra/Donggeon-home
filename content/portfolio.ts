@@ -623,8 +623,8 @@ export const contact = {
   email: "gunni6112@gmail.com",
   github: "https://github.com/WhiteJbb",
   githubLabel: "github.com/WhiteJbb",
-  website: "https://donggeon.nangman.cloud",
-  websiteLabel: "donggeon.nangman.cloud",
+  website: "https://www.nangman.cloud",
+  websiteLabel: "www.nangman.cloud",
   location: "대전, 대한민국",
 };
 
