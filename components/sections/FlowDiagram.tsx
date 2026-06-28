@@ -38,7 +38,7 @@ export function FlowDiagram({ steps, label = "처리 흐름도" }: Readonly<Flow
       variants={list}
       initial={reduceMotion ? "show" : "hidden"}
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: "some" }}
     >
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;

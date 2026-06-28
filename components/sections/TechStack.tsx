@@ -19,7 +19,7 @@ export function TechStack() {
           <div
             key={group.category}
             className={`card card-hover flex flex-col p-7 ${
-              wideCategories.has(group.category) ? "lg:col-span-2" : ""
+              wideCategories.has(group.category) ? "sm:col-span-2 lg:col-span-2" : ""
             }`}
           >
             <div className="flex items-baseline justify-between">

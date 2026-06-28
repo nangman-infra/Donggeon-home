@@ -95,7 +95,7 @@ export function BlogClient({ posts: initialPosts }: Readonly<BlogClientProps>) {
               >
                 {post.thumbnail ? (
                   <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-gray-50 sm:h-24 sm:w-40">
-                    <Image src={post.thumbnail} alt="" fill className="object-cover" unoptimized sizes="220px" />
+                    <Image src={post.thumbnail} alt="" fill className="object-cover" unoptimized sizes="(max-width: 640px) 100vw, 160px" />
                   </div>
                 ) : (
                   <div className={`grid h-40 w-full shrink-0 place-items-center overflow-hidden rounded-xl border bg-gradient-to-br ${p.bg} ${p.border} sm:h-24 sm:w-40`}>

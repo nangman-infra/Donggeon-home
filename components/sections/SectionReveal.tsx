@@ -34,7 +34,7 @@ export function SectionReveal({ children, className, delay = 0, as = "div", id, 
       initial={reduceMotion ? "show" : "hidden"}
       whileInView="show"
       // 살짝 들어오기만 해도 트리거 → 빠른 스크롤에서도 비어 보이지 않게
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: "some" }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay }}
       {...rest}
     >
