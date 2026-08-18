@@ -10,7 +10,7 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/projects",
 }));
 
-const SECTION_IDS = ["about", "featured", "projects", "publications", "awards", "stack", "contact"];
+const SECTION_IDS = ["about", "experience", "projects", "publications", "awards", "stack", "contact"];
 
 function mountSections(tops: Record<string, number>) {
   SECTION_IDS.forEach((id) => {
@@ -42,10 +42,10 @@ describe("layout navigation", () => {
   });
 
   it("ScrollSpyNav: 읽기 기준선에 걸린 섹션을 활성화하고 스크롤에 따라 갱신한다", () => {
-    // line = 0.35 * 800 = 280 → about(-200), featured(120) 가 기준선 위 → featured 활성
+    // line = 0.35 * 800 = 280 → about(-200), experience(120) 가 기준선 위 → experience 활성
     mountSections({
       about: -200,
-      featured: 120,
+      experience: 120,
       projects: 600,
       publications: 1200,
       awards: 1800,
@@ -55,7 +55,7 @@ describe("layout navigation", () => {
 
     render(React.createElement(ScrollSpyNav));
 
-    expect(screen.getByRole("link", { name: "Work" })).toHaveAttribute("aria-current", "true");
+    expect(screen.getByRole("link", { name: "Experience" })).toHaveAttribute("aria-current", "true");
     expect(screen.getByRole("link", { name: "Projects" })).not.toHaveAttribute("aria-current");
 
     // projects 가 기준선을 넘어오도록 위치 변경 후 스크롤 → projects 활성
@@ -69,7 +69,7 @@ describe("layout navigation", () => {
   it("ScrollSpyNav: 페이지 최하단에서는 마지막 섹션을 활성화한다", () => {
     mountSections({
       about: -3000,
-      featured: -2400,
+      experience: -2400,
       projects: -1800,
       publications: -1200,
       awards: -600,

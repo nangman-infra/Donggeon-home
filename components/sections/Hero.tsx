@@ -26,12 +26,12 @@ export function Hero() {
       >
         <motion.p className="eyebrow" variants={reveal}>
           <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden="true" />
-          {hero.badge} · {profile.name}
+          {hero.badge} · {hero.badgeKeywords}
         </motion.p>
 
         <motion.h1
           id="hero-title"
-          className="mt-7 max-w-4xl text-[2.6rem] font-extrabold leading-[1.05] tracking-[-0.03em] text-slate-900 sm:text-6xl lg:text-7xl"
+          className="mt-7 max-w-4xl break-keep text-[2.3rem] font-extrabold leading-[1.08] tracking-[-0.03em] text-slate-900 sm:text-5xl lg:text-6xl"
           variants={reveal}
         >
           {hero.headline.lead}
@@ -71,7 +71,13 @@ export function Hero() {
           {hero.stats.map((stat) => (
             <div key={stat.label} className="bg-white px-6 py-8">
               <dt className="text-4xl font-extrabold tracking-tight text-brand">{stat.value}</dt>
-              <dd className="mt-2.5 text-sm leading-snug text-slate-500">{stat.label}</dd>
+              <dd className="mt-2.5 text-sm leading-snug text-slate-500">
+                {stat.label}
+                {/* 평가셋 기반 수치는 측정 규모를 함께 노출해 운영 성과와 구분한다 */}
+                {stat.context && (
+                  <span className="mt-1.5 block font-mono text-xs text-slate-400">{stat.context}</span>
+                )}
+              </dd>
             </div>
           ))}
         </motion.dl>

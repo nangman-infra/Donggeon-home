@@ -11,11 +11,21 @@ const FILTERS = [
   { label: "Infra", value: "infra" },
 ];
 
+// 카테고리 문자열 하나가 여러 버킷에 걸리지 않도록 AI → Infra → Web 순으로 배타 판정한다.
+const AI_CATEGORY = /AI|LLM|Agent|RAG|Federated|Retrieval|Intelligence/i;
+const INFRA_CATEGORY = /Platform|Infra|Security|Shell|Backend|DB|Gateway|Runtime/i;
+const WEB_CATEGORY = /Web|Frontend|Service/i;
+
 function matchFilter(project: Project, filter: string): boolean {
   if (filter === "all") return true;
-  if (filter === "ai") return /RAG|LLM|AI|Federated|Document/i.test(project.category);
-  if (filter === "web") return /Web|Platform|Frontend|Chrome|C \//i.test(project.category);
-  if (filter === "infra") return /Security|Backend|DB|Embedded/i.test(project.category);
+
+  const isAi = AI_CATEGORY.test(project.category);
+  if (filter === "ai") return isAi;
+
+  const isInfra = !isAi && INFRA_CATEGORY.test(project.category);
+  if (filter === "infra") return isInfra;
+  if (filter === "web") return !isAi && !isInfra && WEB_CATEGORY.test(project.category);
+
   return true;
 }
 
