@@ -2,7 +2,7 @@ import { About } from "@/components/sections/About";
 import { Activities } from "@/components/sections/Activities";
 import { Awards } from "@/components/sections/Awards";
 import { Contact } from "@/components/sections/Contact";
-import { FeaturedExperience } from "@/components/sections/FeaturedExperience";
+import { ExperienceSection } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 import { Publications } from "@/components/sections/Publications";
@@ -18,7 +18,7 @@ export default function Home() {
       <ScrollSpyNav />
       <Hero />
       <About />
-      <FeaturedExperience />
+      <ExperienceSection />
       <Projects projects={featuredProjects} showAllLink />
       <Publications />
       <Activities />

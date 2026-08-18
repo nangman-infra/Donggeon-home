@@ -6,7 +6,7 @@ import { Logo } from "./Logo";
 
 const sectionLinks = [
   { href: "/#about", label: "About" },
-  { href: "/#featured", label: "Work" },
+  { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
   { href: "/#publications", label: "Research" },
   { href: "/#activities", label: "Activities" },
@@ -60,7 +60,7 @@ export function Footer() {
         </div>
 
         <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-5">
-          <p className="text-xs text-slate-400">© {currentYear} 임동건 · AI Product Engineer</p>
+          <p className="text-xs text-slate-400">© {currentYear} 임동건 · AI Engineer</p>
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

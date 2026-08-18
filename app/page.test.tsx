@@ -32,10 +32,17 @@ describe("portfolio pages", () => {
   it("renders the home hero positioning, featured work, and core calls to action", () => {
     render(React.createElement(Home));
 
-    expect(screen.getByText("AI 서비스를 제품 수준으로 구현하고 운영 환경까지 고려하는 엔지니어")).toBeInTheDocument();
-    expect(screen.getAllByText("RAG Application").length).toBeGreaterThanOrEqual(1);
+    expect(
+      screen.getByText(
+        "RAG와 AI Agent부터 Backend, On-premise LLM Serving, 배포와 운영까지 End-to-End로 AI 시스템을 설계하고 구축합니다.",
+      ),
+    ).toBeInTheDocument();
+    // Hero 배지는 메인 직함(AI Engineer) 하나로 고정한다
+    expect(screen.getByText(/AI Engineer · RAG · Agents · LLM Systems/)).toBeInTheDocument();
     expect(screen.getByText("사내 규정 검색 AI Assistant")).toBeInTheDocument();
-    expect(screen.getByText("Federated Learning Testbed & Real Device Validation")).toBeInTheDocument();
+    expect(screen.getByText("Docker-based Federated Learning Heterogeneity Testbed")).toBeInTheDocument();
+    // 평가셋 기반 수치는 측정 규모를 함께 노출한다
+    expect(screen.getByText("240 docs · 106 queries")).toBeInTheDocument();
     expect(document.querySelectorAll('a[href="#projects"]').length).toBeGreaterThanOrEqual(1);
     expect(document.querySelector('a[href^="mailto:gunni6112@gmail.com"]')).not.toBeNull();
   });
@@ -43,9 +50,13 @@ describe("portfolio pages", () => {
   it("renders about positioning and tech stack context", () => {
     render(React.createElement(AboutPage));
 
-    expect(screen.getAllByText("AI / ML").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Infra / DevOps").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("AI / Agent Systems").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Retrieval").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("LLM Systems").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("사내 규정 검색 AI Assistant")).toBeInTheDocument();
+    // 회사 경력은 하나의 회사 아래 여러 업무로 묶여 보여야 한다
+    expect(screen.getByText("(주)엑스코어시스템")).toBeInTheDocument();
+    expect(screen.getByText("사내망 CI/CD 개발환경 구축")).toBeInTheDocument();
   });
 
   it("renders resume awards, publications, and certifications", () => {
@@ -66,7 +77,10 @@ describe("portfolio pages", () => {
     expect(screen.getByText("Budgetly")).toBeInTheDocument();
     expect(screen.getAllByText("PyTorch").length).toBeGreaterThanOrEqual(1);
     // AfterFail 역할 구분 note가 노출되어야 한다
-    expect(screen.getByText(/해당 영역.*팀원이 담당/)).toBeInTheDocument();
+    expect(screen.getByText(/Chaos Mesh 장애 주입.*팀원이 담당/)).toBeInTheDocument();
+    // Featured에서 내린 초기 프로젝트는 Archive 영역에만 남는다
+    expect(screen.getByText("초기 프로젝트")).toBeInTheDocument();
+    expect(screen.getByText("로컬 RAG 파이프라인 (local-rag-policy-chat)")).toBeInTheDocument();
   });
 
   it("submits the contact form successfully", async () => {

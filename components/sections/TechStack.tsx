@@ -1,7 +1,7 @@
 import { sectionHeaders, techStack } from "@/content/portfolio";
 import { Section, SectionHeader } from "./Shell";
 
-const wideCategories = new Set(["AI / ML", "Infra / DevOps", "Backend"]);
+const wideCategories = new Set(["AI / Agent Systems", "Retrieval", "Infrastructure"]);
 
 export function TechStack() {
   return (

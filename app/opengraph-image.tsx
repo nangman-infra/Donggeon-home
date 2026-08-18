@@ -4,7 +4,7 @@ export const dynamic = "force-static";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Donggeon Im — AI Product Engineer";
+export const alt = "Donggeon Im — AI Engineer";
 
 function Mark() {
   return (
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
           <Mark />
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 18, letterSpacing: 4, color: "#475569", fontWeight: 700 }}>
-              AI PRODUCT ENGINEER
+              AI ENGINEER
             </div>
             <div style={{ fontSize: 30, color: "#f8fafc", fontWeight: 700, marginTop: 4 }}>
               Donggeon Im
@@ -86,7 +86,7 @@ export default function OpengraphImage() {
               color: "#f8fafc",
             }}
           >
-            AI as a product,
+            AI as a system,
           </div>
           <div style={{ display: "flex", gap: 18, fontSize: 70, lineHeight: 1.08, letterSpacing: -2, fontWeight: 800 }}>
             <span style={{ color: "#64748b" }}>not just</span>
@@ -105,7 +105,7 @@ export default function OpengraphImage() {
           }}
         >
           <div style={{ display: "flex", fontSize: 22, color: "#475569", fontWeight: 600 }}>
-            RAG · On-premise LLM · LangGraph · AI Infra
+            RAG · AI Agents · LLM Systems · AI Infrastructure
           </div>
           <div style={{ display: "flex", fontSize: 20, color: "#334155", fontWeight: 600 }}>
             donggeon.nangman.cloud

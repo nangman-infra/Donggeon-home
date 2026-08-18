@@ -1,4 +1,5 @@
 import type { Project, ProjectLink } from "@/content/portfolio";
+import { DetailAccordion } from "./DetailAccordion";
 
 type ProjectCardProps = {
   project: Project;
@@ -25,7 +26,14 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
           <p className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
             {project.category} · {project.year}
           </p>
-          <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{project.title}</h3>
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{project.title}</h3>
+            {project.status && (
+              <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand/5 px-3 py-1 font-mono text-xs font-semibold text-brand">
+                {project.status}
+              </span>
+            )}
+          </div>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-500">{project.description}</p>
         </div>
         {(project.link || githubLinks.length > 0) && (
@@ -91,6 +99,20 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
             </div>
           )}
 
+          {project.roadmap && project.roadmap.length > 0 && (
+            <div>
+              <p className="eyebrow text-slate-400">Roadmap · 계획</p>
+              <ul className="mt-3 grid gap-2.5">
+                {project.roadmap.map((item) => (
+                  <li key={item} className="flex gap-3 text-sm leading-relaxed text-slate-500">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-slate-300" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div>
             <p className="eyebrow text-slate-400">Stack</p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -103,6 +125,8 @@ export function ProjectCard({ project }: Readonly<ProjectCardProps>) {
           </div>
         </div>
       </div>
+
+      {project.detail && <DetailAccordion blocks={project.detail} />}
 
       {project.note && (
         <p className="mt-7 border-l-2 border-gray-300 bg-gray-50 px-4 py-3 text-sm leading-relaxed text-slate-500">
