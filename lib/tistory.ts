@@ -7,6 +7,8 @@ export interface TistoryPost {
   thumbnail?: string;
 }
 
+const TISTORY_FETCH_TIMEOUT_MS = 5000;
+
 export function toSafeString(value: unknown): string {
   return typeof value === "string" || typeof value === "number" ? String(value) : "";
 }
@@ -131,26 +133,26 @@ function isAttributeBoundaryAfter(char: string): boolean {
 }
 
 export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), TISTORY_FETCH_TIMEOUT_MS);
+
   try {
     const rssUrl = "https://exit0.tistory.com/rss";
     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, { signal: controller.signal });
 
     if (!response.ok) {
-      console.error(`RSS fetch failed with status: ${response.status}`);
-      return [];
+      throw new Error(`RSS fetch failed with status: ${response.status}`);
     }
 
     const data = await response.json();
 
-    if (data.status === "error") {
-      console.error("RSS2JSON API Error:", data.message);
-      return [];
+    if (data?.status === "error") {
+      throw new Error(`RSS2JSON API Error: ${data.message ?? "unknown error"}`);
     }
 
-    if (!data?.items) {
-      console.error("Invalid RSS response");
-      return [];
+    if (!Array.isArray(data?.items)) {
+      throw new Error("Invalid RSS response");
     }
 
     const posts = parseRSSJson(data.items);
@@ -162,7 +164,9 @@ export async function fetchTistoryPosts(): Promise<TistoryPost[]> {
     return posts;
   } catch (error) {
     console.error("Error fetching Tistory posts:", error);
-    return [];
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

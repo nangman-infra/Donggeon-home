@@ -27,6 +27,9 @@ export function ScrollSpyNav() {
     if (globalThis.window === undefined) return;
 
     const ids = sections.map((section) => section.id);
+    // The navigation is hidden below xl, so avoid measuring every section on mobile.
+    const mediaQuery =
+      typeof window.matchMedia === "function" ? window.matchMedia("(min-width: 1280px)") : null;
     let frame = 0;
 
     const compute = () => {
@@ -52,13 +55,34 @@ export function ScrollSpyNav() {
       if (!frame) frame = requestAnimationFrame(compute);
     };
 
-    compute();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    let removeScrollListeners: (() => void) | undefined;
+    const setup = () => {
+      removeScrollListeners?.();
+
+      if (mediaQuery && !mediaQuery.matches) {
+        setActive("");
+        return;
+      }
+
+      compute();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      removeScrollListeners = () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+        if (frame) {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      };
+    };
+
+    setup();
+    mediaQuery?.addEventListener("change", setup);
+
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
+      removeScrollListeners?.();
+      mediaQuery?.removeEventListener("change", setup);
     };
   }, []);
 

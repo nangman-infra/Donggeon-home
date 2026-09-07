@@ -31,7 +31,8 @@ export function SectionReveal({ children, className, delay = 0, as = "div", id, 
       id={id}
       className={className}
       variants={reveal}
-      initial={reduceMotion ? "show" : "hidden"}
+      // Keep content visible in the static HTML; animate only after it enters the viewport.
+      initial={reduceMotion ? "show" : false}
       whileInView="show"
       // 살짝 들어오기만 해도 트리거 → 빠른 스크롤에서도 비어 보이지 않게
       viewport={{ once: true, amount: "some" }}

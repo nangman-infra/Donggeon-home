@@ -36,7 +36,8 @@ export function FlowDiagram({ steps, label = "처리 흐름도" }: Readonly<Flow
       className="relative flex flex-col gap-0"
       aria-label={label}
       variants={list}
-      initial={reduceMotion ? "show" : "hidden"}
+      // Keep the server-rendered diagram visible while hydration prepares the animation.
+      initial={reduceMotion ? "show" : false}
       whileInView="show"
       viewport={{ once: true, amount: "some" }}
     >

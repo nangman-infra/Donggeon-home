@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { contact, sectionHeaders } from "@/content/portfolio";
 import { SectionReveal } from "./SectionReveal";
 import { SectionHeader } from "./Shell";
@@ -30,6 +29,7 @@ export function Contact() {
     setSubmitStatus({ type: null, message: "" });
 
     try {
+      const { default: emailjs } = await import("@emailjs/browser");
       const result = await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",

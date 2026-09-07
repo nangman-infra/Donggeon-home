@@ -12,6 +12,7 @@ import {
 
 describe("tistory helpers", () => {
   afterEach(() => {
+    vi.useRealTimers();
     vi.unstubAllGlobals();
   });
 
@@ -88,17 +89,37 @@ describe("tistory helpers", () => {
     await expect(fetchTistoryPosts()).resolves.toHaveLength(1);
   });
 
-  it("returns an empty list when tistory fetch fails", async () => {
+  it("fails fast when tistory responds with an error", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 500 }));
 
-    await expect(fetchTistoryPosts()).resolves.toEqual([]);
+    await expect(fetchTistoryPosts()).rejects.toThrow("RSS fetch failed with status: 500");
   });
 
-  it("returns an empty list for invalid rss payloads and thrown fetches", async () => {
+  it("fails when the rss payload is invalid or the request throws", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, json: async () => ({ status: "error" }) }));
-    await expect(fetchTistoryPosts()).resolves.toEqual([]);
+    await expect(fetchTistoryPosts()).rejects.toThrow("RSS2JSON API Error");
 
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network")));
-    await expect(fetchTistoryPosts()).resolves.toEqual([]);
+    await expect(fetchTistoryPosts()).rejects.toThrow("network");
+  });
+
+  it("aborts a slow request after the timeout", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn(
+      (_url: string, init?: RequestInit) =>
+        new Promise<never>((_resolve, reject) => {
+          init?.signal?.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")));
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const request = expect(fetchTistoryPosts()).rejects.toThrow("Aborted");
+    await vi.advanceTimersByTimeAsync(5000);
+
+    await request;
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    );
   });
 });

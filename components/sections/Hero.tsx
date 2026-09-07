@@ -20,7 +20,8 @@ export function Hero() {
       />
       <div className="mx-auto w-full max-w-5xl px-6 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-44">
       <motion.div
-        initial={reduceMotion ? "show" : "hidden"}
+        // Keep the server-rendered hero visible while hydration prepares the animation.
+        initial={reduceMotion ? "show" : false}
         animate="show"
         transition={{ staggerChildren: 0.12 }}
       >
